@@ -1,6 +1,6 @@
 Metal Matrix Multiply
 =====================
-A matrix multiplication test using a Metal kernel function.
+A matrix multiplication test using Metal.
 
 ### Details
 Similar to Apple [sample code] but rebuilt in Swift for iOS 9 and OS X 10.11.
