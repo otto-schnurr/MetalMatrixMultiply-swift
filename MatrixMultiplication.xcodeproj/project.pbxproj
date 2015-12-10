@@ -23,7 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		27455EBE1C190A2700D66961 /* MatrixMultiplication */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MatrixMultiplication; sourceTree = BUILT_PRODUCTS_DIR; };
+		27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "MatrixMultiplication-OSX"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27455EC11C190A2700D66961 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,7 +49,7 @@
 		27455EBF1C190A2700D66961 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				27455EBE1C190A2700D66961 /* MatrixMultiplication */,
+				27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,9 +65,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		27455EBD1C190A2700D66961 /* MatrixMultiplication */ = {
+		27455EBD1C190A2700D66961 /* MatrixMultiplication-OSX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 27455EC51C190A2700D66961 /* Build configuration list for PBXNativeTarget "MatrixMultiplication" */;
+			buildConfigurationList = 27455EC51C190A2700D66961 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-OSX" */;
 			buildPhases = (
 				27455EBA1C190A2700D66961 /* Sources */,
 				27455EBB1C190A2700D66961 /* Frameworks */,
@@ -77,9 +77,9 @@
 			);
 			dependencies = (
 			);
-			name = MatrixMultiplication;
+			name = "MatrixMultiplication-OSX";
 			productName = MatrixMultiplication;
-			productReference = 27455EBE1C190A2700D66961 /* MatrixMultiplication */;
+			productReference = 27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -109,7 +109,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				27455EBD1C190A2700D66961 /* MatrixMultiplication */,
+				27455EBD1C190A2700D66961 /* MatrixMultiplication-OSX */,
 			);
 		};
 /* End PBXProject section */
@@ -232,7 +232,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		27455EC51C190A2700D66961 /* Build configuration list for PBXNativeTarget "MatrixMultiplication" */ = {
+		27455EC51C190A2700D66961 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-OSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				27455EC61C190A2700D66961 /* Debug */,
