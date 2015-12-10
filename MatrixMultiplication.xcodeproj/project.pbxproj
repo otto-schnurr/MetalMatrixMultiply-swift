@@ -29,10 +29,10 @@
 		27455EC11C190A2700D66961 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2777FC741C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_OSX.swift; sourceTree = "<group>"; };
-		2777FC781C190D35004F8AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2777FC781C190D35004F8AE3 /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		2777FC801C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_iOS.swift; sourceTree = "<group>"; };
-		2777FC841C190D71004F8AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2777FC841C190D71004F8AE3 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				27455EC01C190A2700D66961 /* Source */,
-				2777FC751C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX */,
-				2777FC811C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS */,
+				2777FC881C191BE9004F8AE3 /* Test */,
 				27455EBF1C190A2700D66961 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,22 +87,15 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
-		2777FC751C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX */ = {
+		2777FC881C191BE9004F8AE3 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */,
-				2777FC781C190D35004F8AE3 /* Info.plist */,
-			);
-			path = "MatrixMultiplication-LogicTests-OSX";
-			sourceTree = "<group>";
-		};
-		2777FC811C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS */ = {
-			isa = PBXGroup;
-			children = (
+				2777FC841C190D71004F8AE3 /* Info-iOS.plist */,
+				2777FC781C190D35004F8AE3 /* Info-OSX.plist */,
 				2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */,
-				2777FC841C190D71004F8AE3 /* Info.plist */,
+				2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */,
 			);
-			path = "MatrixMultiplication-LogicTests-iOS";
+			path = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,7 +335,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-OSX/Info.plist";
+				INFOPLIST_FILE = "Test/Info-OSX.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -354,7 +346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-OSX/Info.plist";
+				INFOPLIST_FILE = "Test/Info-OSX.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-OSX";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -365,7 +357,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-iOS/Info.plist";
+				INFOPLIST_FILE = "Test/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-iOS";
@@ -378,7 +370,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-iOS/Info.plist";
+				INFOPLIST_FILE = "Test/Info-iOS.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-iOS";
