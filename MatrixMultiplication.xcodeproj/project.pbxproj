@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		27455EC21C190A2700D66961 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27455EC11C190A2700D66961 /* main.swift */; };
+		2777FC771C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */; };
+		2777FC831C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +27,30 @@
 /* Begin PBXFileReference section */
 		27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "MatrixMultiplication-OSX"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27455EC11C190A2700D66961 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		2777FC741C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_OSX.swift; sourceTree = "<group>"; };
+		2777FC781C190D35004F8AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2777FC801C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_iOS.swift; sourceTree = "<group>"; };
+		2777FC841C190D71004F8AE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		27455EBB1C190A2700D66961 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2777FC711C190D35004F8AE3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2777FC7D1C190D71004F8AE3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				27455EC01C190A2700D66961 /* Source */,
+				2777FC751C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX */,
+				2777FC811C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS */,
 				27455EBF1C190A2700D66961 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */,
+				2777FC741C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX.xctest */,
+				2777FC801C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +86,24 @@
 				27455EC11C190A2700D66961 /* main.swift */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		2777FC751C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */,
+				2777FC781C190D35004F8AE3 /* Info.plist */,
+			);
+			path = "MatrixMultiplication-LogicTests-OSX";
+			sourceTree = "<group>";
+		};
+		2777FC811C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */,
+				2777FC841C190D71004F8AE3 /* Info.plist */,
+			);
+			path = "MatrixMultiplication-LogicTests-iOS";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +126,40 @@
 			productReference = 27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */;
 			productType = "com.apple.product-type.tool";
 		};
+		2777FC731C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2777FC7B1C190D35004F8AE3 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-LogicTests-OSX" */;
+			buildPhases = (
+				2777FC701C190D35004F8AE3 /* Sources */,
+				2777FC711C190D35004F8AE3 /* Frameworks */,
+				2777FC721C190D35004F8AE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MatrixMultiplication-LogicTests-OSX";
+			productName = "MatrixMultiplication-LogicTests-OSX";
+			productReference = 2777FC741C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2777FC7F1C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2777FC851C190D71004F8AE3 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-LogicTests-iOS" */;
+			buildPhases = (
+				2777FC7C1C190D71004F8AE3 /* Sources */,
+				2777FC7D1C190D71004F8AE3 /* Frameworks */,
+				2777FC7E1C190D71004F8AE3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MatrixMultiplication-LogicTests-iOS";
+			productName = "MatrixMultiplication-LogicTests-iOS";
+			productReference = 2777FC801C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,6 +171,12 @@
 				ORGANIZATIONNAME = "Otto Schnurr";
 				TargetAttributes = {
 					27455EBD1C190A2700D66961 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					2777FC731C190D35004F8AE3 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					2777FC7F1C190D71004F8AE3 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
@@ -110,9 +194,28 @@
 			projectRoot = "";
 			targets = (
 				27455EBD1C190A2700D66961 /* MatrixMultiplication-OSX */,
+				2777FC731C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX */,
+				2777FC7F1C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2777FC721C190D35004F8AE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2777FC7E1C190D71004F8AE3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		27455EBA1C190A2700D66961 /* Sources */ = {
@@ -120,6 +223,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2777FC701C190D35004F8AE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2777FC771C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2777FC7C1C190D71004F8AE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2777FC831C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +339,55 @@
 			};
 			name = Release;
 		};
+		2777FC791C190D35004F8AE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-OSX/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2777FC7A1C190D35004F8AE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-OSX/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-OSX";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2777FC861C190D71004F8AE3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2777FC871C190D71004F8AE3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "MatrixMultiplication-LogicTests-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ottoschnurr.MatrixMultiplication-LogicTests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -240,6 +408,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		2777FC7B1C190D35004F8AE3 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-LogicTests-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2777FC791C190D35004F8AE3 /* Debug */,
+				2777FC7A1C190D35004F8AE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		2777FC851C190D71004F8AE3 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-LogicTests-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2777FC861C190D71004F8AE3 /* Debug */,
+				2777FC871C190D71004F8AE3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
