@@ -1,9 +1,12 @@
 //
 //  MatrixMultiplication_LogicTests_iOS.swift
-//  MatrixMultiplication-LogicTests-iOS
 //
-//  Created by Otto Schnurr on 12/9/15.
+//  Created by Otto Schnurr on 12/9/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
+//
+//  MIT License
+//     file: ../LICENSE.txt
+//     http://opensource.org/licenses/MIT
 //
 
 import XCTest
