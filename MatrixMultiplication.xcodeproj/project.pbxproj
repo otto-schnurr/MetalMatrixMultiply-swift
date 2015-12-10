@@ -41,7 +41,7 @@
 		27455EB51C190A2700D66961 = {
 			isa = PBXGroup;
 			children = (
-				27455EC01C190A2700D66961 /* MatrixMultiplication */,
+				27455EC01C190A2700D66961 /* Source */,
 				27455EBF1C190A2700D66961 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,12 +54,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		27455EC01C190A2700D66961 /* MatrixMultiplication */ = {
+		27455EC01C190A2700D66961 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				27455EC11C190A2700D66961 /* main.swift */,
 			);
-			path = MatrixMultiplication;
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +239,7 @@
 				27455EC71C190A2700D66961 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
