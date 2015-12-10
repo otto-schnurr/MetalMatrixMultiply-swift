@@ -33,6 +33,8 @@
 		2777FC801C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_iOS.swift; sourceTree = "<group>"; };
 		2777FC841C190D71004F8AE3 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
+		2777FC891C1931B7004F8AE3 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		2777FC8A1C1931B7004F8AE3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,8 @@
 		27455EB51C190A2700D66961 = {
 			isa = PBXGroup;
 			children = (
+				2777FC891C1931B7004F8AE3 /* LICENSE.txt */,
+				2777FC8A1C1931B7004F8AE3 /* README.md */,
 				27455EC01C190A2700D66961 /* Source */,
 				2777FC881C191BE9004F8AE3 /* Test */,
 				27455EBF1C190A2700D66961 /* Products */,
