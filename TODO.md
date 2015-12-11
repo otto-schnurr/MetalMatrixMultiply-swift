@@ -1,0 +1,35 @@
+TODO
+====
+
+### Implement `CPUMatrix`
+- `PaddedMatrix` protocol.
+- logic test: `CPUMatrix` construction.
+- logic test: `CPUMatrix` alignment.
+
+### Implement `CPUMatrixMultiply`
+- `MatrixMultiply` protocol.
+- logic test: `CPUMatrixMultiply` construction.
+- logic test: `CPUMatrixMultiply` multiplication.
+    - Integrate `cblas_sgemm()`
+
+### Implement `MetalMatrix`
+- logic test: `MetalMatrix` construction.
+- logic test: `MetalMatrix` alignment.
+
+### Implement `MetalMatrixMultiply`
+- Implement metal shader.
+- logic test: `MetalMatrixMultiply` construction.
+    - Integrate metal shader.
+- logic test: `MetalMatrixMultiply` multiplication.
+    - Execute metal shader.
+
+### Implement `MatrixMultiplyExperiment`
+- logic test: `MatrixExperiment` construction.
+- logic test: `MatrixExperiment` operation.
+- Integrate randomization.
+- Integrate timing.
+- Integrate logging.
+
+### Implement Targets
+- Implement OSX command-line target.
+- Implement iOS app target.
