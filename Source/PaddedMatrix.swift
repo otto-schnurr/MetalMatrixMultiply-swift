@@ -37,7 +37,20 @@ protocol PaddedMatrix {
     
 }
 
-extension PaddedMatrix {
+/// A row-major matrix of mutable 32-bit floating point numbers.
+protocol MutablePaddedMatrix: PaddedMatrix {
+    
+    var mutableBaseAddress: UnsafeMutablePointer<Float32> { get }
+    
+    //   func resizeTo(rowCount: Int, columnCount: Int) -> Bool
+    
+}
+
+extension MutablePaddedMatrix {
+    
+    var baseAddress: UnsafePointer<Float32> {
+        return UnsafePointer<Float32>(mutableBaseAddress)
+    }
     
     /// - returns: `nil` if the count or alignment are invalid.
     static func padCount(count: Int, toAlignment alignment: Int) -> Int? {

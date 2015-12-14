@@ -11,14 +11,14 @@
 
 import Foundation.NSData
 
-struct CPUMatrix: PaddedMatrix {
+struct CPUMatrix: MutablePaddedMatrix {
 
     let rowCount: Int
     let columnCount: Int
     let bytesPerRow: Int
     
-    var baseAddress: UnsafePointer<Float32> {
-        return UnsafePointer<Float32>(data.bytes)
+    var mutableBaseAddress: UnsafeMutablePointer<Float32> {
+        return UnsafeMutablePointer<Float32>(data.bytes)
     }
     
     var byteCount: Int {
@@ -52,6 +52,6 @@ struct CPUMatrix: PaddedMatrix {
     }
     
     // MARK: Private
-    private let data: NSData
+    private let data: NSMutableData
     
 }

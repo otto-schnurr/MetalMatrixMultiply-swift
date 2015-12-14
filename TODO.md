@@ -1,11 +1,6 @@
 TODO
 ====
 
-### Implement `CPUMatrix`
-- `PaddedMatrix` protocol.
-- logic test: `CPUMatrix` construction.
-- logic test: `CPUMatrix` alignment.
-
 ### Implement `CPUMatrixMultiply`
 - `MatrixMultiply` protocol.
 - logic test: `CPUMatrixMultiply` construction.

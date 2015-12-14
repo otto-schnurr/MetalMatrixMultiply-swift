@@ -13,15 +13,18 @@ import XCTest
 
 class CPUMatrix_tests: XCTestCase {
 
-    var matrix: CPUMatrix!
+    var matrix: CPUMatrix! {
+        return mutableMatrix
+    }
+    var mutableMatrix: CPUMatrix!
     
     override func setUp() {
         super.setUp()
-        matrix = CPUMatrix(rowCount: 4, columnCount: 4, columnCountAlignment: 8)
+        mutableMatrix = CPUMatrix(rowCount: 4, columnCount: 4, columnCountAlignment: 8)
     }
     
     override func tearDown() {
-        matrix = nil
+        mutableMatrix = nil
         super.tearDown()
     }
     
@@ -32,6 +35,7 @@ class CPUMatrix_tests: XCTestCase {
     
     func test_validMatrix_isNotNil() {
         XCTAssertNotNil(matrix)
+        XCTAssertNotNil(mutableMatrix)
     }
 
     func test_matrices_havePointers() {
