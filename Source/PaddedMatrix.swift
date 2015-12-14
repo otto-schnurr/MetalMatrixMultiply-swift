@@ -14,4 +14,21 @@ protocol PaddedMatrix {
     /// The number of elements in every row of the matrix.
     var columnCount: Int { get }
     
+    /// A constant stride that separates every element within a column
+    /// of the matrix.
+    ///
+    /// - Invariant:
+    /// ```
+    /// m.columnCount * sizeof(Float32) <= m.bytesPerRow
+    /// ```
+    var bytesPerRow: Int { get }
+    
+    var baseAddress: UnsafePointer<Float32> { get }
+    
+    /// - Invariant:
+    /// ```
+    /// m.byteCount == m.rowCount * m.bytesPerRow
+    /// ```
+    var byteCount: Int { get }
+    
 }
