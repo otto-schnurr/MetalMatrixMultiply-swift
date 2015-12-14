@@ -30,7 +30,7 @@ class CPUMatrix_tests: XCTestCase {
         XCTAssertNil(matrix)
     }
     
-    func DISABLED_test_validMatrix_isNotNil() {
+    func test_validMatrix_isNotNil() {
         XCTAssertNotNil(matrix)
     }
 

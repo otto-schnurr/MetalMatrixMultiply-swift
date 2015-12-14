@@ -26,10 +26,17 @@ class CPUMatrix: PaddedMatrix {
     ///
     /// - parameter columnCountAlignment:
     ///   A span of floating point elements that rows of the matrix should
-    ///   align with. When necessary, padding is added to each row to achive
-    //    this alignment. See `bytesPerRow`.
+    ///   align with. When necessary, padding is added to each row to achieve
+    ///   this alignment. See `bytesPerRow`.
     init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
+        guard
+            rowCount > 0,
+            let _ = CPUMatrix.padCount(
+                columnCount, toAlignment: columnCountAlignment
+            )
+        else { return nil }
+
         // !!!: implement me
-        return nil
     }
+    
 }
