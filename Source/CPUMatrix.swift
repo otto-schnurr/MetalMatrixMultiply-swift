@@ -9,18 +9,21 @@
 //     http://opensource.org/licenses/MIT
 //
 
-class CPUMatrix: PaddedMatrix {
+import Foundation.NSData
 
-    let rowCount = 0
-    let columnCount = 0
-    let bytesPerRow = 0
+struct CPUMatrix: PaddedMatrix {
+
+    let rowCount: Int
+    let columnCount: Int
+    let bytesPerRow: Int
     
     var baseAddress: UnsafePointer<Float32> {
-        // !!!: implement me
-        return nil
+        return UnsafePointer<Float32>(data.bytes)
     }
-
-    let byteCount = 0
+    
+    var byteCount: Int {
+        return data.length
+    }
 
     /// Create a matrix buffer with the specified rows and columns of data.
     ///
@@ -31,12 +34,24 @@ class CPUMatrix: PaddedMatrix {
     init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
         guard
             rowCount > 0,
-            let _ = CPUMatrix.padCount(
+            let columnsPerRow = CPUMatrix.padCount(
                 columnCount, toAlignment: columnCountAlignment
             )
         else { return nil }
 
-        // !!!: implement me
+        assert(columnCount > 0)
+        self.rowCount = rowCount
+        self.columnCount = columnCount
+        bytesPerRow = columnsPerRow * sizeof(Float32)
+        
+        guard
+            let data = NSMutableData(length: rowCount * bytesPerRow)
+        else { return nil }
+        
+        self.data = data
     }
+    
+    // MARK: Private
+    private let data: NSData
     
 }

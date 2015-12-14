@@ -34,4 +34,34 @@ class CPUMatrix_tests: XCTestCase {
         XCTAssertNotNil(matrix)
     }
 
+    func test_matrices_havePointers() {
+        XCTAssertFalse(matrix.baseAddress == nil)
+    }
+
+    func test_matrixRows_haveExpectedAlignment() {
+        let alignment = 8
+
+        for columnCount in 1...8 {
+            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment)!
+            XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.byteCount, alignment * sizeof(Float32))
+        }
+      
+        for columnCount in 9...16 {
+            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment)!
+            XCTAssertEqual(matrix.bytesPerRow, 2 * alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(Float32))
+        }
+    }
+
+    func test_matrices_haveExpectedAlignment() {
+        let alignment = 8
+
+        for rowCount in 1...5 {
+            let matrix = CPUMatrix(rowCount: rowCount, columnCount: 1, columnCountAlignment: alignment)!
+            XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(Float32))
+        }
+    }
+
 }
