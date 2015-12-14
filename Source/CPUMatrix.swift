@@ -22,4 +22,14 @@ class CPUMatrix: PaddedMatrix {
 
     let byteCount = 0
 
+    /// Create a matrix buffer with the specified rows and columns of data.
+    ///
+    /// - parameter columnCountAlignment:
+    ///   A span of floating point elements that rows of the matrix should
+    ///   align with. When necessary, padding is added to each row to achive
+    //    this alignment. See `bytesPerRow`.
+    init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
+        // !!!: implement me
+        return nil
+    }
 }

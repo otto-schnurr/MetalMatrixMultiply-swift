@@ -4,6 +4,10 @@
 //  Created by Otto Schnurr on 12/14/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
 //
+//  MIT License
+//     file: ../LICENSE.txt
+//     http://opensource.org/licenses/MIT
+//
 
 /// A row-major matrix of read-only 32-bit floating point numbers.
 protocol PaddedMatrix {
@@ -30,5 +34,19 @@ protocol PaddedMatrix {
     /// m.byteCount == m.rowCount * m.bytesPerRow
     /// ```
     var byteCount: Int { get }
+    
+}
+
+extension PaddedMatrix {
+    
+    /// - returns: `nil` if the count or alignment are invalid.
+    static func padCount(count: Int, toAlignment alignment: Int) -> Int? {
+        guard count > 0 && alignment > 0 else { return nil }
+        
+        let remainder = count % alignment
+        guard remainder > 0 else { return count }
+        
+        return count + alignment - remainder
+    }
     
 }
