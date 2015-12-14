@@ -10,6 +10,9 @@
 		273FB47D1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */; };
 		273FB47E1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */; };
 		273FB47F1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */; };
+		273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4801C1F0D29009B709C /* CPUMatrix.swift */; };
+		273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4801C1F0D29009B709C /* CPUMatrix.swift */; };
+		273FB4831C1F0D29009B709C /* CPUMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4801C1F0D29009B709C /* CPUMatrix.swift */; };
 		27455EC21C190A2700D66961 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27455EC11C190A2700D66961 /* main.swift */; };
 		2777FC771C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */; };
 		2777FC831C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */; };
@@ -29,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedMatrix.swift; sourceTree = "<group>"; };
+		273FB4801C1F0D29009B709C /* CPUMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUMatrix.swift; sourceTree = "<group>"; };
 		27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "MatrixMultiplication-OSX"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27455EC11C190A2700D66961 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2777FC741C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +96,7 @@
 		27455EC01C190A2700D66961 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
 				27455EC11C190A2700D66961 /* main.swift */,
 				273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */,
 			);
@@ -227,6 +232,7 @@
 			files = (
 				273FB47D1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
+				273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +242,7 @@
 			files = (
 				273FB47E1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				2777FC771C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift in Sources */,
+				273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +252,7 @@
 			files = (
 				273FB47F1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				2777FC831C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift in Sources */,
+				273FB4831C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
