@@ -42,7 +42,7 @@ protocol MutablePaddedMatrix: PaddedMatrix {
     
     var mutableBaseAddress: UnsafeMutablePointer<Float32> { get }
     
-    //   func resizeTo(rowCount: Int, columnCount: Int) -> Bool
+    func resizeToRowCount(rowCount: Int, columnCount: Int) -> Bool
     
 }
 

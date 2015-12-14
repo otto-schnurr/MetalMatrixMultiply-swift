@@ -68,4 +68,8 @@ class CPUMatrix_tests: XCTestCase {
         }
     }
 
+    func test_resizingToInvalidParameters_fails() {
+        XCTAssertFalse(mutableMatrix.resizeToRowCount(0, columnCount: 0))
+    }
+
 }

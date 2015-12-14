@@ -11,7 +11,7 @@
 
 import Foundation.NSData
 
-struct CPUMatrix: MutablePaddedMatrix {
+class CPUMatrix: MutablePaddedMatrix {
 
     let rowCount: Int
     let columnCount: Int
@@ -37,7 +37,13 @@ struct CPUMatrix: MutablePaddedMatrix {
             let columnsPerRow = CPUMatrix.padCount(
                 columnCount, toAlignment: columnCountAlignment
             )
-        else { return nil }
+        else {
+            self.rowCount = 0
+            self.columnCount = 0
+            bytesPerRow = 0
+            data = NSMutableData()
+            return nil
+        }
 
         assert(columnCount > 0)
         self.rowCount = rowCount
@@ -46,9 +52,17 @@ struct CPUMatrix: MutablePaddedMatrix {
         
         guard
             let data = NSMutableData(length: rowCount * bytesPerRow)
-        else { return nil }
+        else {
+            self.data = NSMutableData()
+            return nil
+        }
         
         self.data = data
+    }
+    
+    func resizeToRowCount(rowCount: Int, columnCount: Int) -> Bool {
+        // !!!: implement me
+        return false
     }
     
     // MARK: Private
