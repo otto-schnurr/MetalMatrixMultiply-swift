@@ -33,30 +33,28 @@ class CPUMatrix: MutablePaddedMatrix {
     ///   this alignment. See `bytesPerRow`.
     init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
         guard
-            rowCount > 0,
-            let columnsPerRow = CPUMatrix.padCount(
-                columnCount, toAlignment: columnCountAlignment
-            )
+            let bytesPerRow = _bytesPerRowForRowCount(
+                rowCount,
+                columnCount: columnCount,
+                columnCountAlignment: columnCountAlignment
+            ),
+            data = NSMutableData(length: rowCount * bytesPerRow)
         else {
             self.rowCount = 0
             self.columnCount = 0
-            bytesPerRow = 0
-            data = NSMutableData()
-            return nil
-        }
-
-        assert(columnCount > 0)
-        self.rowCount = rowCount
-        self.columnCount = columnCount
-        bytesPerRow = columnsPerRow * sizeof(Float32)
-        
-        guard
-            let data = NSMutableData(length: rowCount * bytesPerRow)
-        else {
+            self.bytesPerRow = 0
             self.data = NSMutableData()
             return nil
         }
+
+        assert(rowCount > 0)
+        assert(columnCount > 0)
+        assert(bytesPerRow > 0)
+        assert(data.length > 0)
         
+        self.rowCount = rowCount
+        self.columnCount = columnCount
+        self.bytesPerRow = bytesPerRow
         self.data = data
     }
     
@@ -68,4 +66,24 @@ class CPUMatrix: MutablePaddedMatrix {
     // MARK: Private
     private let data: NSMutableData
     
+}
+
+
+// MARK: - Private
+private typealias
+    _Dimensions = (rowCount: Int, columnCount: Int, bytesPerRow: Int)
+
+private func _bytesPerRowForRowCount(
+    rowCount: Int,
+    columnCount: Int,
+    columnCountAlignment: Int
+) -> Int? {
+    guard
+        rowCount > 0,
+        let columnsPerRow = CPUMatrix.padCount(
+            columnCount, toAlignment: columnCountAlignment
+        )
+    else { return nil }
+
+    return columnsPerRow * sizeof(Float32)
 }
