@@ -13,16 +13,18 @@ import Foundation.NSData
 
 class CPUMatrix: MutablePaddedMatrix {
 
-    let rowCount: Int
-    let columnCount: Int
-    let bytesPerRow: Int
+    private(set) var rowCount: Int
+    private(set) var columnCount: Int
+    private(set) var bytesPerRow: Int
     
     var mutableBaseAddress: UnsafeMutablePointer<Float32> {
         return UnsafeMutablePointer<Float32>(data.bytes)
     }
     
     var byteCount: Int {
-        return data.length
+        let result = rowCount * bytesPerRow
+        assert(data.length >= result)
+        return result
     }
 
     /// Create a matrix buffer with the specified rows and columns of data.
@@ -42,6 +44,7 @@ class CPUMatrix: MutablePaddedMatrix {
         else {
             self.rowCount = 0
             self.columnCount = 0
+            self.columnCountAlignment = 0
             self.bytesPerRow = 0
             self.data = NSMutableData()
             return nil
@@ -50,20 +53,52 @@ class CPUMatrix: MutablePaddedMatrix {
         assert(rowCount > 0)
         assert(columnCount > 0)
         assert(bytesPerRow > 0)
+        assert(columnCountAlignment > 0)
         assert(data.length > 0)
         
         self.rowCount = rowCount
         self.columnCount = columnCount
+        self.columnCountAlignment = columnCountAlignment
         self.bytesPerRow = bytesPerRow
         self.data = data
     }
     
-    func resizeToRowCount(rowCount: Int, columnCount: Int) -> Bool {
-        // !!!: implement me
-        return false
+    func resizeToRowCount(
+        newRowCount: Int, columnCount newColumnCount: Int
+    ) -> Bool {
+        assert(columnCountAlignment > 0)
+        guard
+            newRowCount != rowCount || newColumnCount != columnCount
+        else { return true }
+    
+        guard
+            let newBytesPerRow = _bytesPerRowForRowCount(
+                newRowCount,
+                columnCount: newColumnCount,
+                columnCountAlignment: columnCountAlignment
+            )
+        else { return false }
+
+        assert(newRowCount > 0)
+        assert(newColumnCount > 0)
+        assert(newBytesPerRow > 0)
+        let newByteCount = newRowCount * newBytesPerRow
+        
+        if data.length < newByteCount {
+            data.increaseLengthBy(newByteCount - data.length)
+        }
+
+        guard data.length >= newByteCount else { return false }
+
+        self.rowCount = newRowCount
+        self.columnCount = newColumnCount
+        self.bytesPerRow = newBytesPerRow
+
+        return true
     }
     
     // MARK: Private
+    private let columnCountAlignment: Int
     private let data: NSMutableData
     
 }
