@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273FB47D1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */; };
+		273FB47E1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */; };
+		273FB47F1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */; };
+		273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4801C1F0D29009B709C /* CPUMatrix.swift */; };
+		273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4801C1F0D29009B709C /* CPUMatrix.swift */; };
+		273FB4831C1F0D29009B709C /* CPUMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4801C1F0D29009B709C /* CPUMatrix.swift */; };
+		273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */; };
+		273FB4861C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */; };
 		27455EC21C190A2700D66961 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27455EC11C190A2700D66961 /* main.swift */; };
-		2777FC771C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */; };
-		2777FC831C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,16 +31,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaddedMatrix.swift; sourceTree = "<group>"; };
+		273FB4801C1F0D29009B709C /* CPUMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUMatrix.swift; sourceTree = "<group>"; };
+		273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUMatrix_tests.swift; sourceTree = "<group>"; };
 		27455EBE1C190A2700D66961 /* MatrixMultiplication-OSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "MatrixMultiplication-OSX"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27455EC11C190A2700D66961 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		2777FC741C190D35004F8AE3 /* MatrixMultiplication-LogicTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_OSX.swift; sourceTree = "<group>"; };
 		2777FC781C190D35004F8AE3 /* Info-OSX.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-OSX.plist"; sourceTree = "<group>"; };
 		2777FC801C190D71004F8AE3 /* MatrixMultiplication-LogicTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MatrixMultiplication-LogicTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixMultiplication_LogicTests_iOS.swift; sourceTree = "<group>"; };
 		2777FC841C190D71004F8AE3 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		2777FC891C1931B7004F8AE3 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2777FC8A1C1931B7004F8AE3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		277C34571C1B4C5E00AC23DC /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,7 @@
 			children = (
 				2777FC891C1931B7004F8AE3 /* LICENSE.txt */,
 				2777FC8A1C1931B7004F8AE3 /* README.md */,
+				277C34571C1B4C5E00AC23DC /* TODO.md */,
 				27455EC01C190A2700D66961 /* Source */,
 				2777FC881C191BE9004F8AE3 /* Test */,
 				27455EBF1C190A2700D66961 /* Products */,
@@ -86,7 +95,9 @@
 		27455EC01C190A2700D66961 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
 				27455EC11C190A2700D66961 /* main.swift */,
+				273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -94,10 +105,9 @@
 		2777FC881C191BE9004F8AE3 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */,
 				2777FC841C190D71004F8AE3 /* Info-iOS.plist */,
 				2777FC781C190D35004F8AE3 /* Info-OSX.plist */,
-				2777FC821C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift */,
-				2777FC761C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -218,7 +228,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273FB47D1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
+				273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +238,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2777FC771C190D35004F8AE3 /* MatrixMultiplication_LogicTests_OSX.swift in Sources */,
+				273FB47E1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
+				273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */,
+				273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +248,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2777FC831C190D71004F8AE3 /* MatrixMultiplication_LogicTests_iOS.swift in Sources */,
+				273FB47F1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
+				273FB4831C1F0D29009B709C /* CPUMatrix.swift in Sources */,
+				273FB4861C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +457,7 @@
 				2777FC7A1C190D35004F8AE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2777FC851C190D71004F8AE3 /* Build configuration list for PBXNativeTarget "MatrixMultiplication-LogicTests-iOS" */ = {
 			isa = XCConfigurationList;
@@ -449,6 +466,7 @@
 				2777FC871C190D71004F8AE3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
