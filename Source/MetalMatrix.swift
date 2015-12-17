@@ -40,8 +40,13 @@ class MetalMatrix: MutablePaddedMatrix {
         columnCountAlignment: Int,
         device: MTLDevice
     ) {
-        // !!!: implement me
-        return nil
+        guard
+            let _ = _bytesPerRowForRowCount(
+                rowCount,
+                columnCount: columnCount,
+                columnCountAlignment: columnCountAlignment
+            )
+        else { return nil }
     }
 
     func resizeToRowCount(
@@ -51,4 +56,21 @@ class MetalMatrix: MutablePaddedMatrix {
         return false
     }
     
+}
+
+
+// MARK: - Private
+private func _bytesPerRowForRowCount(
+    rowCount: Int,
+    columnCount: Int,
+    columnCountAlignment: Int
+) -> Int? {
+    guard
+        rowCount > 0,
+        let columnsPerRow = CPUMatrix.padCount(
+            columnCount, toAlignment: columnCountAlignment
+        )
+        else { return nil }
+    
+    return columnsPerRow * sizeof(Float32)
 }

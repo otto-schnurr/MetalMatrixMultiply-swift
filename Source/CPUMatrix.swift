@@ -105,9 +105,6 @@ class CPUMatrix: MutablePaddedMatrix {
 
 
 // MARK: - Private
-private typealias
-    _Dimensions = (rowCount: Int, columnCount: Int, bytesPerRow: Int)
-
 private func _bytesPerRowForRowCount(
     rowCount: Int,
     columnCount: Int,

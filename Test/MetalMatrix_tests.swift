@@ -15,10 +15,19 @@ import XCTest
 class MetalMatrix_tests: XCTestCase {
 
     var device: MTLDevice!
+    var matrix: MetalMatrix!
 
     override func setUp() {
         super.setUp()
         device = MTLCreateSystemDefaultDevice()
+        guard device != nil else {
+            XCTFail("Failed to acquire Metal device.")
+            return
+        }
+        
+        matrix = MetalMatrix(
+            rowCount: 4, columnCount: 4, columnCountAlignment: 8, device: device
+        )
     }
 
     override func tearDown() {
@@ -32,10 +41,13 @@ class MetalMatrix_tests: XCTestCase {
 
     func test_invalidMatrix_isNil() {
         let matrix = MetalMatrix(
-            rowCount: 0, columnCount: 0, columnCountAlignment: 0,
-            device: device
+            rowCount: 0, columnCount: 0, columnCountAlignment: 0, device: device
         )
         XCTAssertNil(matrix)
     }
     
+    func test_validMatrix_isNotNil() {
+        XCTAssertNotNil(matrix)
+    }
+
 }
