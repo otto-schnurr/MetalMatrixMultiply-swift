@@ -16,6 +16,10 @@
 		273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */; };
 		273FB4861C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */; };
 		27455EC21C190A2700D66961 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27455EC11C190A2700D66961 /* main.swift */; };
+		27A15EFD1C23338D00C0F47A /* MetalMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */; };
+		27A15EFE1C23338D00C0F47A /* MetalMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */; };
+		27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */; };
+		27A15F011C23346100C0F47A /* MetalMatrix_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +47,8 @@
 		2777FC891C1931B7004F8AE3 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2777FC8A1C1931B7004F8AE3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		277C34571C1B4C5E00AC23DC /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix.swift; sourceTree = "<group>"; };
+		27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix_tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +104,7 @@
 				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
 				27455EC11C190A2700D66961 /* main.swift */,
 				273FB47C1C1F0AD6009B709C /* PaddedMatrix.swift */,
+				27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -108,6 +115,7 @@
 				273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */,
 				2777FC841C190D71004F8AE3 /* Info-iOS.plist */,
 				2777FC781C190D35004F8AE3 /* Info-OSX.plist */,
+				27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A15EFD1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				273FB47D1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
 				273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */,
@@ -238,6 +247,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A15F011C23346100C0F47A /* MetalMatrix_tests.swift in Sources */,
+				27A15EFE1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				273FB47E1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 				273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
@@ -248,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				273FB47F1C1F0AD6009B709C /* PaddedMatrix.swift in Sources */,
 				273FB4831C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 				273FB4861C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
