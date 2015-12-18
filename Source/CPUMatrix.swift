@@ -11,7 +11,7 @@
 
 import Foundation.NSData
 
-class CPUMatrix: MutablePaddedMatrix {
+class CPUMatrix: MutableMatrix {
 
     private(set) var rowCount: Int
     private(set) var columnCount: Int

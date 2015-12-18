@@ -10,7 +10,7 @@
 //
 
 /// A row-major matrix of read-only 32-bit floating point numbers.
-protocol PaddedMatrix {
+protocol Matrix {
 
     /// The number of rows in the matrix.
     var rowCount: Int { get }
@@ -38,7 +38,7 @@ protocol PaddedMatrix {
 }
 
 /// A row-major matrix of mutable 32-bit floating point numbers.
-protocol MutablePaddedMatrix: PaddedMatrix {
+protocol MutableMatrix: Matrix {
     
     var mutableBaseAddress: UnsafeMutablePointer<Float32> { get }
     
@@ -46,7 +46,7 @@ protocol MutablePaddedMatrix: PaddedMatrix {
     
 }
 
-extension MutablePaddedMatrix {
+extension MutableMatrix {
     
     var baseAddress: UnsafePointer<Float32> {
         return UnsafePointer<Float32>(mutableBaseAddress)

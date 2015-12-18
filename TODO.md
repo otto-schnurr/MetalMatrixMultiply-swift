@@ -2,7 +2,6 @@ TODO
 ====
 
 ### Factor `BufferedMatrix`
-- Rename `[Mutable]PaddedMatrix` to `[Mutable]Matrix`.
 - Define new `Buffer` protocol in a new BufferedMatrix.swift.
 - Create new `BufferedMatrix<B>`.
 - logic test: `CPUBuffer` from CPUMatrix.swift.

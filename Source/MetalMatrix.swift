@@ -11,7 +11,7 @@
 
 import Metal.MTLDevice
 
-class MetalMatrix: MutablePaddedMatrix {
+class MetalMatrix: MutableMatrix {
 
     private(set) var rowCount: Int
     private(set) var columnCount: Int
