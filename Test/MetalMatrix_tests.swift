@@ -15,7 +15,10 @@ import XCTest
 class MetalMatrix_tests: XCTestCase {
 
     var device: MTLDevice!
-    var matrix: MetalMatrix!
+    var matrix: PaddedMatrix! {
+        return mutableMatrix
+    }
+    var mutableMatrix: MetalMatrix!
 
     override func setUp() {
         super.setUp()
@@ -25,12 +28,13 @@ class MetalMatrix_tests: XCTestCase {
             return
         }
         
-        matrix = MetalMatrix(
+        mutableMatrix = MetalMatrix(
             rowCount: 4, columnCount: 4, columnCountAlignment: 8, device: device
         )
     }
 
     override func tearDown() {
+        mutableMatrix = nil
         device = nil
         super.tearDown()
     }
@@ -48,10 +52,12 @@ class MetalMatrix_tests: XCTestCase {
     
     func test_validMatrix_isNotNil() {
         XCTAssertNotNil(matrix)
+        XCTAssertNotNil(mutableMatrix)
     }
 
     func test_matrices_havePointers() {
         XCTAssertFalse(matrix.baseAddress == nil)
+        XCTAssertFalse(mutableMatrix.mutableBaseAddress == nil)
     }
     
 }

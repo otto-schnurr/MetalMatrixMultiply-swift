@@ -13,7 +13,7 @@ import XCTest
 
 class CPUMatrix_tests: XCTestCase {
 
-    var matrix: CPUMatrix! {
+    var matrix: PaddedMatrix! {
         return mutableMatrix
     }
     var mutableMatrix: CPUMatrix!
