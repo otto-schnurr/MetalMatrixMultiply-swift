@@ -1,7 +1,7 @@
 //
-//  CPUMatrix_tests.swift
+//  MetalMatrix_tests.swift
 //
-//  Created by Otto Schnurr on 12/14/2015.
+//  Created by Otto Schnurr on 12/17/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
 //
 //  MIT License
@@ -9,27 +9,44 @@
 //     http://opensource.org/licenses/MIT
 //
 
+import Metal.MTLDevice
 import XCTest
 
-class CPUMatrix_tests: XCTestCase {
+class MetalMatrix_tests: XCTestCase {
 
+    var device: MTLDevice!
     var matrix: PaddedMatrix! {
         return mutableMatrix
     }
-    var mutableMatrix: CPUMatrix!
-    
+    var mutableMatrix: MetalMatrix!
+
     override func setUp() {
         super.setUp()
-        mutableMatrix = CPUMatrix(rowCount: 4, columnCount: 4, columnCountAlignment: 8)
+        device = MTLCreateSystemDefaultDevice()
+        guard device != nil else {
+            XCTFail("Failed to acquire Metal device.")
+            return
+        }
+        
+        mutableMatrix = MetalMatrix(
+            rowCount: 4, columnCount: 4, columnCountAlignment: 8, device: device
+        )
     }
-    
+
     override func tearDown() {
         mutableMatrix = nil
+        device = nil
         super.tearDown()
     }
-    
+
+    func test_metalDevice_isAvailable() {
+        XCTAssertFalse(device == nil)
+    }
+
     func test_invalidMatrix_isNil() {
-        let matrix = CPUMatrix(rowCount: 0, columnCount: 0, columnCountAlignment: 0)
+        let matrix = MetalMatrix(
+            rowCount: 0, columnCount: 0, columnCountAlignment: 0, device: device
+        )
         XCTAssertNil(matrix)
     }
     
@@ -40,19 +57,20 @@ class CPUMatrix_tests: XCTestCase {
 
     func test_matrices_havePointers() {
         XCTAssertFalse(matrix.baseAddress == nil)
+        XCTAssertFalse(mutableMatrix.mutableBaseAddress == nil)
     }
-
+    
     func test_matrixRows_haveExpectedAlignment() {
         let alignment = 8
 
         for columnCount in 1...8 {
-            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment)!
+            let matrix = MetalMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
             XCTAssertEqual(matrix.byteCount, alignment * sizeof(Float32))
         }
       
         for columnCount in 9...16 {
-            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment)!
+            let matrix = MetalMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.bytesPerRow, 2 * alignment * sizeof(Float32))
             XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(Float32))
         }
@@ -62,7 +80,7 @@ class CPUMatrix_tests: XCTestCase {
         let alignment = 8
 
         for rowCount in 1...5 {
-            let matrix = CPUMatrix(rowCount: rowCount, columnCount: 1, columnCountAlignment: alignment)!
+            let matrix = MetalMatrix(rowCount: rowCount, columnCount: 1, columnCountAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
             XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(Float32))
         }
@@ -101,5 +119,5 @@ class CPUMatrix_tests: XCTestCase {
             XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(Float32))
         }
     }
-    
+
 }

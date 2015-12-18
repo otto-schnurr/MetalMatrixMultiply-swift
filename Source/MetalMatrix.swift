@@ -1,7 +1,7 @@
 //
-//  CPUMatrix.swift
+//  MetalMatrix.swift
 //
-//  Created by Otto Schnurr on 12/14/2015.
+//  Created by Otto Schnurr on 12/17/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
 //
 //  MIT License
@@ -9,44 +9,50 @@
 //     http://opensource.org/licenses/MIT
 //
 
-import Foundation.NSData
+import Metal.MTLDevice
 
-class CPUMatrix: MutablePaddedMatrix {
+class MetalMatrix: MutablePaddedMatrix {
 
     private(set) var rowCount: Int
     private(set) var columnCount: Int
     private(set) var bytesPerRow: Int
     
     var mutableBaseAddress: UnsafeMutablePointer<Float32> {
-        return UnsafeMutablePointer<Float32>(data.bytes)
+        return UnsafeMutablePointer<Float32>(buffer.contents())
     }
     
     var byteCount: Int {
         let result = rowCount * bytesPerRow
-        assert(data.length >= result)
+        assert(buffer.length >= result)
         return result
     }
 
-    /// Create a matrix buffer with the specified rows and columns of data.
+    /// Create a matrix buffer with the specified rows and columns of data
+    /// for the specified devices.
     ///
     /// - parameter columnCountAlignment:
     ///   A span of floating point elements that rows of the matrix should
     ///   align with. When necessary, padding is added to each row to achieve
     ///   this alignment. See `bytesPerRow`.
-    init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
+    init?(
+        rowCount: Int,
+        columnCount: Int,
+        columnCountAlignment: Int,
+        device: MTLDevice
+    ) {
         guard
             let bytesPerRow = _bytesPerRowForRowCount(
                 rowCount,
                 columnCount: columnCount,
                 columnCountAlignment: columnCountAlignment
-            ),
-            data = NSMutableData(length: rowCount * bytesPerRow)
+            )
         else {
             self.rowCount = 0
             self.columnCount = 0
             self.columnCountAlignment = 0
             self.bytesPerRow = 0
-            self.data = NSMutableData()
+            self.device = nil
+            self.buffer = nil
             return nil
         }
 
@@ -54,15 +60,18 @@ class CPUMatrix: MutablePaddedMatrix {
         assert(columnCount > 0)
         assert(bytesPerRow > 0)
         assert(columnCountAlignment > 0)
-        assert(data.length > 0)
-        
+
         self.rowCount = rowCount
         self.columnCount = columnCount
         self.columnCountAlignment = columnCountAlignment
         self.bytesPerRow = bytesPerRow
-        self.data = data
+        self.device = device
+        self.buffer = device.newBufferWithLength(
+            rowCount * bytesPerRow,
+            options: .CPUCacheModeDefaultCache
+        )
     }
-    
+
     func resizeToRowCount(
         newRowCount: Int, columnCount newColumnCount: Int
     ) -> Bool {
@@ -70,7 +79,7 @@ class CPUMatrix: MutablePaddedMatrix {
         guard
             newRowCount != rowCount || newColumnCount != columnCount
         else { return true }
-    
+        
         guard
             let newBytesPerRow = _bytesPerRowForRowCount(
                 newRowCount,
@@ -78,28 +87,29 @@ class CPUMatrix: MutablePaddedMatrix {
                 columnCountAlignment: columnCountAlignment
             )
         else { return false }
-
+        
         assert(newRowCount > 0)
         assert(newColumnCount > 0)
         assert(newBytesPerRow > 0)
         let newByteCount = newRowCount * newBytesPerRow
         
-        if data.length < newByteCount {
-            data.increaseLengthBy(newByteCount - data.length)
-        }
-
-        guard data.length >= newByteCount else { return false }
-
+        self.buffer = device.newBufferWithLength(
+            newRowCount * newBytesPerRow,
+            options: .CPUCacheModeDefaultCache
+        )
+        assert(buffer.length >= newByteCount)
+        
         self.rowCount = newRowCount
         self.columnCount = newColumnCount
         self.bytesPerRow = newBytesPerRow
-
+        
         return true
     }
     
     // MARK: Private
     private let columnCountAlignment: Int
-    private let data: NSMutableData
+    private let device: MTLDevice!
+    private var buffer: MTLBuffer!
     
 }
 
@@ -115,7 +125,7 @@ private func _bytesPerRowForRowCount(
         let columnsPerRow = CPUMatrix.padCount(
             columnCount, toAlignment: columnCountAlignment
         )
-    else { return nil }
-
+        else { return nil }
+    
     return columnsPerRow * sizeof(Float32)
 }
