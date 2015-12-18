@@ -1,15 +1,26 @@
 TODO
 ====
 
+### Implement `MetalMatrix`
+- logic test: `MetalMatrix` alignment.
+- logic test: `MetalMatrix` resizing.
+
+### Factor `BufferedMatrix`
+- Rename `[Mutable]PaddedMatrix` to `[Mutable]Matrix`.
+- Define new `Buffer` protocol in a new BufferedMatrix.swift.
+- Create new `BufferedMatrix<B>`.
+- logic test: `CPUBuffer` from CPUMatrix.swift.
+- logic test: `MetalBuffer` from MetalMatrix.swift.
+- Typealias `CPUMatrix` to be `BufferedMatrix<CPUBuffer>`.
+    - Add extension for creating a `CPUMatrix` directly.
+- Typealias `MetalMatrix` to be `BufferedMatrix<MetalBuffer>`.
+    - Add extension for creating a `MetalMatrix` directly with a device.
+
 ### Implement `CPUMatrixMultiply`
 - `MatrixMultiply` protocol.
 - logic test: `CPUMatrixMultiply` construction.
 - logic test: `CPUMatrixMultiply` multiplication.
     - Integrate `cblas_sgemm()`
-
-### Implement `MetalMatrix`
-- logic test: `MetalMatrix` construction.
-- logic test: `MetalMatrix` alignment.
 
 ### Implement `MetalMatrixMultiply`
 - Implement metal shader.
