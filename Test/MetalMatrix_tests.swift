@@ -50,4 +50,8 @@ class MetalMatrix_tests: XCTestCase {
         XCTAssertNotNil(matrix)
     }
 
+    func test_matrices_havePointers() {
+        XCTAssertFalse(matrix.baseAddress == nil)
+    }
+    
 }

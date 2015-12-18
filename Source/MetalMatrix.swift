@@ -18,13 +18,13 @@ class MetalMatrix: MutablePaddedMatrix {
     private(set) var bytesPerRow: Int
     
     var mutableBaseAddress: UnsafeMutablePointer<Float32> {
-        // !!!: implement me
-        return nil
+        return UnsafeMutablePointer<Float32>(buffer.contents())
     }
     
     var byteCount: Int {
-        // !!!: implement me
-        return 0
+        let result = rowCount * bytesPerRow
+        assert(buffer.length >= result)
+        return result
     }
 
     /// Create a matrix buffer with the specified rows and columns of data
@@ -51,6 +51,8 @@ class MetalMatrix: MutablePaddedMatrix {
             self.columnCount = 0
             self.columnCountAlignment = 0
             self.bytesPerRow = 0
+            self.device = nil
+            self.buffer = nil
             return nil
         }
 
@@ -63,6 +65,11 @@ class MetalMatrix: MutablePaddedMatrix {
         self.columnCount = columnCount
         self.columnCountAlignment = columnCountAlignment
         self.bytesPerRow = bytesPerRow
+        self.device = device
+        self.buffer = device.newBufferWithLength(
+            rowCount * bytesPerRow,
+            options: .CPUCacheModeDefaultCache
+        )
     }
 
     func resizeToRowCount(
@@ -74,6 +81,8 @@ class MetalMatrix: MutablePaddedMatrix {
     
     // MARK: Private
     private let columnCountAlignment: Int
+    private let device: MTLDevice!
+    private let buffer: MTLBuffer!
     
 }
 
