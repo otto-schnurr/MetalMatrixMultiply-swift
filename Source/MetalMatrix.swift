@@ -13,9 +13,9 @@ import Metal.MTLDevice
 
 class MetalMatrix: MutablePaddedMatrix {
 
-    let rowCount = 0
-    let columnCount = 0
-    let bytesPerRow = 0
+    private(set) var rowCount: Int
+    private(set) var columnCount: Int
+    private(set) var bytesPerRow: Int
     
     var mutableBaseAddress: UnsafeMutablePointer<Float32> {
         // !!!: implement me
@@ -41,12 +41,28 @@ class MetalMatrix: MutablePaddedMatrix {
         device: MTLDevice
     ) {
         guard
-            let _ = _bytesPerRowForRowCount(
+            let bytesPerRow = _bytesPerRowForRowCount(
                 rowCount,
                 columnCount: columnCount,
                 columnCountAlignment: columnCountAlignment
             )
-        else { return nil }
+        else {
+            self.rowCount = 0
+            self.columnCount = 0
+            self.columnCountAlignment = 0
+            self.bytesPerRow = 0
+            return nil
+        }
+
+        assert(rowCount > 0)
+        assert(columnCount > 0)
+        assert(bytesPerRow > 0)
+        assert(columnCountAlignment > 0)
+
+        self.rowCount = rowCount
+        self.columnCount = columnCount
+        self.columnCountAlignment = columnCountAlignment
+        self.bytesPerRow = bytesPerRow
     }
 
     func resizeToRowCount(
@@ -55,6 +71,9 @@ class MetalMatrix: MutablePaddedMatrix {
         // !!!: implement me
         return false
     }
+    
+    // MARK: Private
+    private let columnCountAlignment: Int
     
 }
 
