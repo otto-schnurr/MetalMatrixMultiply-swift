@@ -75,14 +75,41 @@ class MetalMatrix: MutablePaddedMatrix {
     func resizeToRowCount(
         newRowCount: Int, columnCount newColumnCount: Int
     ) -> Bool {
-        // !!!: implement me
-        return false
+        assert(columnCountAlignment > 0)
+        guard
+            newRowCount != rowCount || newColumnCount != columnCount
+        else { return true }
+        
+        guard
+            let newBytesPerRow = _bytesPerRowForRowCount(
+                newRowCount,
+                columnCount: newColumnCount,
+                columnCountAlignment: columnCountAlignment
+            )
+        else { return false }
+        
+        assert(newRowCount > 0)
+        assert(newColumnCount > 0)
+        assert(newBytesPerRow > 0)
+        let newByteCount = newRowCount * newBytesPerRow
+        
+        self.buffer = device.newBufferWithLength(
+            newRowCount * newBytesPerRow,
+            options: .CPUCacheModeDefaultCache
+        )
+        assert(buffer.length >= newByteCount)
+        
+        self.rowCount = newRowCount
+        self.columnCount = newColumnCount
+        self.bytesPerRow = newBytesPerRow
+        
+        return true
     }
     
     // MARK: Private
     private let columnCountAlignment: Int
     private let device: MTLDevice!
-    private let buffer: MTLBuffer!
+    private var buffer: MTLBuffer!
     
 }
 

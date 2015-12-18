@@ -1,10 +1,6 @@
 TODO
 ====
 
-### Implement `MetalMatrix`
-- logic test: `MetalMatrix` alignment.
-- logic test: `MetalMatrix` resizing.
-
 ### Factor `BufferedMatrix`
 - Rename `[Mutable]PaddedMatrix` to `[Mutable]Matrix`.
 - Define new `Buffer` protocol in a new BufferedMatrix.swift.
