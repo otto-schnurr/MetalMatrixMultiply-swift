@@ -52,14 +52,4 @@ extension MutableMatrix {
         return UnsafePointer<Float32>(mutableBaseAddress)
     }
     
-    /// - returns: `nil` if the count or alignment are invalid.
-    static func padCount(count: Int, toAlignment alignment: Int) -> Int? {
-        guard count > 0 && alignment > 0 else { return nil }
-        
-        let remainder = count % alignment
-        guard remainder > 0 else { return count }
-        
-        return count + alignment - remainder
-    }
-    
 }

@@ -15,7 +15,7 @@ protocol Buffer {
     func resizeToLength(newLength: Int) -> Bool
 }
 
-class BufferedMatrix<B: Buffer> {
+class BufferedMatrix<B: Buffer>: MutableMatrix {
     
     private(set) var rowCount: Int
     private(set) var columnCount: Int
@@ -75,11 +75,11 @@ class BufferedMatrix<B: Buffer> {
         else { return true }
         
         guard
-        let newBytesPerRow = _bytesPerRowForRowCount(
-            newRowCount,
-            columnCount: newColumnCount,
-            columnCountAlignment: columnCountAlignment
-        )
+            let newBytesPerRow = _bytesPerRowForRowCount(
+                newRowCount,
+                columnCount: newColumnCount,
+                columnCountAlignment: columnCountAlignment
+            )
         else { return false }
         
         assert(newRowCount > 0)
@@ -88,7 +88,7 @@ class BufferedMatrix<B: Buffer> {
         let newByteCount = newRowCount * newBytesPerRow
         
         if buffer.length < newByteCount {
-            guard buffer.resizeToLength(newByteCount - buffer.length) else {
+            guard buffer.resizeToLength(newByteCount) else {
                 return false
             }
         }
@@ -116,10 +116,19 @@ private func _bytesPerRowForRowCount(
 ) -> Int? {
     guard
         rowCount > 0,
-        let columnsPerRow = CPUMatrix.padCount(
+        let columnsPerRow = _padCount(
             columnCount, toAlignment: columnCountAlignment
         )
         else { return nil }
     
     return columnsPerRow * sizeof(Float32)
+}
+
+private func _padCount(count: Int, toAlignment alignment: Int) -> Int? {
+    guard count > 0 && alignment > 0 else { return nil }
+    
+    let remainder = count % alignment
+    guard remainder > 0 else { return count }
+    
+    return count + alignment - remainder
 }

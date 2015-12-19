@@ -1,13 +1,6 @@
 TODO
 ====
 
-### Factor `BufferedMatrix`
-- Create new `BufferedMatrix<B>`.
-- Typealias `CPUMatrix` to be `BufferedMatrix<CPUBuffer>`.
-    - Add extension for creating a `CPUMatrix` directly.
-- Typealias `MetalMatrix` to be `BufferedMatrix<MetalBuffer>`.
-    - Add extension for creating a `MetalMatrix` directly with a device.
-
 ### Implement `CPUMatrixMultiply`
 - `MatrixMultiply` protocol.
 - logic test: `CPUMatrixMultiply` construction.
