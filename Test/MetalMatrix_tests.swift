@@ -15,7 +15,7 @@ import XCTest
 class MetalMatrix_tests: XCTestCase {
 
     var device: MTLDevice!
-    var matrix: PaddedMatrix! {
+    var matrix: Matrix! {
         return mutableMatrix
     }
     var mutableMatrix: MetalMatrix!
