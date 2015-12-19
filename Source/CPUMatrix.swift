@@ -119,3 +119,55 @@ private func _bytesPerRowForRowCount(
 
     return columnsPerRow * sizeof(Float32)
 }
+
+private class CPUBuffer: Buffer {
+    
+    var memory: UnsafeMutablePointer<Void> {
+        guard let data = data else { return nil }
+        return data.mutableBytes
+    }
+
+    var length: Int {
+        get { return data?.length ?? 0 }
+        set {
+            guard newValue != length else {
+                return
+            }
+            guard newValue > 0 else {
+                data = nil
+                return
+            }
+            guard let data = data else {
+                self.data = NSMutableData(length: newValue)
+                return
+            }
+
+            data.resizeToLength(newValue)
+        }
+    }
+
+    // MARK: - Private
+    private var data: NSMutableData?
+    
+}
+
+private extension NSMutableData {
+    
+    func resizeToLength(newLength: Int) {
+        guard newLength != length else {
+            return
+        }
+        guard newLength > 0 else {
+            setData(NSData())
+            return
+        }
+        
+        if newLength > length {
+            increaseLengthBy(newLength - length)
+        } else {
+            let range = NSMakeRange(0, newLength)
+            setData(subdataWithRange(range))
+        }
+    }
+    
+}

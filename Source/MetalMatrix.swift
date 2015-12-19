@@ -129,3 +129,69 @@ private func _bytesPerRowForRowCount(
     
     return columnsPerRow * sizeof(Float32)
 }
+
+private class MetalBuffer: Buffer {
+    
+    var memory: UnsafeMutablePointer<Void> {
+        guard let buffer = buffer else { return nil }
+        return buffer.contents()
+    }
+    
+    var length: Int {
+        get { return buffer?.length ?? 0 }
+        set {
+            guard newValue != length else {
+                return
+            }
+            guard newValue > 0 else {
+                buffer = nil
+                return
+            }
+            guard let buffer = buffer else {
+                self.buffer = device.newBufferWithLength(
+                    newValue, options: .CPUCacheModeDefaultCache
+                )
+                return
+            }
+            
+            self.buffer = buffer.resizedToLength(newValue)
+        }
+    }
+    
+    init(device: MTLDevice) { self.device = device }
+    
+    // MARK: - Private
+    private let device: MTLDevice
+    private var buffer: MTLBuffer?
+    
+}
+
+private extension MTLBuffer {
+    
+    func resizedToLength(newLength: Int) -> MTLBuffer? {
+        guard newLength != length else {
+            return self
+        }
+        guard newLength > 0 else {
+            return nil
+        }
+        
+        let newBuffer: MTLBuffer
+        
+        if newLength > length {
+            newBuffer = device.newBufferWithBytes(
+                self.contents(),
+                length: newLength,
+                options: .CPUCacheModeDefaultCache
+            )
+        } else {
+            newBuffer = device.newBufferWithLength(
+                newLength, options: .CPUCacheModeDefaultCache
+            )
+            newBuffer.contents().assignFrom(self.contents(), count: newLength)
+        }
+        
+        return newBuffer
+    }
+    
+}

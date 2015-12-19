@@ -20,6 +20,9 @@
 		27A15EFE1C23338D00C0F47A /* MetalMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */; };
 		27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */; };
 		27A15F011C23346100C0F47A /* MetalMatrix_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */; };
+		27A15F041C24D13300C0F47A /* BufferedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F031C24D13300C0F47A /* BufferedMatrix.swift */; };
+		27A15F051C24D13300C0F47A /* BufferedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F031C24D13300C0F47A /* BufferedMatrix.swift */; };
+		27A15F061C24D13300C0F47A /* BufferedMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F031C24D13300C0F47A /* BufferedMatrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +52,7 @@
 		277C34571C1B4C5E00AC23DC /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix.swift; sourceTree = "<group>"; };
 		27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix_tests.swift; sourceTree = "<group>"; };
+		27A15F031C24D13300C0F47A /* BufferedMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferedMatrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,7 @@
 		27455EC01C190A2700D66961 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				27A15F031C24D13300C0F47A /* BufferedMatrix.swift */,
 				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
 				27455EC11C190A2700D66961 /* main.swift */,
 				273FB47C1C1F0AD6009B709C /* Matrix.swift */,
@@ -236,6 +241,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A15F041C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 				27A15EFD1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				273FB47D1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
@@ -252,6 +258,7 @@
 				273FB47E1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 				273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
+				27A15F051C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A15F061C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 				27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				273FB47F1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				273FB4831C1F0D29009B709C /* CPUMatrix.swift in Sources */,
