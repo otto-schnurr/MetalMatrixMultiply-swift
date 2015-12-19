@@ -15,7 +15,7 @@ protocol Buffer {
     func resizeToLength(newLength: Int) -> Bool
 }
 
-class BufferedMatrix<B: Buffer>: MutableMatrix {
+class BufferedMatrix: MutableMatrix {
     
     private(set) var rowCount: Int
     private(set) var columnCount: Int
@@ -109,6 +109,15 @@ class BufferedMatrix<B: Buffer>: MutableMatrix {
 
 
 // MARK: - Private
+private func _padCount(count: Int, toAlignment alignment: Int) -> Int? {
+    guard count > 0 && alignment > 0 else { return nil }
+    
+    let remainder = count % alignment
+    guard remainder > 0 else { return count }
+    
+    return count + alignment - remainder
+}
+
 private func _bytesPerRowForRowCount(
     rowCount: Int,
     columnCount: Int,
@@ -119,16 +128,7 @@ private func _bytesPerRowForRowCount(
         let columnsPerRow = _padCount(
             columnCount, toAlignment: columnCountAlignment
         )
-        else { return nil }
+    else { return nil }
     
     return columnsPerRow * sizeof(Float32)
-}
-
-private func _padCount(count: Int, toAlignment alignment: Int) -> Int? {
-    guard count > 0 && alignment > 0 else { return nil }
-    
-    let remainder = count % alignment
-    guard remainder > 0 else { return count }
-    
-    return count + alignment - remainder
 }

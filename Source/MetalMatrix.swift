@@ -11,7 +11,7 @@
 
 import Metal.MTLDevice
 
-class MetalMatrix: BufferedMatrix<MetalBuffer> {
+class MetalMatrix: BufferedMatrix {
 
     init?(
         rowCount: Int,
