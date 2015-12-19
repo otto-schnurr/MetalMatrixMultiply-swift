@@ -127,23 +127,21 @@ private class CPUBuffer: Buffer {
         return data.mutableBytes
     }
 
-    var length: Int {
-        get { return data?.length ?? 0 }
-        set {
-            guard newValue != length else {
-                return
-            }
-            guard newValue > 0 else {
-                data = nil
-                return
-            }
-            guard let data = data else {
-                self.data = NSMutableData(length: newValue)
-                return
-            }
-
-            data.resizeToLength(newValue)
+    var length: Int { return data?.length ?? 0 }
+    
+    func resizeToLength(newLength: Int) -> Bool {
+        guard newLength >= 0 else { return false }
+        guard newLength != length else { return true }
+        
+        if newLength == 0 {
+            data = nil
+        } else if let data = data {
+            data.resizeToLength(newLength)
+        } else {
+            data = NSMutableData(length: newLength)
         }
+
+        return true
     }
 
     // MARK: - Private

@@ -137,25 +137,23 @@ private class MetalBuffer: Buffer {
         return buffer.contents()
     }
     
-    var length: Int {
-        get { return buffer?.length ?? 0 }
-        set {
-            guard newValue != length else {
-                return
-            }
-            guard newValue > 0 else {
-                buffer = nil
-                return
-            }
-            guard let buffer = buffer else {
-                self.buffer = device.newBufferWithLength(
-                    newValue, options: .CPUCacheModeDefaultCache
-                )
-                return
-            }
-            
-            self.buffer = buffer.resizedToLength(newValue)
+    var length: Int { return buffer?.length ?? 0 }
+    
+    func resizeToLength(newLength: Int) -> Bool {
+        guard newLength >= 0 else { return false }
+        guard newLength != length else { return true }
+        
+        if newLength == 0 {
+            buffer = nil
+        } else if let buffer = buffer {
+            buffer.resizedToLength(newLength)
+        } else {
+            buffer = device.newBufferWithLength(
+                newLength, options: .CPUCacheModeDefaultCache
+            )
         }
+        
+        return true
     }
     
     init(device: MTLDevice) { self.device = device }
