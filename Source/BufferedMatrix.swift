@@ -80,7 +80,7 @@ class BufferedMatrix: Matrix {
 
 }
 
-class ResizableBufferedMatrix: BufferedMatrix, ResizableMatrix {
+class ResizableBufferedMatrix: BufferedMatrix {
     
     func resizeToRowCount(
         newRowCount: Int, columnCount newColumnCount: Int

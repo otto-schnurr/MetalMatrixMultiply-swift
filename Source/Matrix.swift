@@ -36,7 +36,3 @@ protocol Matrix {
     var byteCount: Int { get }
     
 }
-
-protocol ResizableMatrix: Matrix {
-    func resizeToRowCount(rowCount: Int, columnCount: Int) -> Bool
-}
