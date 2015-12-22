@@ -109,12 +109,9 @@
 		27455EC01C190A2700D66961 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				27A15F031C24D13300C0F47A /* BufferedMatrix.swift */,
-				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
 				27455EC11C190A2700D66961 /* main.swift */,
-				273FB47C1C1F0AD6009B709C /* Matrix.swift */,
-				27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */,
-				27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */,
+				27E97DF31C29FD8900400330 /* Model */,
+				27E97DF41C29FDE700400330 /* Multiplication */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -128,6 +125,25 @@
 				27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */,
 			);
 			path = Test;
+			sourceTree = "<group>";
+		};
+		27E97DF31C29FD8900400330 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				27A15F031C24D13300C0F47A /* BufferedMatrix.swift */,
+				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
+				273FB47C1C1F0AD6009B709C /* Matrix.swift */,
+				27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		27E97DF41C29FDE700400330 /* Multiplication */ = {
+			isa = PBXGroup;
+			children = (
+				27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */,
+			);
+			path = Multiplication;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
