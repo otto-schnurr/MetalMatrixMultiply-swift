@@ -12,16 +12,19 @@
 protocol Buffer {
     var memory: UnsafeMutablePointer<Void> { get }
     var length: Int { get }
+}
+
+protocol ResizableBuffer: Buffer {
     func resizeToLength(newLength: Int) -> Bool
 }
 
-class BufferedMatrix: MutableMatrix {
+class BufferedMatrix: Matrix {
     
     private(set) var rowCount: Int
     private(set) var columnCount: Int
     private(set) var bytesPerRow: Int
     
-    var mutableBaseAddress: UnsafeMutablePointer<Float32> {
+    var baseAddress: UnsafeMutablePointer<Float32> {
         return UnsafeMutablePointer<Float32>(buffer.memory)
     }
     
@@ -37,7 +40,12 @@ class BufferedMatrix: MutableMatrix {
     ///   A span of floating point elements that rows of the matrix should
     ///   align with. When necessary, padding is added to each row to achieve
     ///   this alignment. See `bytesPerRow`.
-    init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int, buffer: Buffer) {
+    init?(
+        rowCount: Int,
+        columnCount: Int,
+        columnCountAlignment: Int,
+        buffer: ResizableBuffer
+    ) {
         guard
             let bytesPerRow = _bytesPerRowForRowCount(
                 rowCount,
@@ -65,6 +73,14 @@ class BufferedMatrix: MutableMatrix {
         self.bytesPerRow = bytesPerRow
         self.buffer = buffer
     }
+    
+    // MARK: Private
+    private let columnCountAlignment: Int
+    private let buffer: ResizableBuffer
+
+}
+
+class ResizableBufferedMatrix: BufferedMatrix {
     
     func resizeToRowCount(
         newRowCount: Int, columnCount newColumnCount: Int
@@ -101,10 +117,6 @@ class BufferedMatrix: MutableMatrix {
         return true
     }
     
-    // MARK: Private
-    private let columnCountAlignment: Int
-    private let buffer: Buffer
-
 }
 
 

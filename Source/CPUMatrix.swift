@@ -11,7 +11,7 @@
 
 import Foundation.NSData
 
-class CPUMatrix: BufferedMatrix {
+class CPUMatrix: ResizableBufferedMatrix {
 
     init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
         super.init(
@@ -24,7 +24,7 @@ class CPUMatrix: BufferedMatrix {
     
 }
 
-class CPUBuffer: Buffer {
+class CPUBuffer: ResizableBuffer {
     
     var memory: UnsafeMutablePointer<Void> {
         guard let data = data else { return nil }

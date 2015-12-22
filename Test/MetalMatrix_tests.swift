@@ -16,9 +16,9 @@ class MetalMatrix_tests: XCTestCase {
 
     var device: MTLDevice!
     var matrix: Matrix! {
-        return mutableMatrix
+        return resizableMatrix
     }
-    var mutableMatrix: MetalMatrix!
+    var resizableMatrix: MetalMatrix!
 
     override func setUp() {
         super.setUp()
@@ -28,13 +28,13 @@ class MetalMatrix_tests: XCTestCase {
             return
         }
         
-        mutableMatrix = MetalMatrix(
+        resizableMatrix = MetalMatrix(
             rowCount: 4, columnCount: 4, columnCountAlignment: 8, device: device
         )
     }
 
     override func tearDown() {
-        mutableMatrix = nil
+        resizableMatrix = nil
         device = nil
         super.tearDown()
     }
@@ -52,12 +52,11 @@ class MetalMatrix_tests: XCTestCase {
     
     func test_validMatrix_isNotNil() {
         XCTAssertNotNil(matrix)
-        XCTAssertNotNil(mutableMatrix)
+        XCTAssertNotNil(resizableMatrix)
     }
 
     func test_matrices_havePointers() {
         XCTAssertFalse(matrix.baseAddress == nil)
-        XCTAssertFalse(mutableMatrix.mutableBaseAddress == nil)
     }
     
     func test_matrixRows_haveExpectedAlignment() {
@@ -87,11 +86,11 @@ class MetalMatrix_tests: XCTestCase {
     }
 
     func test_resizingToInvalidParameters_fails() {
-        XCTAssertFalse(mutableMatrix.resizeToRowCount(0, columnCount: 0))
+        XCTAssertFalse(resizableMatrix.resizeToRowCount(0, columnCount: 0))
     }
 
     func test_resizingToValidParameters_succeeds() {
-        XCTAssertTrue(mutableMatrix.resizeToRowCount(5, columnCount: 5))
+        XCTAssertTrue(resizableMatrix.resizeToRowCount(5, columnCount: 5))
         XCTAssertEqual(matrix.rowCount, 5)
         XCTAssertEqual(matrix.columnCount, 5)
         XCTAssertEqual(matrix.bytesPerRow, 8 * sizeof(Float32))
@@ -102,19 +101,19 @@ class MetalMatrix_tests: XCTestCase {
         let alignment = 8
 
         for columnCount in 1...8 {
-            mutableMatrix.resizeToRowCount(1, columnCount: columnCount)
+            resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
             XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
             XCTAssertEqual(matrix.byteCount, alignment * sizeof(Float32))
         }
         
         for columnCount in 9...16 {
-            mutableMatrix.resizeToRowCount(1, columnCount: columnCount)
+            resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
             XCTAssertEqual(matrix.bytesPerRow, 2 * alignment * sizeof(Float32))
             XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(Float32))
         }
 
         for rowCount in 1...5 {
-            mutableMatrix.resizeToRowCount(rowCount, columnCount: 1)
+            resizableMatrix.resizeToRowCount(rowCount, columnCount: 1)
             XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
             XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(Float32))
         }

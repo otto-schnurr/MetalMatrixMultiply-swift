@@ -11,7 +11,7 @@
 
 import Metal.MTLDevice
 
-class MetalMatrix: BufferedMatrix {
+class MetalMatrix: ResizableBufferedMatrix {
 
     init?(
         rowCount: Int,
@@ -29,7 +29,7 @@ class MetalMatrix: BufferedMatrix {
 
 }
 
-class MetalBuffer: Buffer {
+class MetalBuffer: ResizableBuffer {
     
     var memory: UnsafeMutablePointer<Void> {
         guard let buffer = buffer else { return nil }
