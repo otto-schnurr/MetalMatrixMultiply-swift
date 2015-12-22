@@ -1,5 +1,5 @@
 //
-//  PaddedMatrix.swift
+//  Matrix.swift
 //
 //  Created by Otto Schnurr on 12/14/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.

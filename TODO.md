@@ -1,22 +1,26 @@
 TODO
 ====
 
-### Implement `CPUMatrixMultiply`
-- `MatrixMultiply` protocol.
-- logic test: `CPUMatrixMultiply` construction.
-- logic test: `CPUMatrixMultiply` multiplication.
+### Implement `CPUMultiplicationTask`
+- Factor Source/Model/ vs Source/Multiplication/.
+- Define `MultiplicationTask` protocol.
+- logic test: `CPUMultiplicationTask` construction.
+- logic test: `CPUMultiplicationTask` multiplication.
     - Integrate `cblas_sgemm()`
 
-### Implement `MetalMatrixMultiply`
+### Implement `MetalMultiplicationTask`
+- Restore `BufferedMatrix<B: Buffer>` as a template.
+- Add `buffer: Buffer` read-only property `BufferedMatrix`.
+- Add `MatrixType` assocated type to `MultiplicationData`.
 - Implement metal shader.
-- logic test: `MetalMatrixMultiply` construction.
+- logic test: `MetalMultiplicationTask` construction.
     - Integrate metal shader.
-- logic test: `MetalMatrixMultiply` multiplication.
+- logic test: `MetalMultiplicationTask` multiplication.
     - Execute metal shader.
 
-### Implement `MatrixMultiplyExperiment`
-- logic test: `MatrixExperiment` construction.
-- logic test: `MatrixExperiment` operation.
+### Implement `MultiplicationExperiment`
+- logic test: `MultiplicationExperiment` construction.
+- logic test: `MultiplicationExperiment` operation.
 - Integrate randomization.
 - Integrate timing.
 - Integrate logging.
