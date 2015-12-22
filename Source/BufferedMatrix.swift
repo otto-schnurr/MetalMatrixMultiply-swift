@@ -18,7 +18,7 @@ protocol ResizableBuffer: Buffer {
     func resizeToLength(newLength: Int) -> Bool
 }
 
-class BufferedMatrix: ResizableMatrix {
+class BufferedMatrix: Matrix {
     
     private(set) var rowCount: Int
     private(set) var columnCount: Int
@@ -74,6 +74,14 @@ class BufferedMatrix: ResizableMatrix {
         self.buffer = buffer
     }
     
+    // MARK: Private
+    private let columnCountAlignment: Int
+    private let buffer: ResizableBuffer
+
+}
+
+class ResizableBufferedMatrix: BufferedMatrix, ResizableMatrix {
+    
     func resizeToRowCount(
         newRowCount: Int, columnCount newColumnCount: Int
     ) -> Bool {
@@ -109,10 +117,6 @@ class BufferedMatrix: ResizableMatrix {
         return true
     }
     
-    // MARK: Private
-    private let columnCountAlignment: Int
-    private let buffer: ResizableBuffer
-
 }
 
 

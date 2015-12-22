@@ -11,7 +11,7 @@
 
 import Metal.MTLDevice
 
-class MetalMatrix: BufferedMatrix {
+class MetalMatrix: ResizableBufferedMatrix {
 
     init?(
         rowCount: Int,

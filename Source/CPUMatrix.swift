@@ -11,7 +11,7 @@
 
 import Foundation.NSData
 
-class CPUMatrix: BufferedMatrix {
+class CPUMatrix: ResizableBufferedMatrix {
 
     init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
         super.init(
