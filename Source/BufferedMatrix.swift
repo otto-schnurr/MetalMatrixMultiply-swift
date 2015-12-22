@@ -12,6 +12,9 @@
 protocol Buffer {
     var memory: UnsafeMutablePointer<Void> { get }
     var length: Int { get }
+}
+
+protocol ResizableBuffer: Buffer {
     func resizeToLength(newLength: Int) -> Bool
 }
 
@@ -37,7 +40,12 @@ class BufferedMatrix: ResizableMatrix {
     ///   A span of floating point elements that rows of the matrix should
     ///   align with. When necessary, padding is added to each row to achieve
     ///   this alignment. See `bytesPerRow`.
-    init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int, buffer: Buffer) {
+    init?(
+        rowCount: Int,
+        columnCount: Int,
+        columnCountAlignment: Int,
+        buffer: ResizableBuffer
+    ) {
         guard
             let bytesPerRow = _bytesPerRowForRowCount(
                 rowCount,
@@ -103,7 +111,7 @@ class BufferedMatrix: ResizableMatrix {
     
     // MARK: Private
     private let columnCountAlignment: Int
-    private let buffer: Buffer
+    private let buffer: ResizableBuffer
 
 }
 

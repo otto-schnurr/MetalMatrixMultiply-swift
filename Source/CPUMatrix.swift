@@ -24,7 +24,7 @@ class CPUMatrix: BufferedMatrix {
     
 }
 
-class CPUBuffer: Buffer {
+class CPUBuffer: ResizableBuffer {
     
     var memory: UnsafeMutablePointer<Void> {
         guard let data = data else { return nil }

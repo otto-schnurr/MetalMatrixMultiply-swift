@@ -29,7 +29,7 @@ class MetalMatrix: BufferedMatrix {
 
 }
 
-class MetalBuffer: Buffer {
+class MetalBuffer: ResizableBuffer {
     
     var memory: UnsafeMutablePointer<Void> {
         guard let buffer = buffer else { return nil }
