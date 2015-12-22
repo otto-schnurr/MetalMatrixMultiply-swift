@@ -15,13 +15,13 @@ protocol Buffer {
     func resizeToLength(newLength: Int) -> Bool
 }
 
-class BufferedMatrix: MutableMatrix {
+class BufferedMatrix: ResizableMatrix {
     
     private(set) var rowCount: Int
     private(set) var columnCount: Int
     private(set) var bytesPerRow: Int
     
-    var mutableBaseAddress: UnsafeMutablePointer<Float32> {
+    var baseAddress: UnsafeMutablePointer<Float32> {
         return UnsafeMutablePointer<Float32>(buffer.memory)
     }
     

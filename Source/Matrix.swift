@@ -9,7 +9,7 @@
 //     http://opensource.org/licenses/MIT
 //
 
-/// A row-major matrix of read-only 32-bit floating point numbers.
+/// A row-major matrix of 32-bit floating point numbers.
 protocol Matrix {
 
     /// The number of rows in the matrix.
@@ -27,7 +27,7 @@ protocol Matrix {
     /// ```
     var bytesPerRow: Int { get }
     
-    var baseAddress: UnsafePointer<Float32> { get }
+    var baseAddress: UnsafeMutablePointer<Float32> { get }
     
     /// - Invariant:
     /// ```
@@ -37,19 +37,6 @@ protocol Matrix {
     
 }
 
-/// A row-major matrix of mutable 32-bit floating point numbers.
-protocol MutableMatrix: Matrix {
-    
-    var mutableBaseAddress: UnsafeMutablePointer<Float32> { get }
-    
+protocol ResizableMatrix: Matrix {
     func resizeToRowCount(rowCount: Int, columnCount: Int) -> Bool
-    
-}
-
-extension MutableMatrix {
-    
-    var baseAddress: UnsafePointer<Float32> {
-        return UnsafePointer<Float32>(mutableBaseAddress)
-    }
-    
 }
