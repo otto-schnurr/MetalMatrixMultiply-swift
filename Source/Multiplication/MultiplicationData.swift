@@ -13,23 +13,19 @@
 /// ```
 /// output = A^T * B
 /// ```
-protocol MultiplicationData {
+struct MultiplicationData {
 
-    var inputA: Matrix { get }
-    var inputB: Matrix { get }
-    var output: Matrix { get }
+    let inputA: Matrix
+    let inputB: Matrix
+    let output: Matrix
 
-}
-
-extension MultiplicationData {
-    
     var inputDimensionsAreValid: Bool {
         return inputA.rowCount == inputB.rowCount
     }
     
     var outputDimensionsAreValid: Bool {
         return output.rowCount == inputA.columnCount &&
-               output.columnCount == inputB.columnCount
+            output.columnCount == inputB.columnCount
     }
 
 }

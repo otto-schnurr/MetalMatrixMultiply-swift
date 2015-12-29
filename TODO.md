@@ -2,7 +2,6 @@ TODO
 ====
 
 ### Implement `CPUMultiplicationTask`
-- Turn `MultiplicationData` into a struct.
 - logic test: `CPUMultiplicationTask` multiplication.
     - Integrate `cblas_sgemm()`
 
