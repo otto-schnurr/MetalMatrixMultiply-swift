@@ -10,7 +10,7 @@
 //
 
 /// A row-major matrix of 32-bit floating point numbers.
-protocol Matrix {
+protocol Matrix: class {
 
     /// The number of rows in the matrix.
     var rowCount: Int { get }
