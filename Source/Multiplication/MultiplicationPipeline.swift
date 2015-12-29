@@ -1,5 +1,5 @@
 //
-//  MultiplicationTask.swift
+//  MultiplicationPipeline.swift
 //
 //  Created by Otto Schnurr on 12/22/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
@@ -10,16 +10,25 @@
 //     http://opensource.org/licenses/MIT
 //
 
-/// The interface for a transient, single-use object that can perform
-/// the matrix multiplication implied by a `MultiplicationData` object.
-protocol MultiplicationTask {
+/// An interface for vending resizable matrices and performing matrix
+/// multiplication.
+///
+/// A pipeline and its associated matrices are heavy-weight objects
+/// that are intended to be created once and used multiple times.
+protocol MultiplicationPipeline {
+
+    func newMatrix(rowCount: Int, columnCount: Int) -> ResizableBufferedMatrix?
 
     /// Asynchronously multiply the specified matrices.
     ///
     /// - parameter repeatCount:
     ///   The number of *additional* times to perform the matrix
     ///   multiplication before calling the completion handler.
-    func multiplyDataAsync(
+    ///
+    /// - parameter completion:
+    ///   Receives `false` if the data is inconsistent or incompatible
+    ///   with this pipeline.
+    func multiplyAsync(
         data: MultiplicationData,
         repeatCount: Int,
         completion: (success: Bool) -> Void
