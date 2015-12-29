@@ -9,11 +9,19 @@
 //     http://opensource.org/licenses/MIT
 //
 
-class CPUPipeline: MultiplicationPipeline {
+private let _columnCountAlignment = 8
 
-    func newMatrix(rowCount: Int, columnCount: Int) -> ResizableBufferedMatrix? {
-        // !!!: implement me
-        return nil
+struct CPUPipeline: MultiplicationPipeline {
+
+    func newMatrixWithRowCount(
+        rowCount: Int,
+        columnCount: Int
+    ) -> ResizableBufferedMatrix? {
+        return CPUMatrix(
+            rowCount: rowCount,
+            columnCount: columnCount,
+            columnCountAlignment: _columnCountAlignment
+        )
     }
     
     func multiplyAsync(

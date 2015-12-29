@@ -17,7 +17,10 @@
 /// that are intended to be created once and used multiple times.
 protocol MultiplicationPipeline {
 
-    func newMatrix(rowCount: Int, columnCount: Int) -> ResizableBufferedMatrix?
+    func newMatrixWithRowCount(
+        rowCount: Int,
+        columnCount: Int
+    ) -> ResizableBufferedMatrix?
 
     /// Asynchronously multiply the specified matrices.
     ///
