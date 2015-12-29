@@ -1,5 +1,5 @@
 //
-//  PaddedMatrix.swift
+//  Matrix.swift
 //
 //  Created by Otto Schnurr on 12/14/2015.
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
@@ -10,7 +10,7 @@
 //
 
 /// A row-major matrix of 32-bit floating point numbers.
-protocol Matrix {
+protocol Matrix: class {
 
     /// The number of rows in the matrix.
     var rowCount: Int { get }
