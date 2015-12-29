@@ -34,7 +34,7 @@ class BufferedMatrix: Matrix {
         return result
     }
     
-    /// Create a matrix buffer with the specified rows and columns of data.
+    /// Create a buffered matrix with the specified rows and columns of data.
     ///
     /// - parameter columnCountAlignment:
     ///   A span of floating point elements that rows of the matrix should

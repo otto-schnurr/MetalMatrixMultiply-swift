@@ -2,8 +2,6 @@ TODO
 ====
 
 ### Implement `CPUMultiplicationTask`
-- Factor Source/Model/ vs Source/Multiplication/.
-- Define `MultiplicationTask` protocol.
 - logic test: `CPUMultiplicationTask` construction.
 - logic test: `CPUMultiplicationTask` multiplication.
     - Integrate `cblas_sgemm()`
