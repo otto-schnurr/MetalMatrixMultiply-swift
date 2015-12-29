@@ -1,15 +1,18 @@
 TODO
 ====
 
-### Implement `CPUMultiplicationTask`
-- logic test: `CPUMultiplicationTask` multiplication.
-    - Integrate `cblas_sgemm()`
+### Clean up
+- Dry up `Float32` references.
+- Offer float alternative to `bytesPerRow` (maybe `paddedColumnCount`).
+- Consider `Int32` size types for direct insertion into BLAS.
+- Fix paths to license file.
 
 ### Implement `MetalMultiplicationTask`
 - Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
 - Implement metal shader.
 - logic test: `MetalMultiplicationTask` construction.
     - Integrate metal shader.
+- logic test: `MetalMultiplicationTask` matrix factory.
 - logic test: `MetalMultiplicationTask` multiplication.
     - Execute metal shader.
 
