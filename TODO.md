@@ -2,14 +2,12 @@ TODO
 ====
 
 ### Implement `CPUMultiplicationTask`
-- logic test: `CPUMultiplicationTask` construction.
+- Turn `MultiplicationData` into a struct.
 - logic test: `CPUMultiplicationTask` multiplication.
     - Integrate `cblas_sgemm()`
 
 ### Implement `MetalMultiplicationTask`
-- Restore `BufferedMatrix<B: Buffer>` as a template.
-- Add `buffer: Buffer` read-only property `BufferedMatrix`.
-- Add `MatrixType` assocated type to `MultiplicationData`.
+- Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
 - Implement metal shader.
 - logic test: `MetalMultiplicationTask` construction.
     - Integrate metal shader.
