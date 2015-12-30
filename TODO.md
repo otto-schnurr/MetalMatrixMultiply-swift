@@ -1,6 +1,9 @@
 TODO
 ====
 
+### Fix threading (defer it one level up).
+- Make `CPUPipeline.multiplyData()` synchronous.
+
 ### Implement `MetalPipeline`
 - Simplify `CPUPipeline`.
 - Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
