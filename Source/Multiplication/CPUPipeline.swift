@@ -13,7 +13,8 @@ import Accelerate.vecLib
 
 private let _columnCountAlignment = 8
 
-struct CPUPipeline: MultiplicationPipeline {
+/// An interface for performing matrix mutliplication on the CPU.
+struct CPUPipeline {
 
     func newMatrixWithRowCount(
         rowCount: Int,

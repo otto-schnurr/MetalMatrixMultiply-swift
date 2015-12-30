@@ -33,9 +33,6 @@
 		27A15F0C1C25F78D00C0F47A /* MultiplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */; };
 		27A15F0D1C25F78D00C0F47A /* MultiplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */; };
 		27A15F0E1C25F78D00C0F47A /* MultiplicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */; };
-		27E97DF61C29FED900400330 /* MultiplicationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E97DF51C29FED900400330 /* MultiplicationPipeline.swift */; };
-		27E97DF71C29FED900400330 /* MultiplicationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E97DF51C29FED900400330 /* MultiplicationPipeline.swift */; };
-		27E97DF81C29FED900400330 /* MultiplicationPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E97DF51C29FED900400330 /* MultiplicationPipeline.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,7 +67,6 @@
 		27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix_tests.swift; sourceTree = "<group>"; };
 		27A15F031C24D13300C0F47A /* BufferedMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferedMatrix.swift; sourceTree = "<group>"; };
 		27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplicationData.swift; sourceTree = "<group>"; };
-		27E97DF51C29FED900400330 /* MultiplicationPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplicationPipeline.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +155,6 @@
 			children = (
 				271119661C3309120078AE67 /* CPUPipeline.swift */,
 				27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */,
-				27E97DF51C29FED900400330 /* MultiplicationPipeline.swift */,
 			);
 			path = Multiplication;
 			sourceTree = "<group>";
@@ -283,7 +278,6 @@
 				27A15F041C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 				27A15EFD1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				271119671C3309120078AE67 /* CPUPipeline.swift in Sources */,
-				27E97DF61C29FED900400330 /* MultiplicationPipeline.swift in Sources */,
 				27A15F0C1C25F78D00C0F47A /* MultiplicationData.swift in Sources */,
 				273FB47D1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
@@ -301,7 +295,6 @@
 				271119681C3309120078AE67 /* CPUPipeline.swift in Sources */,
 				2711196F1C330CE20078AE67 /* MultiplicationData_tests.swift in Sources */,
 				273FB47E1C1F0AD6009B709C /* Matrix.swift in Sources */,
-				27E97DF71C29FED900400330 /* MultiplicationPipeline.swift in Sources */,
 				273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 				273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
 				2711196C1C3309C40078AE67 /* CPUPipeline_tests.swift in Sources */,
@@ -317,7 +310,6 @@
 				27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				271119691C3309120078AE67 /* CPUPipeline.swift in Sources */,
 				271119701C330CE20078AE67 /* MultiplicationData_tests.swift in Sources */,
-				27E97DF81C29FED900400330 /* MultiplicationPipeline.swift in Sources */,
 				27A15F0E1C25F78D00C0F47A /* MultiplicationData.swift in Sources */,
 				2711196D1C3309C40078AE67 /* CPUPipeline_tests.swift in Sources */,
 				273FB47F1C1F0AD6009B709C /* Matrix.swift in Sources */,

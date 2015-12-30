@@ -1,18 +1,19 @@
 TODO
 ====
 
-### Implement `MetalMultiplicationTask`
+### Implement `MetalPipeline`
+- Simplify `CPUPipeline`.
 - Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
 - Implement metal shader.
-- logic test: `MetalMultiplicationTask` construction.
+- logic test: `MetalPipeline` construction.
     - Integrate metal shader.
-- logic test: `MetalMultiplicationTask` matrix factory.
-- logic test: `MetalMultiplicationTask` multiplication.
+- logic test: `MetalPipeline` matrix factory.
+- logic test: `MetalPipeline` multiplication.
     - Execute metal shader.
 
-### Implement `MultiplicationExperiment`
-- logic test: `MultiplicationExperiment` construction.
-- logic test: `MultiplicationExperiment` operation.
+### Implement `Experiment`
+- logic test: `Experiment` construction.
+- logic test: `Experiment` operation.
 - Integrate randomization.
 - Integrate timing.
 - Integrate logging.
