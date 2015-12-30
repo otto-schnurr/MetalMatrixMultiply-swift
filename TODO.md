@@ -2,12 +2,11 @@ TODO
 ====
 
 ### Implement `MetalPipeline`
-- Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
-- Implement metal shader.
 - logic test: `MetalPipeline` construction.
     - Integrate metal shader.
-- logic test: `MetalPipeline` matrix factory.
+- Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
 - logic test: `MetalPipeline` multiplication.
+    - Implement metal shader.
     - Execute metal shader.
 
 ### Implement `Experiment`

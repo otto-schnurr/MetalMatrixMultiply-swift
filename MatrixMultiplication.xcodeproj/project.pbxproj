@@ -40,6 +40,8 @@
 		27E84CF51C34555D00B57034 /* MetalPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF31C34555800B57034 /* MetalPipeline.swift */; };
 		27E84CF61C34555E00B57034 /* MetalPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF31C34555800B57034 /* MetalPipeline.swift */; };
 		27E84CF81C34562C00B57034 /* MetalPipeline_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF71C34562C00B57034 /* MetalPipeline_tests.swift */; };
+		27E84CFA1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */; };
+		27E84CFB1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -77,6 +79,7 @@
 		27E84CEF1C3450F200B57034 /* PipelineError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PipelineError.swift; sourceTree = "<group>"; };
 		27E84CF31C34555800B57034 /* MetalPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalPipeline.swift; sourceTree = "<group>"; };
 		27E84CF71C34562C00B57034 /* MetalPipeline_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalPipeline_tests.swift; sourceTree = "<group>"; };
+		27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MultiplyMatrices.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,7 @@
 				271119661C3309120078AE67 /* CPUPipeline.swift */,
 				27E84CF31C34555800B57034 /* MetalPipeline.swift */,
 				27A15F0B1C25F78D00C0F47A /* MultiplicationData.swift */,
+				27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */,
 				27E84CEF1C3450F200B57034 /* PipelineError.swift */,
 			);
 			path = Multiplication;
@@ -295,6 +299,7 @@
 				27A15F0C1C25F78D00C0F47A /* MultiplicationData.swift in Sources */,
 				273FB47D1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
+				27E84CFA1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */,
 				27E84CF01C3450F200B57034 /* PipelineError.swift in Sources */,
 				273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 			);
@@ -307,6 +312,7 @@
 				27E84CF11C3450F200B57034 /* PipelineError.swift in Sources */,
 				27E84CF81C34562C00B57034 /* MetalPipeline_tests.swift in Sources */,
 				27A15F011C23346100C0F47A /* MetalMatrix_tests.swift in Sources */,
+				27E84CFB1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */,
 				27A15F0D1C25F78D00C0F47A /* MultiplicationData.swift in Sources */,
 				27E84CF51C34555D00B57034 /* MetalPipeline.swift in Sources */,
 				27A15EFE1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
