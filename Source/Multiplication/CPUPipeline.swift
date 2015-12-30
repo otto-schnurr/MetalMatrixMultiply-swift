@@ -16,18 +16,7 @@ private let _columnCountAlignment = 8
 /// An interface for performing matrix mutliplication on the CPU.
 struct CPUPipeline {
 
-    func newMatrixWithRowCount(
-        rowCount: Int,
-        columnCount: Int
-    ) -> ResizableBufferedMatrix? {
-        return CPUMatrix(
-            rowCount: rowCount,
-            columnCount: columnCount,
-            columnCountAlignment: _columnCountAlignment
-        )
-    }
-    
-    func multiplyAsync(
+    static func multiplyAsync(
         data: MultiplicationData,
         repeatCount: Int,
         completion: (success: Bool) -> Void

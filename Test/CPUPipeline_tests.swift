@@ -13,32 +13,6 @@ import XCTest
 
 class CPUPipeline_tests: XCTestCase {
 
-    var pipeline: CPUPipeline!
-    
-    override func setUp() {
-        super.setUp()
-        pipeline = CPUPipeline()
-    }
-    
-    override func tearDown() {
-        pipeline = nil
-        super.tearDown()
-    }
-    
-    func test_pipeline_initializesSuccessfully() {
-        XCTAssertNotNil(pipeline)
-    }
-    
-    func test_pipeline_vendsValidMatrix() {
-        let matrix = pipeline.newMatrixWithRowCount(4, columnCount: 4)
-        XCTAssertFalse(matrix == nil)
-    }
-    
-    func test_pipeline_doesNotVendInvalidMatrix() {
-        let matrix = pipeline.newMatrixWithRowCount(0, columnCount: 4)
-        XCTAssertTrue(matrix == nil)
-    }
-    
     func test_invalidMatrices_failToMultiply() {
         let inputA = CPUMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8)!
         let inputB = CPUMatrix(rowCount: 3, columnCount: 6, columnCountAlignment: 8)!
@@ -47,7 +21,7 @@ class CPUPipeline_tests: XCTestCase {
         
         let expectation = expectationWithDescription("multiplication completed")
 
-        pipeline.multiplyAsync(data, repeatCount: 1) { success in
+        CPUPipeline.multiplyAsync(data, repeatCount: 1) { success in
             XCTAssertFalse(success)
             expectation.fulfill()
         }
@@ -63,7 +37,7 @@ class CPUPipeline_tests: XCTestCase {
         
         let expectation = expectationWithDescription("multiplication completed")
         
-        pipeline.multiplyAsync(data, repeatCount: -1) { success in
+        CPUPipeline.multiplyAsync(data, repeatCount: -1) { success in
             XCTAssertFalse(success)
             expectation.fulfill()
         }
@@ -93,7 +67,7 @@ class CPUPipeline_tests: XCTestCase {
 
         let expectation = expectationWithDescription("multiplication completed")
         
-        pipeline.multiplyAsync(data, repeatCount: 0) { success in
+        CPUPipeline.multiplyAsync(data, repeatCount: 0) { success in
             XCTAssertTrue(success)
             let epsilon = MatrixElement(0.000001)
             
