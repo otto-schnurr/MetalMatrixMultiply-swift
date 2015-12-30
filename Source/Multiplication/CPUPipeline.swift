@@ -63,9 +63,9 @@ private func _multiply(data: MultiplicationData) {
         Int32(data.output.rowCount), Int32(data.output.columnCount),
         Int32(data.inputB.rowCount),
         1.0,
-        data.inputA.baseAddress, Int32(data.inputA.bytesPerRow / sizeof(Float32)),
-        data.inputB.baseAddress, Int32(data.inputB.bytesPerRow / sizeof(Float32)),
+        data.inputA.baseAddress, Int32(data.inputA.paddedColumnCount),
+        data.inputB.baseAddress, Int32(data.inputB.paddedColumnCount),
         0.0,
-        data.output.baseAddress, Int32(data.output.bytesPerRow / sizeof(Float32))
+        data.output.baseAddress, Int32(data.output.paddedColumnCount)
     )
 }

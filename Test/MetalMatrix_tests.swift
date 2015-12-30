@@ -64,14 +64,14 @@ class MetalMatrix_tests: XCTestCase {
 
         for columnCount in 1...8 {
             let matrix = MetalMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment, device: device)!
-            XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
-            XCTAssertEqual(matrix.byteCount, alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.paddedColumnCount, alignment)
+            XCTAssertEqual(matrix.byteCount, alignment * sizeof(MatrixElement))
         }
       
         for columnCount in 9...16 {
             let matrix = MetalMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment, device: device)!
-            XCTAssertEqual(matrix.bytesPerRow, 2 * alignment * sizeof(Float32))
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.paddedColumnCount, 2 * alignment)
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(MatrixElement))
         }
     }
 
@@ -80,8 +80,8 @@ class MetalMatrix_tests: XCTestCase {
 
         for rowCount in 1...5 {
             let matrix = MetalMatrix(rowCount: rowCount, columnCount: 1, columnCountAlignment: alignment, device: device)!
-            XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
-            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.paddedColumnCount, alignment)
+            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(MatrixElement))
         }
     }
 
@@ -93,7 +93,7 @@ class MetalMatrix_tests: XCTestCase {
         XCTAssertTrue(resizableMatrix.resizeToRowCount(5, columnCount: 5))
         XCTAssertEqual(matrix.rowCount, 5)
         XCTAssertEqual(matrix.columnCount, 5)
-        XCTAssertEqual(matrix.bytesPerRow, 8 * sizeof(Float32))
+        XCTAssertEqual(matrix.paddedColumnCount, 8)
         XCTAssertFalse(matrix.baseAddress == nil)
     }
     
@@ -102,20 +102,20 @@ class MetalMatrix_tests: XCTestCase {
 
         for columnCount in 1...8 {
             resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
-            XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
-            XCTAssertEqual(matrix.byteCount, alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.paddedColumnCount, alignment)
+            XCTAssertEqual(matrix.byteCount, alignment * sizeof(MatrixElement))
         }
         
         for columnCount in 9...16 {
             resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
-            XCTAssertEqual(matrix.bytesPerRow, 2 * alignment * sizeof(Float32))
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.paddedColumnCount, 2 * alignment)
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(MatrixElement))
         }
 
         for rowCount in 1...5 {
             resizableMatrix.resizeToRowCount(rowCount, columnCount: 1)
-            XCTAssertEqual(matrix.bytesPerRow, alignment * sizeof(Float32))
-            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(Float32))
+            XCTAssertEqual(matrix.paddedColumnCount, alignment)
+            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(MatrixElement))
         }
     }
 

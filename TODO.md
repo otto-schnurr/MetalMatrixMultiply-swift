@@ -2,8 +2,6 @@ TODO
 ====
 
 ### Clean up
-- Dry up `Float32` references.
-- Offer float alternative to `bytesPerRow` (maybe `paddedColumnCount`).
 - Consider `Int32` size types for direct insertion into BLAS.
 - Fix paths to license file.
 
