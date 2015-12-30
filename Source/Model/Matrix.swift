@@ -21,14 +21,16 @@ protocol Matrix: class {
     /// The number of elements in every row of the matrix.
     var columnCount: Int { get }
     
-    /// A constant stride that separates every element within a column
-    /// of the matrix.
+    /// A constant stride of elements that separates every element within
+    /// a column of this matrix.
+    ///
+    /// - Note: BLAS refers to this as the *leading dimension* of the matrix.
     ///
     /// - Invariant:
     /// ```
-    /// m.columnCount * sizeof(MatrixElement) <= m.bytesPerRow
+    /// m.paddedColumnCount >= m.columnCount
     /// ```
-    var bytesPerRow: Int { get }
+    var paddedColumnCount: Int { get }
     
     var baseAddress: UnsafeMutablePointer<MatrixElement> { get }
     
@@ -38,4 +40,17 @@ protocol Matrix: class {
     /// ```
     var byteCount: Int { get }
     
+}
+
+extension Matrix {
+    
+    /// A constant stride of bytes that separates every element within
+    /// a column of this matrix.
+    ///
+    /// - Invariant:
+    /// ```
+    /// m.bytesPerRow == m.paddedColumnCount * sizeof(MatrixElement)
+    /// ```
+    var bytesPerRow: Int { return paddedColumnCount * sizeof(MatrixElement) }
+
 }

@@ -22,7 +22,7 @@ class BufferedMatrix: Matrix {
     
     private(set) var rowCount: Int
     private(set) var columnCount: Int
-    private(set) var bytesPerRow: Int
+    private(set) var paddedColumnCount: Int
     
     var baseAddress: UnsafeMutablePointer<MatrixElement> {
         return UnsafeMutablePointer<MatrixElement>(buffer.memory)
@@ -39,7 +39,7 @@ class BufferedMatrix: Matrix {
     /// - parameter columnCountAlignment:
     ///   A span of floating point elements that rows of the matrix should
     ///   align with. When necessary, padding is added to each row to achieve
-    ///   this alignment. See `bytesPerRow`.
+    ///   this alignment. See `paddedColumnCount` and `bytesPerRow`.
     init?(
         rowCount: Int,
         columnCount: Int,
@@ -47,31 +47,34 @@ class BufferedMatrix: Matrix {
         buffer: ResizableBuffer
     ) {
         guard
-            let bytesPerRow = _bytesPerRowForRowCount(
-                rowCount,
-                columnCount: columnCount,
-                columnCountAlignment: columnCountAlignment
-            ) where buffer.resizeToLength(rowCount * bytesPerRow)
+            let paddedColumnCount = _padCount(
+                columnCount, toAlignment: columnCountAlignment
+            ),
+            let byteCount = _byteCountForRowCount(
+                rowCount, paddedColumnCount: paddedColumnCount
+            ) where buffer.resizeToLength(byteCount)
         else {
             self.rowCount = 0
             self.columnCount = 0
+            self.paddedColumnCount = 0
             self.columnCountAlignment = 0
-            self.bytesPerRow = 0
             self.buffer = buffer
             return nil
         }
         
         assert(rowCount > 0)
         assert(columnCount > 0)
-        assert(bytesPerRow > 0)
+        assert(paddedColumnCount > 0)
         assert(columnCountAlignment > 0)
         assert(buffer.length > 0)
         
         self.rowCount = rowCount
         self.columnCount = columnCount
         self.columnCountAlignment = columnCountAlignment
-        self.bytesPerRow = bytesPerRow
+        self.paddedColumnCount = paddedColumnCount
         self.buffer = buffer
+        
+        assert(bytesPerRow > 0)
     }
     
     // MARK: Private
@@ -91,17 +94,18 @@ class ResizableBufferedMatrix: BufferedMatrix {
         else { return true }
         
         guard
-            let newBytesPerRow = _bytesPerRowForRowCount(
-                newRowCount,
-                columnCount: newColumnCount,
-                columnCountAlignment: columnCountAlignment
+            let newPaddedColumnCount = _padCount(
+                newColumnCount, toAlignment: columnCountAlignment
+            ),
+            let newByteCount = _byteCountForRowCount(
+                newRowCount, paddedColumnCount: newPaddedColumnCount
             )
         else { return false }
         
         assert(newRowCount > 0)
         assert(newColumnCount > 0)
-        assert(newBytesPerRow > 0)
-        let newByteCount = newRowCount * newBytesPerRow
+        assert(newPaddedColumnCount > 0)
+        assert(newByteCount > 0)
         
         if buffer.length < newByteCount {
             guard buffer.resizeToLength(newByteCount) else {
@@ -110,10 +114,12 @@ class ResizableBufferedMatrix: BufferedMatrix {
         }
         
         assert(buffer.length >= newByteCount)
-        self.rowCount = newRowCount
-        self.columnCount = newColumnCount
-        self.bytesPerRow = newBytesPerRow
         
+        rowCount = newRowCount
+        columnCount = newColumnCount
+        paddedColumnCount = newPaddedColumnCount
+        
+        assert(bytesPerRow > 0)
         return true
     }
     
@@ -130,17 +136,7 @@ private func _padCount(count: Int, toAlignment alignment: Int) -> Int? {
     return count + alignment - remainder
 }
 
-private func _bytesPerRowForRowCount(
-    rowCount: Int,
-    columnCount: Int,
-    columnCountAlignment: Int
-) -> Int? {
-    guard
-        rowCount > 0,
-        let columnsPerRow = _padCount(
-            columnCount, toAlignment: columnCountAlignment
-        )
-    else { return nil }
-    
-    return columnsPerRow * sizeof(MatrixElement)
+private func _byteCountForRowCount(rowCount: Int, paddedColumnCount: Int) -> Int? {
+    guard rowCount > 0 && paddedColumnCount > 0 else { return nil }
+    return rowCount * paddedColumnCount * sizeof(MatrixElement)
 }
