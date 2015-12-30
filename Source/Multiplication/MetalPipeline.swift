@@ -26,8 +26,24 @@ class MetalPipeline {
     ///   to achieve this alignment. See `BufferedMatrix`.
     init?(device: MTLDevice, columnCountAlignment: Int) {
         self.device = device
+        commandQueue = self.device.newCommandQueue()
+        library = _loadLibraryForDevice(device)
+
+        if let kernelFunction = library?.newFunctionWithName("MultiplyMatrices") {
+            state = try? device.newComputePipelineStateWithFunction(kernelFunction)
+        } else {
+            state = nil
+        }
+
         self.columnCountAlignment = columnCountAlignment
-        guard self.columnCountAlignment > 0 else { return nil }
+        
+        guard
+            self.columnCountAlignment > 0 && library != nil && state != nil
+        else { return nil }
+        
+        assert(self.columnCountAlignment > 0)
+        assert(library != nil)
+        assert(state != nil)
     }
     
     func newMatrixWithRowCount(
@@ -43,7 +59,20 @@ class MetalPipeline {
     }
 
     // MARK: Private
-    let device: MTLDevice
-    let columnCountAlignment: Int
+    private let device: MTLDevice
+    private let commandQueue: MTLCommandQueue
+    private let library: MTLLibrary!
+    private let state: MTLComputePipelineState!
+    private let columnCountAlignment: Int
+}
 
+
+// MARK: Private
+private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
+    let bundle = NSBundle(forClass: MetalPipeline.self)
+    guard
+        let filePath = bundle.pathForResource(nil, ofType: "metallib")
+    else { return nil }
+    
+    return try? device.newLibraryWithFile(filePath)
 }
