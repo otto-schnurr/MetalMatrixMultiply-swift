@@ -15,34 +15,32 @@ class CPUPipeline_tests: XCTestCase {
 
     func test_invalidMatrices_failToMultiply() {
         let inputA = CPUMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8)!
-        let inputB = CPUMatrix(rowCount: 3, columnCount: 6, columnCountAlignment: 8)!
+        let inputB = CPUMatrix(rowCount: 2, columnCount: 6, columnCountAlignment: 8)!
         let output = CPUMatrix(rowCount: 5, columnCount: 6, columnCountAlignment: 8)!
-        let data = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
+        let badData = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
         
-        let expectation = expectationWithDescription("multiplication completed")
-
-        CPUPipeline.multiplyAsync(data, repeatCount: 1) { success in
-            XCTAssertFalse(success)
-            expectation.fulfill()
+        do {
+            try CPUPipeline.multiplyData(badData)
+            XCTFail("Multiplied matrices with bad output dimensions.")
+        } catch PipelineError.InvalidOutputDimensions {
+        } catch {
+            XCTFail("Failed to report bad output dimensions.")
         }
-
-        waitForExpectationsWithTimeout(1.0) { error in XCTAssertNil(error) }
     }
     
     func test_invalidRepeatCount_failsToMultiply() {
         let inputA = CPUMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8)!
-        let inputB = CPUMatrix(rowCount: 3, columnCount: 6, columnCountAlignment: 8)!
+        let inputB = CPUMatrix(rowCount: 2, columnCount: 6, columnCountAlignment: 8)!
         let output = CPUMatrix(rowCount: 4, columnCount: 6, columnCountAlignment: 8)!
         let data = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
         
-        let expectation = expectationWithDescription("multiplication completed")
-        
-        CPUPipeline.multiplyAsync(data, repeatCount: -1) { success in
-            XCTAssertFalse(success)
-            expectation.fulfill()
+        do {
+            try CPUPipeline.multiplyData(data, repeatCount: -1)
+            XCTFail("Multiplied matrices with bad repeat count.")
+        } catch PipelineError.InvalidRepeatCount {
+        } catch {
+            XCTFail("Failed to report bad repeat count.")
         }
-        
-        waitForExpectationsWithTimeout(1.0) { error in XCTAssertNil(error) }
     }
     
     func test_successfulMultiplication_hasExpectedOutput() {
@@ -65,22 +63,20 @@ class CPUPipeline_tests: XCTestCase {
         secondRowB[0] = 7.0
         secondRowB[1] = 8.0
 
-        let expectation = expectationWithDescription("multiplication completed")
-        
-        CPUPipeline.multiplyAsync(data, repeatCount: 0) { success in
-            XCTAssertTrue(success)
+        do {
+            try CPUPipeline.multiplyData(data)
+
             let epsilon = MatrixElement(0.000001)
-            
             let firstRow = output.baseAddress
             let secondRow = output.baseAddress + output.paddedColumnCount
+
             XCTAssertEqualWithAccuracy(firstRow[0], 26.0, accuracy: epsilon)
             XCTAssertEqualWithAccuracy(firstRow[1], 30.0, accuracy: epsilon)
             XCTAssertEqualWithAccuracy(secondRow[0], 38.0, accuracy: epsilon)
             XCTAssertEqualWithAccuracy(secondRow[1], 44.0, accuracy: epsilon)
-            
-            expectation.fulfill()
+        } catch {
+            XCTFail("Failed to multiply matrices.")
         }
-        
-        waitForExpectationsWithTimeout(1.0) { error in XCTAssertNil(error) }
     }
+
 }

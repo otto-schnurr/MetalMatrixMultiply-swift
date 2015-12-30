@@ -16,28 +16,22 @@ private let _columnCountAlignment = 8
 /// An interface for performing matrix mutliplication on the CPU.
 struct CPUPipeline {
 
-    static func multiplyAsync(
+    static func multiplyData(
         data: MultiplicationData,
-        repeatCount: Int,
-        completion: (success: Bool) -> Void
-    ) {
-        guard
-            data.inputDimensionsAreValid &&
-            data.outputDimensionsAreValid &&
-            repeatCount >= 0
-        else {
-            completion(success: false)
-            return
+        repeatCount: Int = 0
+    ) throws {
+        guard data.inputDimensionsAreValid else {
+            throw PipelineError.InvalidInputDimensions
+        }
+        guard data.outputDimensionsAreValid else {
+            throw PipelineError.InvalidOutputDimensions
+        }
+        guard repeatCount >= 0 else {
+            throw PipelineError.InvalidRepeatCount
         }
     
-        let queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
-
-        dispatch_async(queue) {
-            assert(!NSThread.isMainThread())
-            let count = 1 + repeatCount
-            for _ in 1 ... count { _multiply(data) }
-            completion(success: true)
-        }
+        let count = 1 + repeatCount
+        for _ in 1...count { _multiply(data) }
     }
     
 }
