@@ -9,12 +9,18 @@
 //     http://opensource.org/licenses/MIT
 //
 
+import Metal
+
 /// An interface for vending GPU matrices and performing matrix multiplication
 /// on the GPU.
 ///
 /// A Metal pipeline and its associated matrices are heavy-weight objects
 /// that are intended to be created once and used multiple times.
 class MetalPipeline {
+    
+    init?(device: MTLDevice) {
+        self.device = device
+    }
     
     func newMatrixWithRowCount(
         rowCount: Int,
@@ -23,5 +29,8 @@ class MetalPipeline {
         // !!!: implement me
         return nil
     }
+
+    // MARK: Private
+    let device: MTLDevice
 
 }

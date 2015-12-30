@@ -13,7 +13,9 @@ class MetalPipeline_tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        pipeline = MetalPipeline()
+        if let device = MTLCreateSystemDefaultDevice() {
+            pipeline = MetalPipeline(device: device)
+        }
     }
     
     override func tearDown() {
@@ -21,7 +23,7 @@ class MetalPipeline_tests: XCTestCase {
         super.tearDown()
     }
     
-    func test_pipeline_initializesSuccessfully() {
+    func test_pipeline_isAvailable() {
         XCTAssertNotNil(pipeline)
     }
 
