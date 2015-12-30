@@ -78,16 +78,16 @@ class CPUPipeline_tests: XCTestCase {
         let data = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
         
         let firstRowA = inputA.baseAddress
+        let secondRowA = inputA.baseAddress + inputA.paddedColumnCount
         firstRowA[0] = 1.0
         firstRowA[1] = 2.0
-        let secondRowA = inputA.baseAddress + inputA.paddedColumnCount
         secondRowA[0] = 3.0
         secondRowA[1] = 4.0
         
         let firstRowB = inputB.baseAddress
+        let secondRowB = inputB.baseAddress + inputB.paddedColumnCount
         firstRowB[0] = 5.0
         firstRowB[1] = 6.0
-        let secondRowB = inputB.baseAddress + inputB.paddedColumnCount
         secondRowB[0] = 7.0
         secondRowB[1] = 8.0
 
@@ -98,9 +98,9 @@ class CPUPipeline_tests: XCTestCase {
             let epsilon = MatrixElement(0.000001)
             
             let firstRow = output.baseAddress
+            let secondRow = output.baseAddress + output.paddedColumnCount
             XCTAssertEqualWithAccuracy(firstRow[0], 26.0, accuracy: epsilon)
             XCTAssertEqualWithAccuracy(firstRow[1], 30.0, accuracy: epsilon)
-            let secondRow = output.baseAddress + output.paddedColumnCount
             XCTAssertEqualWithAccuracy(secondRow[0], 38.0, accuracy: epsilon)
             XCTAssertEqualWithAccuracy(secondRow[1], 44.0, accuracy: epsilon)
             
