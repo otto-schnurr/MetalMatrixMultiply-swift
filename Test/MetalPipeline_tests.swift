@@ -33,4 +33,14 @@ class MetalPipeline_tests: XCTestCase {
         XCTAssertTrue(pipeline == nil)
     }
 
+    func test_pipeline_vendsValidMatrix() {
+        let matrix = pipeline.newMatrixWithRowCount(4, columnCount: 4)
+        XCTAssertFalse(matrix == nil)
+    }
+    
+    func test_pipeline_doesNotVendInvalidMatrix() {
+        let matrix = pipeline.newMatrixWithRowCount(0, columnCount: 4)
+        XCTAssertTrue(matrix == nil)
+    }
+    
 }

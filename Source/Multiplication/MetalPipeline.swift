@@ -26,18 +26,24 @@ class MetalPipeline {
     ///   to achieve this alignment. See `BufferedMatrix`.
     init?(device: MTLDevice, columnCountAlignment: Int) {
         self.device = device
-        guard columnCountAlignment > 0 else { return nil }
+        self.columnCountAlignment = columnCountAlignment
+        guard self.columnCountAlignment > 0 else { return nil }
     }
     
     func newMatrixWithRowCount(
         rowCount: Int,
         columnCount: Int
     ) -> MetalMatrix? {
-        // !!!: implement me
-        return nil
+        return MetalMatrix(
+            rowCount: rowCount,
+            columnCount: columnCount,
+            columnCountAlignment: columnCountAlignment,
+            device: device
+        )
     }
 
     // MARK: Private
     let device: MTLDevice
+    let columnCountAlignment: Int
 
 }
