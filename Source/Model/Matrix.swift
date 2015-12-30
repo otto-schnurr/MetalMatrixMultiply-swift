@@ -9,6 +9,9 @@
 //     http://opensource.org/licenses/MIT
 //
 
+// TODO: Can this somehow be nested as Matrix.Element?
+typealias MatrixElement = Float32
+
 /// A row-major matrix of 32-bit floating point numbers.
 protocol Matrix: class {
 
@@ -23,11 +26,11 @@ protocol Matrix: class {
     ///
     /// - Invariant:
     /// ```
-    /// m.columnCount * sizeof(Float32) <= m.bytesPerRow
+    /// m.columnCount * sizeof(MatrixElement) <= m.bytesPerRow
     /// ```
     var bytesPerRow: Int { get }
     
-    var baseAddress: UnsafeMutablePointer<Float32> { get }
+    var baseAddress: UnsafeMutablePointer<MatrixElement> { get }
     
     /// - Invariant:
     /// ```

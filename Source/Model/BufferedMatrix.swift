@@ -24,8 +24,8 @@ class BufferedMatrix: Matrix {
     private(set) var columnCount: Int
     private(set) var bytesPerRow: Int
     
-    var baseAddress: UnsafeMutablePointer<Float32> {
-        return UnsafeMutablePointer<Float32>(buffer.memory)
+    var baseAddress: UnsafeMutablePointer<MatrixElement> {
+        return UnsafeMutablePointer<MatrixElement>(buffer.memory)
     }
     
     var byteCount: Int {
@@ -142,5 +142,5 @@ private func _bytesPerRowForRowCount(
         )
     else { return nil }
     
-    return columnsPerRow * sizeof(Float32)
+    return columnsPerRow * sizeof(MatrixElement)
 }
