@@ -1,10 +1,6 @@
 TODO
 ====
 
-### Clean up
-- Consider `Int32` size types for direct insertion into BLAS.
-- Fix paths to license file.
-
 ### Implement `MetalMultiplicationTask`
 - Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
 - Implement metal shader.

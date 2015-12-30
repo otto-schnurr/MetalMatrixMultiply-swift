@@ -6,7 +6,7 @@
 //
 //
 //  MIT License
-//     file: ../LICENSE.txt
+//     file: ../../LICENSE.txt
 //     http://opensource.org/licenses/MIT
 //
 

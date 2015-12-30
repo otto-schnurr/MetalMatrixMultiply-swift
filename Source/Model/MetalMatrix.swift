@@ -5,7 +5,7 @@
 //  Copyright © 2015 Otto Schnurr. All rights reserved.
 //
 //  MIT License
-//     file: ../LICENSE.txt
+//     file: ../../LICENSE.txt
 //     http://opensource.org/licenses/MIT
 //
 
