@@ -14,7 +14,7 @@ class MetalPipeline_tests: XCTestCase {
     override func setUp() {
         super.setUp()
         if let device = MTLCreateSystemDefaultDevice() {
-            pipeline = MetalPipeline(device: device)
+            pipeline = MetalPipeline(device: device, columnCountAlignment: 8)
         }
     }
     
@@ -25,6 +25,12 @@ class MetalPipeline_tests: XCTestCase {
     
     func test_pipeline_isAvailable() {
         XCTAssertNotNil(pipeline)
+    }
+
+    func test_pipelineWithBadAlignment_cannnotBeCreated() {
+        let device = MTLCreateSystemDefaultDevice()!
+        let pipeline = MetalPipeline(device: device, columnCountAlignment: 0)
+        XCTAssertTrue(pipeline == nil)
     }
 
 }

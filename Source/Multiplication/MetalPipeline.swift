@@ -18,8 +18,15 @@ import Metal
 /// that are intended to be created once and used multiple times.
 class MetalPipeline {
     
-    init?(device: MTLDevice) {
+    /// Create a Metal pipeline that vends matrices with the specified alignment.
+    ///
+    /// - parameter columnCountAlignment:
+    ///   A span of floating point elements that rows of every matrix should
+    ///   align with. When necessary, padding is added to each row of a matrix
+    ///   to achieve this alignment. See `BufferedMatrix`.
+    init?(device: MTLDevice, columnCountAlignment: Int) {
         self.device = device
+        guard columnCountAlignment > 0 else { return nil }
     }
     
     func newMatrixWithRowCount(
