@@ -31,6 +31,9 @@ class MetalMatrix: ResizableBufferedMatrix {
 
 class MetalBuffer: ResizableBuffer {
     
+    let device: MTLDevice
+    private(set) var buffer: MTLBuffer?
+    
     var memory: UnsafeMutablePointer<Void> {
         guard let buffer = buffer else { return nil }
         return buffer.contents()
@@ -56,10 +59,6 @@ class MetalBuffer: ResizableBuffer {
     }
     
     init(device: MTLDevice) { self.device = device }
-    
-    // MARK: Private
-    private let device: MTLDevice
-    private var buffer: MTLBuffer?
     
 }
 
