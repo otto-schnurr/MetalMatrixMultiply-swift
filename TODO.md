@@ -2,7 +2,6 @@ TODO
 ====
 
 ### Implement `MetalPipeline`
-- Work around kernel panic on second creation of `MetalPipeline`.
 - Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
 - logic test: `MetalPipeline` multiplication.
     - Implement metal shader.
