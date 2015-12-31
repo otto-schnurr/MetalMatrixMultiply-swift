@@ -58,6 +58,25 @@ class MetalPipeline {
         )
     }
 
+    func multiplyData<M: MetalMatrix>(
+        data: MultiplicationData<M>,
+        repeatCount: Int = 0
+    ) throws {
+        guard data.inputDimensionsAreValid else {
+            throw PipelineError.InvalidInputDimensions
+        }
+        guard data.outputDimensionsAreValid else {
+            throw PipelineError.InvalidOutputDimensions
+        }
+        guard repeatCount >= 0 else {
+            throw PipelineError.InvalidRepeatCount
+        }
+        
+        // !!!: implement me
+//        let count = 1 + repeatCount
+//        for _ in 1...count { _multiply(data) }
+    }
+
     // MARK: Private
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue

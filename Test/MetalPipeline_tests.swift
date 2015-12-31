@@ -43,6 +43,36 @@ class MetalPipeline_tests: XCTestCase {
         XCTAssertTrue(matrix == nil)
     }
     
+    func test_invalidMatrices_failToMultiply() {
+        let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 4)!
+        let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 6)!
+        let output = pipeline.newMatrixWithRowCount(5, columnCount: 6)!
+        let badData = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
+        
+        do {
+            try pipeline.multiplyData(badData)
+            XCTFail("Multiplied matrices with bad output dimensions.")
+        } catch PipelineError.InvalidOutputDimensions {
+        } catch {
+            XCTFail("Failed to report bad output dimensions.")
+        }
+    }
+    
+    func test_invalidRepeatCount_failsToMultiply() {
+        let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 4)!
+        let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 6)!
+        let output = pipeline.newMatrixWithRowCount(4, columnCount: 6)!
+        let data = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
+        
+        do {
+            try pipeline.multiplyData(data, repeatCount: -1)
+            XCTFail("Multiplied matrices with bad repeat count.")
+        } catch PipelineError.InvalidRepeatCount {
+        } catch {
+            XCTFail("Failed to report bad repeat count.")
+        }
+    }
+    
 }
 
 
