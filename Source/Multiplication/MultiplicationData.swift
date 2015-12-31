@@ -13,11 +13,11 @@
 /// ```
 /// output = A^T * B
 /// ```
-struct MultiplicationData {
+struct MultiplicationData<M: Matrix> {
 
-    let inputA: Matrix
-    let inputB: Matrix
-    let output: Matrix
+    let inputA: M
+    let inputB: M
+    let output: M
 
     var inputDimensionsAreValid: Bool {
         return inputA.rowCount == inputB.rowCount
