@@ -18,6 +18,8 @@ import Metal
 /// that are intended to be created once and used multiple times.
 class MetalPipeline {
     
+    let device: MTLDevice
+
     /// Create a Metal pipeline that vends matrices with the specified alignment.
     ///
     /// - parameter columnCountAlignment:
@@ -70,6 +72,14 @@ class MetalPipeline {
         guard repeatCount >= 0 else {
             throw PipelineError.InvalidRepeatCount
         }
+        guard
+            let deviceA = data.inputA.metalBuffer?.device,
+            let deviceB = data.inputB.metalBuffer?.device,
+            let deviceOutput = data.output.metalBuffer?.device
+            where deviceA == device && deviceB == device && deviceOutput == device
+        else {
+            throw PipelineError.IncompatibleDevice
+        }
         
         // !!!: implement me
 //        let count = 1 + repeatCount
@@ -77,7 +87,6 @@ class MetalPipeline {
     }
 
     // MARK: Private
-    private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private let library: MTLLibrary!
     private let state: MTLComputePipelineState!
@@ -93,4 +102,8 @@ private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
     else { return nil }
     
     return try? device.newLibraryWithFile(filePath)
+}
+
+private func ==(deviceA: MTLDevice, deviceB: MTLDevice) -> Bool {
+    return unsafeAddressOf(deviceA) == unsafeAddressOf(deviceB)
 }

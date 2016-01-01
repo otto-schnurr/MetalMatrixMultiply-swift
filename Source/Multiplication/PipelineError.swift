@@ -13,4 +13,5 @@ enum PipelineError: ErrorType {
     case InvalidInputDimensions
     case InvalidOutputDimensions
     case InvalidRepeatCount
+    case IncompatibleDevice
 }

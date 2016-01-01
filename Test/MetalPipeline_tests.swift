@@ -73,6 +73,26 @@ class MetalPipeline_tests: XCTestCase {
         }
     }
     
+    func test_incompatibleDevice_failsToMultiply() {
+        let defaultDevice = MTLCreateSystemDefaultDevice()!
+        let canCreateIncompatibleDevice =
+            unsafeAddressOf(defaultDevice) != unsafeAddressOf(pipeline.device)
+        guard canCreateIncompatibleDevice else { return }
+        
+        let inputA = MetalMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8, device: defaultDevice)!
+        let inputB = MetalMatrix(rowCount: 2, columnCount: 6, columnCountAlignment: 8, device: defaultDevice)!
+        let output = MetalMatrix(rowCount: 4, columnCount: 6, columnCountAlignment: 8, device: defaultDevice)!
+        let data = MetalData(inputA: inputA, inputB: inputB, output: output)
+        
+        do {
+            try pipeline.multiplyData(data)
+            XCTFail("Multiplied matrices with incompatible device.")
+        } catch PipelineError.IncompatibleDevice {
+        } catch {
+            XCTFail("Failed to report incompatible device.")
+        }
+    }
+    
 }
 
 
