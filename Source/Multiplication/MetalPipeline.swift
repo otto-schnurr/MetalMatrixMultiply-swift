@@ -73,10 +73,16 @@ class MetalPipeline {
             throw PipelineError.InvalidRepeatCount
         }
         guard
-            let deviceA = data.inputA.metalBuffer?.device,
-            let deviceB = data.inputB.metalBuffer?.device,
-            let deviceOutput = data.output.metalBuffer?.device
-            where deviceA == device && deviceB == device && deviceOutput == device
+            let bufferA = data.inputA.metalBuffer,
+            bufferB = data.inputB.metalBuffer,
+            outputBuffer = data.output.metalBuffer
+        else {
+            throw PipelineError.InvalidBuffer
+        }
+        guard
+            bufferA.device == device &&
+            bufferB.device == device &&
+            outputBuffer.device == device
         else {
             throw PipelineError.IncompatibleDevice
         }

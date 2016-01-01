@@ -3,7 +3,6 @@ TODO
 
 ### Implement `MetalPipeline`
 - logic test: `MetalPipeline` multiplication.
-    - Unavailable buffer errors.
     - Implement metal shader.
     - Execute metal shader.
 
