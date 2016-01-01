@@ -13,12 +13,18 @@
 /// ```
 /// output = A^T * B
 /// ```
-struct MultiplicationData<M: Matrix> {
+protocol MultiplicationData {
 
-    let inputA: M
-    let inputB: M
-    let output: M
+    typealias MatrixType: Matrix
 
+    var inputA: MatrixType { get }
+    var inputB: MatrixType { get }
+    var output: MatrixType { get }
+
+}
+
+extension MultiplicationData {
+    
     var inputDimensionsAreValid: Bool {
         return inputA.rowCount == inputB.rowCount
     }

@@ -58,10 +58,9 @@ class MetalPipeline {
         )
     }
 
-    func multiplyData<M: MetalMatrix>(
-        data: MultiplicationData<M>,
-        repeatCount: Int = 0
-    ) throws {
+    func multiplyData<
+        Data: MultiplicationData where Data.MatrixType: MetalMatrix
+    >(data: Data, repeatCount: Int = 0) throws {
         guard data.inputDimensionsAreValid else {
             throw PipelineError.InvalidInputDimensions
         }

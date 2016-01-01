@@ -47,7 +47,7 @@ class MetalPipeline_tests: XCTestCase {
         let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 4)!
         let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 6)!
         let output = pipeline.newMatrixWithRowCount(5, columnCount: 6)!
-        let badData = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
+        let badData = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
             try pipeline.multiplyData(badData)
@@ -62,7 +62,7 @@ class MetalPipeline_tests: XCTestCase {
         let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 4)!
         let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 6)!
         let output = pipeline.newMatrixWithRowCount(4, columnCount: 6)!
-        let data = MultiplicationData(inputA: inputA, inputB: inputB, output: output)
+        let data = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
             try pipeline.multiplyData(data, repeatCount: -1)
@@ -90,3 +90,13 @@ private var _metalDeviceForPipelineTesting: MTLDevice? = {
 
     return MTLCreateSystemDefaultDevice()
 }()
+
+private struct MetalData: MultiplicationData {
+    
+    typealias MatrixType = MetalMatrix
+    
+    let inputA: MatrixType
+    let inputB: MatrixType
+    let output: MatrixType
+    
+}
