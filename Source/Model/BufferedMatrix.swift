@@ -20,6 +20,7 @@ protocol ResizableBuffer: Buffer {
 
 class BufferedMatrix: Matrix {
     
+    let buffer: ResizableBuffer
     private(set) var rowCount: Int
     private(set) var columnCount: Int
     private(set) var paddedColumnCount: Int
@@ -79,7 +80,6 @@ class BufferedMatrix: Matrix {
     
     // MARK: Private
     private let columnCountAlignment: Int
-    private let buffer: ResizableBuffer
 
 }
 
