@@ -134,7 +134,7 @@
 			children = (
 				27455EC11C190A2700D66961 /* main.swift */,
 				27E97DF31C29FD8900400330 /* Model */,
-				27E97DF41C29FDE700400330 /* Multiplication */,
+				27E97DF41C29FDE700400330 /* Pipeline */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -164,7 +164,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		27E97DF41C29FDE700400330 /* Multiplication */ = {
+		27E97DF41C29FDE700400330 /* Pipeline */ = {
 			isa = PBXGroup;
 			children = (
 				271119661C3309120078AE67 /* CPUPipeline.swift */,
@@ -173,7 +173,7 @@
 				27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */,
 				27E84CEF1C3450F200B57034 /* PipelineError.swift */,
 			);
-			path = Multiplication;
+			path = Pipeline;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
