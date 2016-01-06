@@ -22,11 +22,11 @@ class MetalPipeline {
 
     /// Create a Metal pipeline that vends matrices with the specified alignment.
     ///
-    /// - parameter columnCountAlignment:
+    /// - parameter countAlignment:
     ///   A span of floating point elements that rows of every matrix should
     ///   align with. When necessary, padding is added to each row of a matrix
     ///   to achieve this alignment. See `BufferedMatrix`.
-    init?(device: MTLDevice, columnCountAlignment: Int) {
+    init?(device: MTLDevice, countAlignment: Int) {
         self.device = device
         commandQueue = self.device.newCommandQueue()
         library = _loadLibraryForDevice(device)
@@ -37,13 +37,13 @@ class MetalPipeline {
             state = nil
         }
 
-        self.columnCountAlignment = columnCountAlignment
+        self.countAlignment = countAlignment
         
         guard
-            self.columnCountAlignment > 0 && library != nil && state != nil
+            self.countAlignment > 0 && library != nil && state != nil
         else { return nil }
         
-        assert(self.columnCountAlignment > 0)
+        assert(self.countAlignment > 0)
         assert(library != nil)
         assert(state != nil)
     }
@@ -55,7 +55,7 @@ class MetalPipeline {
         return MetalMatrix(
             rowCount: rowCount,
             columnCount: columnCount,
-            columnCountAlignment: columnCountAlignment,
+            countAlignment: countAlignment,
             device: device
         )
     }
@@ -96,7 +96,7 @@ class MetalPipeline {
     private let commandQueue: MTLCommandQueue
     private let library: MTLLibrary!
     private let state: MTLComputePipelineState!
-    private let columnCountAlignment: Int
+    private let countAlignment: Int
 }
 
 

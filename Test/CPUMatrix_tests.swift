@@ -20,7 +20,7 @@ class CPUMatrix_tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        resizableMatrix = CPUMatrix(rowCount: 4, columnCount: 4, columnCountAlignment: 8)
+        resizableMatrix = CPUMatrix(rowCount: 4, columnCount: 4, countAlignment: 8)
     }
     
     override func tearDown() {
@@ -29,7 +29,7 @@ class CPUMatrix_tests: XCTestCase {
     }
     
     func test_invalidMatrix_isNil() {
-        let matrix = CPUMatrix(rowCount: 0, columnCount: 0, columnCountAlignment: 0)
+        let matrix = CPUMatrix(rowCount: 0, columnCount: 0, countAlignment: 0)
         XCTAssertNil(matrix)
     }
     
@@ -46,15 +46,17 @@ class CPUMatrix_tests: XCTestCase {
         let alignment = 8
 
         for columnCount in 1...8 {
-            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment)!
+            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, countAlignment: alignment)!
+            XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
         }
       
         for columnCount in 9...16 {
-            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, columnCountAlignment: alignment)!
+            let matrix = CPUMatrix(rowCount: 1, columnCount: columnCount, countAlignment: alignment)!
+            XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, 2 * alignment)
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
         }
     }
 
@@ -62,9 +64,17 @@ class CPUMatrix_tests: XCTestCase {
         let alignment = 8
 
         for rowCount in 1...5 {
-            let matrix = CPUMatrix(rowCount: rowCount, columnCount: 1, columnCountAlignment: alignment)!
+            let matrix = CPUMatrix(rowCount: rowCount, columnCount: 1, countAlignment: alignment)!
+            XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
+        }
+
+        for rowCount in 9...16 {
+            let matrix = CPUMatrix(rowCount: rowCount, columnCount: 1, countAlignment: alignment)!
+            XCTAssertEqual(matrix.paddedRowCount, 2 * alignment)
+            XCTAssertEqual(matrix.paddedColumnCount, alignment)
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
         }
     }
 
@@ -76,6 +86,7 @@ class CPUMatrix_tests: XCTestCase {
         XCTAssertTrue(resizableMatrix.resizeToRowCount(5, columnCount: 5))
         XCTAssertEqual(matrix.rowCount, 5)
         XCTAssertEqual(matrix.columnCount, 5)
+        XCTAssertEqual(matrix.paddedRowCount, 8)
         XCTAssertEqual(matrix.paddedColumnCount, 8)
         XCTAssertFalse(matrix.baseAddress == nil)
     }
@@ -85,20 +96,30 @@ class CPUMatrix_tests: XCTestCase {
 
         for columnCount in 1...8 {
             resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
+            XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
         }
         
         for columnCount in 9...16 {
             resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
+            XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, 2 * alignment)
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
         }
 
         for rowCount in 1...5 {
             resizableMatrix.resizeToRowCount(rowCount, columnCount: 1)
+            XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, rowCount * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
+        }
+
+        for rowCount in 9...16 {
+            resizableMatrix.resizeToRowCount(rowCount, columnCount: 1)
+            XCTAssertEqual(matrix.paddedRowCount, 2 * alignment)
+            XCTAssertEqual(matrix.paddedColumnCount, alignment)
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
         }
     }
     

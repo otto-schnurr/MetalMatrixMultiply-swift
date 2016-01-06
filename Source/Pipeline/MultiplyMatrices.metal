@@ -45,9 +45,9 @@ kernel void MultiplyMatrices(
     
     const device float* inputA [[ buffer(1) ]],
     const device float* inputB [[ buffer(2) ]],
-    device float*       output [[ buffer(3) ]]
+    device float*       output [[ buffer(3) ]],
 
-    ushort2 outputSection [[ thread_position_in_grid ]],
+    ushort2 outputSection [[ thread_position_in_grid ]]
 )
 {
     // !!!: implement me

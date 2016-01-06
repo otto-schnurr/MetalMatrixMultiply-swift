@@ -14,9 +14,9 @@ import XCTest
 class CPUPipeline_tests: XCTestCase {
 
     func test_invalidMatrices_failToMultiply() {
-        let inputA = CPUMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8)!
-        let inputB = CPUMatrix(rowCount: 2, columnCount: 6, columnCountAlignment: 8)!
-        let output = CPUMatrix(rowCount: 5, columnCount: 6, columnCountAlignment: 8)!
+        let inputA = CPUMatrix(rowCount: 2, columnCount: 4, countAlignment: 8)!
+        let inputB = CPUMatrix(rowCount: 2, columnCount: 6, countAlignment: 8)!
+        let output = CPUMatrix(rowCount: 5, columnCount: 6, countAlignment: 8)!
         let badData = TestData(inputA: inputA, inputB: inputB, output: output)
         
         do {
@@ -29,9 +29,9 @@ class CPUPipeline_tests: XCTestCase {
     }
     
     func test_invalidRepeatCount_failsToMultiply() {
-        let inputA = CPUMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8)!
-        let inputB = CPUMatrix(rowCount: 2, columnCount: 6, columnCountAlignment: 8)!
-        let output = CPUMatrix(rowCount: 4, columnCount: 6, columnCountAlignment: 8)!
+        let inputA = CPUMatrix(rowCount: 2, columnCount: 4, countAlignment: 8)!
+        let inputB = CPUMatrix(rowCount: 2, columnCount: 6, countAlignment: 8)!
+        let output = CPUMatrix(rowCount: 4, columnCount: 6, countAlignment: 8)!
         let data = TestData(inputA: inputA, inputB: inputB, output: output)
         
         do {
@@ -44,9 +44,9 @@ class CPUPipeline_tests: XCTestCase {
     }
     
     func test_successfulMultiplication_hasExpectedOutput() {
-        let inputA = CPUMatrix(rowCount: 2, columnCount: 2, columnCountAlignment: 8)!
-        let inputB = CPUMatrix(rowCount: 2, columnCount: 2, columnCountAlignment: 8)!
-        let output = CPUMatrix(rowCount: 2, columnCount: 2, columnCountAlignment: 8)!
+        let inputA = CPUMatrix(rowCount: 2, columnCount: 2, countAlignment: 8)!
+        let inputB = CPUMatrix(rowCount: 2, columnCount: 2, countAlignment: 8)!
+        let output = CPUMatrix(rowCount: 2, columnCount: 2, countAlignment: 8)!
         let data = TestData(inputA: inputA, inputB: inputB, output: output)
         
         let firstRowA = inputA.baseAddress

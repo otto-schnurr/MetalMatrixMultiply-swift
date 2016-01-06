@@ -13,11 +13,11 @@ import Foundation.NSData
 
 class CPUMatrix: ResizableBufferedMatrix {
 
-    init?(rowCount: Int, columnCount: Int, columnCountAlignment: Int) {
+    init?(rowCount: Int, columnCount: Int, countAlignment: Int) {
         super.init(
             rowCount: rowCount,
             columnCount: columnCount,
-            columnCountAlignment: columnCountAlignment,
+            countAlignment: countAlignment,
             buffer: CPUBuffer()
         )
     }

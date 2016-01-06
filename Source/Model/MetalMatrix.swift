@@ -18,13 +18,13 @@ class MetalMatrix: ResizableBufferedMatrix {
     init?(
         rowCount: Int,
         columnCount: Int,
-        columnCountAlignment: Int,
+        countAlignment: Int,
         device: MTLDevice
     ) {
         super.init(
             rowCount: rowCount,
             columnCount: columnCount,
-            columnCountAlignment: columnCountAlignment,
+            countAlignment: countAlignment,
             buffer: MetalBuffer(device: device)
         )
     }

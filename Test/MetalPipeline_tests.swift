@@ -14,7 +14,7 @@ class MetalPipeline_tests: XCTestCase {
     override func setUp() {
         super.setUp()
         if let device = _metalDeviceForPipelineTesting {
-            pipeline = MetalPipeline(device: device, columnCountAlignment: 8)
+            pipeline = MetalPipeline(device: device, countAlignment: 8)
         }
     }
     
@@ -29,7 +29,7 @@ class MetalPipeline_tests: XCTestCase {
 
     func test_pipelineWithBadAlignment_cannnotBeCreated() {
         let device = _metalDeviceForPipelineTesting!
-        let pipeline = MetalPipeline(device: device, columnCountAlignment: 0)
+        let pipeline = MetalPipeline(device: device, countAlignment: 0)
         XCTAssertTrue(pipeline == nil)
     }
 
@@ -79,9 +79,9 @@ class MetalPipeline_tests: XCTestCase {
             unsafeAddressOf(defaultDevice) != unsafeAddressOf(pipeline.device)
         guard canCreateIncompatibleDevice else { return }
         
-        let inputA = MetalMatrix(rowCount: 2, columnCount: 4, columnCountAlignment: 8, device: defaultDevice)!
-        let inputB = MetalMatrix(rowCount: 2, columnCount: 6, columnCountAlignment: 8, device: defaultDevice)!
-        let output = MetalMatrix(rowCount: 4, columnCount: 6, columnCountAlignment: 8, device: defaultDevice)!
+        let inputA = MetalMatrix(rowCount: 2, columnCount: 4, countAlignment: 8, device: defaultDevice)!
+        let inputB = MetalMatrix(rowCount: 2, columnCount: 6, countAlignment: 8, device: defaultDevice)!
+        let output = MetalMatrix(rowCount: 4, columnCount: 6, countAlignment: 8, device: defaultDevice)!
         let data = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
