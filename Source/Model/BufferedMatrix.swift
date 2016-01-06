@@ -50,12 +50,8 @@ class BufferedMatrix: Matrix {
         buffer: ResizableBuffer
     ) {
         guard
-            let paddedRowCount = _padCount(
-                rowCount, toAlignment: countAlignment
-            ),
-            let paddedColumnCount = _padCount(
-                columnCount, toAlignment: countAlignment
-            ),
+            let paddedRowCount = rowCount.paddedToAlignment(countAlignment),
+            let paddedColumnCount = columnCount.paddedToAlignment(countAlignment),
             let byteCount = _byteCountForPaddedRowCount(
                 paddedRowCount, paddedColumnCount: paddedColumnCount
             ) where buffer.resizeToLength(byteCount)
@@ -102,12 +98,10 @@ class ResizableBufferedMatrix: BufferedMatrix {
         else { return true }
         
         guard
-            let newPaddedRowCount = _padCount(
-                newRowCount, toAlignment: countAlignment
-            ),
-            let newPaddedColumnCount = _padCount(
-                newColumnCount, toAlignment: countAlignment
-            ),
+            let newPaddedRowCount =
+                newRowCount.paddedToAlignment(countAlignment),
+            let newPaddedColumnCount =
+                newColumnCount.paddedToAlignment(countAlignment),
             let newByteCount = _byteCountForPaddedRowCount(
                 newPaddedRowCount, paddedColumnCount: newPaddedColumnCount
             )
@@ -140,13 +134,17 @@ class ResizableBufferedMatrix: BufferedMatrix {
 
 
 // MARK: - Private
-private func _padCount(count: Int, toAlignment alignment: Int) -> Int? {
-    guard count > 0 && alignment > 0 else { return nil }
-    
-    let remainder = count % alignment
-    guard remainder > 0 else { return count }
-    
-    return count + alignment - remainder
+private extension Int {
+
+    func paddedToAlignment(alignment: Int) -> Int? {
+        guard self > 0 && alignment > 0 else { return nil }
+        
+        let remainder = self % alignment
+        guard remainder > 0 else { return self }
+        
+        return self + alignment - remainder
+    }
+
 }
 
 private func _byteCountForPaddedRowCount(
