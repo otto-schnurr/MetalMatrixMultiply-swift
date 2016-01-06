@@ -11,7 +11,7 @@
 
 import Accelerate.vecLib
 
-private let _columnCountAlignment = 8
+private let _countAlignment = 8
 
 /// An interface for performing matrix mutliplication on the CPU.
 struct CPUPipeline {
