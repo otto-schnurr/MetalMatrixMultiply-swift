@@ -13,6 +13,7 @@
 using namespace metal;
 
 using Dimension = unsigned short;
+constexpr constant Dimension sectorSize = 8;
 
 /// For computing: output = A^T * B.
 ///
@@ -29,26 +30,75 @@ using BufferDimensions = struct
     Dimension outputBytesPerRow;
 };
 
-using Float8 = float4[2];
-using Float8x8 = Float8[8];
+/// note: Even though float4x4 is column-major, we will use
+///       its columns to populate a row-major matrix buffer.
+static inline void accumulateOuterProduct(
+    const device float4& inputA,
+    const device float4& inputB,
+    thread float4x4& output
+)
+{
+    // !!!: implement me
+}
 
-/// Each thread of this kernel operates on a Float8x8 section of the
+/// Each thread of this kernel operates on a 8x8 sector of the
 /// output buffer. Matrix buffers require padding to accomodate this.
 ///
 /// Requirements:
 ///
 /// The bytes-per-row of each matrix buffer must be padded to a multiple
-/// of Float8 (32 bytes). Similarly, the row count of each matrix must be
-/// padded to a multiple of 8.
+/// of eight floats (32 bytes). Similarly, the row count of each matrix
+/// must be padded to a multiple of eight.
 kernel void MultiplyMatrices(
     constant BufferDimensions& dimensions [[ buffer(0) ]],
     
-    const device float* inputA [[ buffer(1) ]],
-    const device float* inputB [[ buffer(2) ]],
-    device float*       output [[ buffer(3) ]],
+    const device float4* inputA [[ buffer(1) ]],
+    const device float4* inputB [[ buffer(2) ]],
+    device float4*       output [[ buffer(3) ]],
 
-    ushort2 outputSection [[ thread_position_in_grid ]]
+    ushort2 outputSector [[ thread_position_in_grid ]]
 )
 {
-    // !!!: implement me
+    const ushort2 outputPosition = outputSector * sectorSize;
+    
+    if (
+        outputPosition.x > dimensions.outputRowCount ||
+        outputPosition.y > dimensions.outputColumnCount
+    )
+    {
+        return;
+    }
+
+    float4x4 s00, s01, s10, s11 = float4x4();
+    inputA += outputPosition.x / 4;
+    inputB += outputPosition.y / 4;
+    
+    const Dimension strideA = dimensions.bytesPerRowA / sizeof(float4);
+    const Dimension strideB = dimensions.bytesPerRowB / sizeof(float4);
+    const device float4* const endOfB = inputB + dimensions.innerInputDimension * strideB;
+    
+    while (inputB < endOfB) {
+        accumulateOuterProduct(inputA[0], inputB[0], s00);
+        accumulateOuterProduct(inputA[0], inputB[1], s01);
+        accumulateOuterProduct(inputA[1], inputB[0], s10);
+        accumulateOuterProduct(inputA[1], inputB[1], s11);
+
+        inputA += strideA;
+        inputB += strideB;
+    }
+
+    const Dimension outputStride = dimensions.outputBytesPerRow / sizeof(float4);
+    output += outputPosition.x * outputStride + outputPosition.y / 4;
+    
+    output[0] = s00[0]; output[1] = s00[1]; output += outputStride;
+    output[0] = s00[2]; output[1] = s00[3]; output += outputStride;
+    
+    output[0] = s01[0]; output[1] = s01[1]; output += outputStride;
+    output[0] = s01[2]; output[1] = s01[3]; output += outputStride;
+    
+    output[0] = s10[0]; output[1] = s10[1]; output += outputStride;
+    output[0] = s10[2]; output[1] = s10[3]; output += outputStride;
+    
+    output[0] = s11[0]; output[1] = s11[1]; output += outputStride;
+    output[0] = s11[2]; output[1] = s11[3]; output += outputStride;
 }
