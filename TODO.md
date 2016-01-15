@@ -3,7 +3,6 @@ TODO
 
 ### Implement `MetalPipeline`
 - logic test: `MetalPipeline` multiplication.
-    - Implement metal shader.
     - Execute metal shader.
 
 ### Implement `Experiment`

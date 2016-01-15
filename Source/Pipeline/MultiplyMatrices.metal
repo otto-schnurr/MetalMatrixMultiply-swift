@@ -38,7 +38,10 @@ static inline void accumulateOuterProduct(
     thread float4x4& output
 )
 {
-    // !!!: implement me
+    output[0] += inputA.x * inputB;
+    output[1] += inputA.y * inputB;
+    output[2] += inputA.z * inputB;
+    output[3] += inputA.w * inputB;
 }
 
 /// Each thread of this kernel operates on a 8x8 sector of the
@@ -69,7 +72,7 @@ kernel void MultiplyMatrices(
         return;
     }
 
-    float4x4 s00, s01, s10, s11 = float4x4();
+    float4x4 s00, s01, s10, s11 = float4x4(0.f);
     inputA += outputPosition.x / 4;
     inputB += outputPosition.y / 4;
     
@@ -100,5 +103,5 @@ kernel void MultiplyMatrices(
     output[0] = s10[2]; output[1] = s10[3]; output += outputStride;
     
     output[0] = s11[0]; output[1] = s11[1]; output += outputStride;
-    output[0] = s11[2]; output[1] = s11[3]; output += outputStride;
+    output[0] = s11[2]; output[1] = s11[3];
 }
