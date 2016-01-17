@@ -14,6 +14,9 @@
 		2711196D1C3309C40078AE67 /* CPUPipeline_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2711196A1C3309C40078AE67 /* CPUPipeline_tests.swift */; };
 		2711196F1C330CE20078AE67 /* MultiplicationData_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2711196E1C330CE20078AE67 /* MultiplicationData_tests.swift */; };
 		271119701C330CE20078AE67 /* MultiplicationData_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2711196E1C330CE20078AE67 /* MultiplicationData_tests.swift */; };
+		272801271C4C2CB70077EABB /* Int+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272801261C4C2CB70077EABB /* Int+Alignment.swift */; };
+		272801281C4C2CB70077EABB /* Int+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272801261C4C2CB70077EABB /* Int+Alignment.swift */; };
+		272801291C4C2CB70077EABB /* Int+Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272801261C4C2CB70077EABB /* Int+Alignment.swift */; };
 		273FB47D1C1F0AD6009B709C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* Matrix.swift */; };
 		273FB47E1C1F0AD6009B709C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* Matrix.swift */; };
 		273FB47F1C1F0AD6009B709C /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273FB47C1C1F0AD6009B709C /* Matrix.swift */; };
@@ -60,6 +63,7 @@
 		271119661C3309120078AE67 /* CPUPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUPipeline.swift; sourceTree = "<group>"; };
 		2711196A1C3309C40078AE67 /* CPUPipeline_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUPipeline_tests.swift; sourceTree = "<group>"; };
 		2711196E1C330CE20078AE67 /* MultiplicationData_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplicationData_tests.swift; sourceTree = "<group>"; };
+		272801261C4C2CB70077EABB /* Int+Alignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Alignment.swift"; sourceTree = "<group>"; };
 		273FB47C1C1F0AD6009B709C /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		273FB4801C1F0D29009B709C /* CPUMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUMatrix.swift; sourceTree = "<group>"; };
 		273FB4841C1F0DEA009B709C /* CPUMatrix_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPUMatrix_tests.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 			children = (
 				27A15F031C24D13300C0F47A /* BufferedMatrix.swift */,
 				273FB4801C1F0D29009B709C /* CPUMatrix.swift */,
+				272801261C4C2CB70077EABB /* Int+Alignment.swift */,
 				273FB47C1C1F0AD6009B709C /* Matrix.swift */,
 				27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */,
 			);
@@ -299,6 +304,7 @@
 				27A15F0C1C25F78D00C0F47A /* MultiplicationData.swift in Sources */,
 				273FB47D1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				27455EC21C190A2700D66961 /* main.swift in Sources */,
+				272801271C4C2CB70077EABB /* Int+Alignment.swift in Sources */,
 				27E84CFA1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */,
 				27E84CF01C3450F200B57034 /* PipelineError.swift in Sources */,
 				273FB4811C1F0D29009B709C /* CPUMatrix.swift in Sources */,
@@ -321,6 +327,7 @@
 				273FB47E1C1F0AD6009B709C /* Matrix.swift in Sources */,
 				273FB4821C1F0D29009B709C /* CPUMatrix.swift in Sources */,
 				273FB4851C1F0DEA009B709C /* CPUMatrix_tests.swift in Sources */,
+				272801281C4C2CB70077EABB /* Int+Alignment.swift in Sources */,
 				2711196C1C3309C40078AE67 /* CPUPipeline_tests.swift in Sources */,
 				27A15F051C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 			);
@@ -333,6 +340,7 @@
 				27A15F061C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 				27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				27E84CF61C34555E00B57034 /* MetalPipeline.swift in Sources */,
+				272801291C4C2CB70077EABB /* Int+Alignment.swift in Sources */,
 				271119691C3309120078AE67 /* CPUPipeline.swift in Sources */,
 				271119701C330CE20078AE67 /* MultiplicationData_tests.swift in Sources */,
 				27E84CF21C3450F200B57034 /* PipelineError.swift in Sources */,

@@ -134,19 +134,6 @@ class ResizableBufferedMatrix: BufferedMatrix {
 
 
 // MARK: - Private
-private extension Int {
-
-    func paddedToAlignment(alignment: Int) -> Int? {
-        guard self > 0 && alignment > 0 else { return nil }
-        
-        let remainder = self % alignment
-        guard remainder > 0 else { return self }
-        
-        return self + alignment - remainder
-    }
-
-}
-
 private func _byteCountForPaddedRowCount(
     paddedRowCount: Int, paddedColumnCount: Int
 ) -> Int? {
