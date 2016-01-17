@@ -69,29 +69,29 @@ class MetalPipeline {
     func multiplyData<
         Data: MultiplicationData where Data.MatrixType: MetalMatrix
     >(data: Data, repeatCount: Int = 0) throws {
-        guard data.inputDimensionsAreValid else {
-            throw PipelineError.InvalidInputDimensions
-        }
-        guard data.outputDimensionsAreValid else {
-            throw PipelineError.InvalidOutputDimensions
-        }
-        guard repeatCount >= 0 else {
-            throw PipelineError.InvalidRepeatCount
-        }
+        guard
+            data.inputDimensionsAreValid
+        else { throw PipelineError.InvalidInputDimensions }
+
+        guard
+            data.outputDimensionsAreValid
+        else { throw PipelineError.InvalidOutputDimensions }
+
+        guard
+            repeatCount >= 0
+        else { throw PipelineError.InvalidRepeatCount }
+
         guard
             let bufferA = data.inputA.metalBuffer,
             bufferB = data.inputB.metalBuffer,
             outputBuffer = data.output.metalBuffer
-        else {
-            throw PipelineError.InvalidBuffer
-        }
+        else { throw PipelineError.InvalidBuffer }
+
         guard
             bufferA.device == device &&
             bufferB.device == device &&
             outputBuffer.device == device
-        else {
-            throw PipelineError.IncompatibleDevice
-        }
+        else { throw PipelineError.IncompatibleDevice }
         
         try dimensionBuffer.encodeDimensionsForData(data)
         
@@ -117,11 +117,15 @@ private let _dimensionBufferByteCount = _dimensionCount * sizeof(_Dimension)
 private extension MTLBuffer {
 
     func encodeDimensionsForData<Data: MultiplicationData>(data: Data) throws {
-        guard _canEncodeDimensionsForData(data)
+        guard
+            data.inputA.canEncodeDimensions &&
+            data.inputB.canEncodeDimensions &&
+            data.output.canEncodeDimensions
         else { throw PipelineError.UnsupportedMatrixSize }
         
         let pointer = UnsafeMutablePointer<_Dimension>(contents())
-        guard _dimensionBufferByteCount <= length && pointer != nil
+        guard
+            _dimensionBufferByteCount <= length && pointer != nil
         else { throw PipelineError.InvalidBuffer }
         
         let dimensions = UnsafeMutableBufferPointer<_Dimension>(
@@ -137,25 +141,19 @@ private extension MTLBuffer {
 
 }
 
-// important: Don't let Swift crash the app on overflow.
-private func _canEncodeDimensionsForData<Data: MultiplicationData>(data: Data) -> Bool {
-    let maxValue = Int(_Dimension.max)
+private extension Matrix {
     
-    func canEncodeValue(value: Int) -> Bool {
-        return 0 <= value && value <= maxValue
+    // important: Don't let Swift crash the app on overflow.
+    var canEncodeDimensions: Bool {
+        let maxValue = Int(_Dimension.max)
+        
+        func canEncode(value: Int) -> Bool {
+            return 0 <= value && value <= maxValue
+        }
+        
+        return canEncode(bytesPerRow) && canEncode(columnCount)
     }
     
-    func canEncodeMatrix(matrix: Data.MatrixType) -> Bool {
-        return
-            canEncodeValue(matrix.rowCount) &&
-            canEncodeValue(matrix.columnCount) &&
-            canEncodeValue(matrix.bytesPerRow)
-    }
-    
-    return
-        canEncodeMatrix(data.inputA) &&
-        canEncodeMatrix(data.inputB) &&
-        canEncodeMatrix(data.output)
 }
 
 private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
