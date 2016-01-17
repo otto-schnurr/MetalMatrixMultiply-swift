@@ -93,6 +93,8 @@ class MetalPipeline {
             throw PipelineError.IncompatibleDevice
         }
         
+        try dimensionBuffer.encodeDimensionsForData(data)
+        
         // !!!: implement me
 //        let count = 1 + repeatCount
 //        for _ in 1...count { _multiply(data) }
@@ -109,7 +111,52 @@ class MetalPipeline {
 
 // MARK: Private
 private typealias _Dimension = UInt16
-private let _dimensionBufferByteCount = 6 * sizeof(_Dimension)
+private let _dimensionCount = 6
+private let _dimensionBufferByteCount = _dimensionCount * sizeof(_Dimension)
+
+private extension MTLBuffer {
+
+    func encodeDimensionsForData<Data: MultiplicationData>(data: Data) throws {
+        guard _canEncodeDimensionsForData(data)
+        else { throw PipelineError.UnsupportedMatrixSize }
+        
+        let pointer = UnsafeMutablePointer<_Dimension>(contents())
+        guard _dimensionBufferByteCount <= length && pointer != nil
+        else { throw PipelineError.InvalidBuffer }
+        
+        let dimensions = UnsafeMutableBufferPointer<_Dimension>(
+            start: pointer, count: _dimensionCount
+        )
+        dimensions[0] = _Dimension(data.output.rowCount)
+        dimensions[1] = _Dimension(data.output.columnCount)
+        dimensions[2] = _Dimension(data.inputB.rowCount)
+        dimensions[3] = _Dimension(data.inputA.bytesPerRow)
+        dimensions[4] = _Dimension(data.inputB.bytesPerRow)
+        dimensions[5] = _Dimension(data.output.bytesPerRow)
+    }
+
+}
+
+// important: Don't let Swift crash the app on overflow.
+private func _canEncodeDimensionsForData<Data: MultiplicationData>(data: Data) -> Bool {
+    let maxValue = Int(_Dimension.max)
+    
+    func canEncodeValue(value: Int) -> Bool {
+        return 0 <= value && value <= maxValue
+    }
+    
+    func canEncodeMatrix(matrix: Data.MatrixType) -> Bool {
+        return
+            canEncodeValue(matrix.rowCount) &&
+            canEncodeValue(matrix.columnCount) &&
+            canEncodeValue(matrix.bytesPerRow)
+    }
+    
+    return
+        canEncodeMatrix(data.inputA) &&
+        canEncodeMatrix(data.inputB) &&
+        canEncodeMatrix(data.output)
+}
 
 private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
     let bundle = NSBundle(forClass: MetalPipeline.self)

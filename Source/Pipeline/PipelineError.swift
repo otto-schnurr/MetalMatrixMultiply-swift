@@ -15,4 +15,5 @@ enum PipelineError: ErrorType {
     case InvalidRepeatCount
     case InvalidBuffer
     case IncompatibleDevice
+    case UnsupportedMatrixSize
 }
