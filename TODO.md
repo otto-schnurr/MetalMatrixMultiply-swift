@@ -2,6 +2,9 @@ TODO
 ====
 
 ### Implement `MetalPipeline`
+- Add private dimensionBuffer (perhaps a private struct).
+    - Allocate in initializer.
+    - Method for setting dimension values.
 - logic test: `MetalPipeline` multiplication.
     - Execute metal shader.
 

@@ -29,6 +29,10 @@ class MetalPipeline {
     init?(device: MTLDevice, countAlignment: Int) {
         self.device = device
         commandQueue = self.device.newCommandQueue()
+        dimensionBuffer = device.newBufferWithLength(
+            _dimensionBufferByteCount,
+            options: .CPUCacheModeDefaultCache
+        )
         library = _loadLibraryForDevice(device)
 
         if let kernelFunction = library?.newFunctionWithName("MultiplyMatrices") {
@@ -40,7 +44,8 @@ class MetalPipeline {
         self.countAlignment = countAlignment
         
         guard
-            self.countAlignment > 0 && library != nil && state != nil
+            self.countAlignment > 0 && dimensionBuffer != nil &&
+            library != nil && state != nil
         else { return nil }
         
         assert(self.countAlignment > 0)
@@ -60,6 +65,7 @@ class MetalPipeline {
         )
     }
 
+    /// - important: Synchronous. Not thread safe.
     func multiplyData<
         Data: MultiplicationData where Data.MatrixType: MetalMatrix
     >(data: Data, repeatCount: Int = 0) throws {
@@ -94,6 +100,7 @@ class MetalPipeline {
 
     // MARK: Private
     private let commandQueue: MTLCommandQueue
+    private let dimensionBuffer: MTLBuffer!
     private let library: MTLLibrary!
     private let state: MTLComputePipelineState!
     private let countAlignment: Int
@@ -101,6 +108,9 @@ class MetalPipeline {
 
 
 // MARK: Private
+private typealias _Dimension = UInt16
+private let _dimensionBufferByteCount = 6 * sizeof(_Dimension)
+
 private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
     let bundle = NSBundle(forClass: MetalPipeline.self)
     guard
