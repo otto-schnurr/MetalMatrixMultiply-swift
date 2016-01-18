@@ -2,10 +2,7 @@ TODO
 ====
 
 ### Implement `MetalPipeline`
-- Add private dimensionBuffer (perhaps a private struct).
-    - Method for setting dimension values.
 - logic test: `MetalPipeline` multiplication.
-    - Execute metal shader.
 
 ### Implement `Experiment`
 - logic test: `Experiment` construction.

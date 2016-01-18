@@ -11,6 +11,8 @@
 
 import Metal
 
+private let _threadGroupSize = MTLSize(width: 4, height: 8, depth: 1)
+
 /// An interface for vending GPU matrices and performing matrix multiplication
 /// on the GPU.
 ///
@@ -93,11 +95,39 @@ class MetalPipeline {
             outputBuffer.device == device
         else { throw PipelineError.IncompatibleDevice }
         
+        // important: One device thread computes an (8x8) sector of output.
+        let outputSectorCount = MTLSize(
+            width: data.output.paddedColumnCount / countAlignment,
+            height: data.output.paddedRowCount / countAlignment,
+            depth: 1
+        );
+        
+        guard
+            let paddedSectorCount =
+                outputSectorCount.paddedToThreadGroupSize(_threadGroupSize)
+        else { throw PipelineError.InvalidOutputDimensions }
+
         try dimensionBuffer.encodeDimensionsForData(data)
         
-        // !!!: implement me
-//        let count = 1 + repeatCount
-//        for _ in 1...count { _multiply(data) }
+        let commandBuffer = commandQueue.commandBuffer()
+        let encoder = commandBuffer.computeCommandEncoder()
+        encoder.setBuffer(dimensionBuffer, offset: 0, atIndex: 0)
+        encoder.setBuffer(bufferA, offset: 0, atIndex: 1)
+        encoder.setBuffer(bufferB, offset: 0, atIndex: 2)
+        encoder.setBuffer(outputBuffer, offset: 0, atIndex: 3)
+        
+        let threadGroupCount = paddedSectorCount / _threadGroupSize
+        let count = 1 + repeatCount
+
+        for _ in 1...count {
+            encoder.dispatchThreadgroups(
+                threadGroupCount, threadsPerThreadgroup: _threadGroupSize
+            )
+        }
+        
+        encoder.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()        
     }
 
     // MARK: Private
@@ -106,10 +136,11 @@ class MetalPipeline {
     private let library: MTLLibrary!
     private let state: MTLComputePipelineState!
     private let countAlignment: Int
+    
 }
 
 
-// MARK: Private
+// MARK: - Private
 private typealias _Dimension = UInt16
 private let _dimensionCount = 6
 private let _dimensionBufferByteCount = _dimensionCount * sizeof(_Dimension)
@@ -154,6 +185,28 @@ private extension Matrix {
         return canEncode(bytesPerRow) && canEncode(columnCount)
     }
     
+}
+
+private extension MTLSize {
+    
+    func paddedToThreadGroupSize(groupSize: MTLSize) -> MTLSize? {
+        guard
+           let paddedWidth = width.paddedToAlignment(groupSize.width),
+           paddedHeight = width.paddedToAlignment(groupSize.height),
+           paddedDepth = width.paddedToAlignment(groupSize.depth)
+        else { return nil }
+        
+        return MTLSize(width: paddedWidth, height: paddedHeight, depth: paddedDepth)
+    }
+    
+}
+
+private func /(numerator: MTLSize, denominator: MTLSize) -> MTLSize {
+    return MTLSize(
+        width: numerator.width / denominator.width,
+        height: numerator.height / denominator.height,
+        depth: numerator.depth / denominator.depth
+    )
 }
 
 private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
