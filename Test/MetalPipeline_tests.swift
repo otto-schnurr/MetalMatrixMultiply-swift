@@ -93,6 +93,42 @@ class MetalPipeline_tests: XCTestCase {
         }
     }
     
+    func test_successfulMultiplication_hasExpectedOutput() {
+        let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
+        let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
+        let output = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
+        let data = MetalData(inputA: inputA, inputB: inputB, output: output)
+        
+        let firstRowA = inputA.baseAddress
+        let secondRowA = inputA.baseAddress + inputA.paddedColumnCount
+        firstRowA[0] = 1.0
+        firstRowA[1] = 2.0
+        secondRowA[0] = 3.0
+        secondRowA[1] = 4.0
+        
+        let firstRowB = inputB.baseAddress
+        let secondRowB = inputB.baseAddress + inputB.paddedColumnCount
+        firstRowB[0] = 5.0
+        firstRowB[1] = 6.0
+        secondRowB[0] = 7.0
+        secondRowB[1] = 8.0
+
+        do {
+            try pipeline.multiplyData(data)
+
+            let epsilon = MatrixElement(0.000001)
+            let firstRow = output.baseAddress
+            let secondRow = output.baseAddress + output.paddedColumnCount
+
+            XCTAssertEqualWithAccuracy(firstRow[0], 26.0, accuracy: epsilon)
+            XCTAssertEqualWithAccuracy(firstRow[1], 30.0, accuracy: epsilon)
+            XCTAssertEqualWithAccuracy(secondRow[0], 38.0, accuracy: epsilon)
+            XCTAssertEqualWithAccuracy(secondRow[1], 44.0, accuracy: epsilon)
+        } catch {
+            XCTFail("Failed to multiply matrices.")
+        }
+    }
+
 }
 
 

@@ -111,6 +111,7 @@ class MetalPipeline {
         
         let commandBuffer = commandQueue.commandBuffer()
         let encoder = commandBuffer.computeCommandEncoder()
+        encoder.setComputePipelineState(state)
         encoder.setBuffer(dimensionBuffer, offset: 0, atIndex: 0)
         encoder.setBuffer(bufferA, offset: 0, atIndex: 1)
         encoder.setBuffer(bufferB, offset: 0, atIndex: 2)
