@@ -1,9 +1,6 @@
 TODO
 ====
 
-### Implement `MetalPipeline`
-- logic test: `MetalPipeline` multiplication.
-
 ### Implement `Experiment`
 - logic test: `Experiment` construction.
 - logic test: `Experiment` operation.

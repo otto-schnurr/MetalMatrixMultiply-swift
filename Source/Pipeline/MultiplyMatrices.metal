@@ -39,8 +39,9 @@ static inline void accumulateOuterProduct(
 )
 {
     output[0] += inputA.x * inputB;
-    output[1] += inputA.y * inputB;
-    output[2] += inputA.z * inputB;
+    output[2] += inputA.y * inputB;
+
+    output[1] += inputA.z * inputB;
     output[3] += inputA.w * inputB;
 }
 
@@ -72,7 +73,8 @@ kernel void MultiplyMatrices(
         return;
     }
 
-    float4x4 s00, s01, s10, s11 = float4x4(0.f);
+    float4x4 s00 = float4x4(0.f), s01 = float4x4(0.f);
+    float4x4 s10 = float4x4(0.f), s11 = float4x4(0.f);
     inputA += outputPosition.x / 4;
     inputB += outputPosition.y / 4;
     
