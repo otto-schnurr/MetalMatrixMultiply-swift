@@ -1,6 +1,9 @@
 TODO
 ====
 
+### Implement `MetalPipeline`
+- Verify 12x12 multiply.
+
 ### Implement `Experiment`
 - logic test: `Experiment` construction.
 - logic test: `Experiment` operation.

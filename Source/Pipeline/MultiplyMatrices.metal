@@ -39,9 +39,8 @@ static inline void accumulateOuterProduct(
 )
 {
     output[0] += inputA.x * inputB;
-    output[2] += inputA.y * inputB;
-
-    output[1] += inputA.z * inputB;
+    output[1] += inputA.y * inputB;
+    output[2] += inputA.z * inputB;
     output[3] += inputA.w * inputB;
 }
 
@@ -66,8 +65,8 @@ kernel void MultiplyMatrices(
     const ushort2 outputPosition = outputSector * sectorSize;
     
     if (
-        outputPosition.x > dimensions.outputRowCount ||
-        outputPosition.y > dimensions.outputColumnCount
+        outputPosition.x >= dimensions.outputRowCount ||
+        outputPosition.y >= dimensions.outputColumnCount
     )
     {
         return;
@@ -95,15 +94,15 @@ kernel void MultiplyMatrices(
     const Dimension outputStride = dimensions.outputBytesPerRow / sizeof(float4);
     output += outputPosition.x * outputStride + outputPosition.y / 4;
     
-    output[0] = s00[0]; output[1] = s00[1]; output += outputStride;
-    output[0] = s00[2]; output[1] = s00[3]; output += outputStride;
+    output[0] = s00[0]; output[1] = s01[0]; output += outputStride;
+    output[0] = s00[1]; output[1] = s01[1]; output += outputStride;
     
-    output[0] = s01[0]; output[1] = s01[1]; output += outputStride;
-    output[0] = s01[2]; output[1] = s01[3]; output += outputStride;
+    output[0] = s00[2]; output[1] = s01[2]; output += outputStride;
+    output[0] = s00[3]; output[1] = s01[3]; output += outputStride;
     
-    output[0] = s10[0]; output[1] = s10[1]; output += outputStride;
-    output[0] = s10[2]; output[1] = s10[3]; output += outputStride;
+    output[0] = s10[0]; output[1] = s11[0]; output += outputStride;
+    output[0] = s10[1]; output[1] = s11[1]; output += outputStride;
     
-    output[0] = s11[0]; output[1] = s11[1]; output += outputStride;
-    output[0] = s11[2]; output[1] = s11[3];
+    output[0] = s10[2]; output[1] = s11[2]; output += outputStride;
+    output[0] = s10[3]; output[1] = s11[3];
 }

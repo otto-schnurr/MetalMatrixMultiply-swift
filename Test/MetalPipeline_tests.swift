@@ -93,7 +93,7 @@ class MetalPipeline_tests: XCTestCase {
         }
     }
     
-    func test_successfulMultiplication_hasExpectedOutput() {
+    func test_simpleMultiplication_hasExpectedOutput() {
         let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
         let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
         let output = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
@@ -129,6 +129,60 @@ class MetalPipeline_tests: XCTestCase {
         }
     }
 
+    func test_multiplications_haveExpectedOutput() {
+        let inputA = pipeline.newMatrixWithRowCount(17, columnCount: 17)!
+        let inputB = pipeline.newMatrixWithRowCount(17, columnCount: 17)!
+        let output = pipeline.newMatrixWithRowCount(17, columnCount: 17)!
+        let metalData = MetalData(inputA: inputA, inputB: inputB, output: output)
+
+        let referenceOutput = CPUMatrix(rowCount: 17, columnCount: 17, countAlignment: 8)!
+        let referenceData = CPUData(inputA: inputA, inputB: inputB, output: referenceOutput)
+    
+        for n in [7, 8, 9, 15, 16, 17] {
+            inputA.resizeToRowCount(n, columnCount: n)
+            inputB.resizeToRowCount(n, columnCount: n)
+            output.resizeToRowCount(n, columnCount: n)
+            referenceOutput.resizeToRowCount(n, columnCount: n)
+            
+            for rowIndex in 0 ..< inputA.rowCount {
+                let row = inputA.baseAddress + rowIndex * inputA.paddedColumnCount
+                for columnIndex in 0 ..< inputA.columnCount {
+                    row[columnIndex] = rowIndex == columnIndex ? 1.0 : 0.0
+                }
+            }
+            
+            for rowIndex in 0 ..< inputB.rowCount {
+                let row = inputB.baseAddress + rowIndex * inputB.paddedColumnCount
+                for columnIndex in 0 ..< inputB.columnCount {
+                    row[columnIndex] = Float(rowIndex) * 100.0 + Float(columnIndex)
+                }
+            }
+            
+            do {
+                try pipeline.multiplyData(metalData)
+                try CPUPipeline.multiplyData(referenceData)
+                
+                let epsilon = MatrixElement(0.001)
+                
+                for rowIndex in 0 ..< output.rowCount {
+                    let row = output.baseAddress + rowIndex * output.paddedColumnCount
+                    let referenceRow = referenceOutput.baseAddress + rowIndex * referenceOutput.paddedColumnCount
+
+                    for columnIndex in 0 ..< output.columnCount {
+                        XCTAssertEqualWithAccuracy(
+                            row[columnIndex],
+                            referenceRow[columnIndex],
+                            accuracy: epsilon,
+                            "\(n)x\(n): failed at \(rowIndex), \(columnIndex)"
+                        )
+                    }
+                }
+            } catch {
+                XCTFail("Failed to multiply matrices.")
+            }
+        }
+    }
+
 }
 
 
@@ -150,6 +204,16 @@ private var _metalDeviceForPipelineTesting: MTLDevice? = {
 private struct MetalData: MultiplicationData {
     
     typealias MatrixType = MetalMatrix
+    
+    let inputA: MatrixType
+    let inputB: MatrixType
+    let output: MatrixType
+    
+}
+
+private struct CPUData: MultiplicationData {
+    
+    typealias MatrixType = BufferedMatrix
     
     let inputA: MatrixType
     let inputB: MatrixType
