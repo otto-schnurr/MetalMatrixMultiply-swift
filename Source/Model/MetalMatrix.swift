@@ -13,16 +13,18 @@ import Metal.MTLDevice
 
 class MetalMatrix: ResizableBufferedMatrix {
 
+    var metalBuffer: MTLBuffer? { return (buffer as? MetalBuffer)?.buffer }
+
     init?(
         rowCount: Int,
         columnCount: Int,
-        columnCountAlignment: Int,
+        countAlignment: Int,
         device: MTLDevice
     ) {
         super.init(
             rowCount: rowCount,
             columnCount: columnCount,
-            columnCountAlignment: columnCountAlignment,
+            countAlignment: countAlignment,
             buffer: MetalBuffer(device: device)
         )
     }
@@ -30,6 +32,8 @@ class MetalMatrix: ResizableBufferedMatrix {
 }
 
 class MetalBuffer: ResizableBuffer {
+    
+    let device: MTLDevice
     
     var memory: UnsafeMutablePointer<Void> {
         guard let buffer = buffer else { return nil }
@@ -56,11 +60,10 @@ class MetalBuffer: ResizableBuffer {
     }
     
     init(device: MTLDevice) { self.device = device }
-    
+
     // MARK: Private
-    private let device: MTLDevice
     private var buffer: MTLBuffer?
-    
+
 }
 
 

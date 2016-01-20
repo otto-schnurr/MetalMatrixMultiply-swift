@@ -15,11 +15,19 @@ typealias MatrixElement = Float32
 /// A row-major matrix of 32-bit floating point numbers.
 protocol Matrix: class {
 
-    /// The number of rows in the matrix.
+    /// The number of rows of data in the matrix.
     var rowCount: Int { get }
     
-    /// The number of elements in every row of the matrix.
+    /// The number of elements of data in every row of the matrix.
     var columnCount: Int { get }
+    
+    /// The total number of rows in the matrix including padded rows.
+    ///
+    /// - Invariant:
+    /// ```
+    /// m.paddedRowCount >= m.rowCount
+    /// ```
+    var paddedRowCount: Int { get }
     
     /// A constant stride of elements that separates every element within
     /// a column of this matrix.
@@ -36,7 +44,7 @@ protocol Matrix: class {
     
     /// - Invariant:
     /// ```
-    /// m.byteCount == m.rowCount * m.bytesPerRow
+    /// m.byteCount == m.paddedRowCount * m.bytesPerRow
     /// ```
     var byteCount: Int { get }
     

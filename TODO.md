@@ -1,18 +1,8 @@
 TODO
 ====
 
-### Fix threading (defer it one level up).
-- Make `CPUPipeline.multiplyData()` synchronous.
-
 ### Implement `MetalPipeline`
-- Simplify `CPUPipeline`.
-- Add `metalBuffer: MTLBuffer` read-only property to `MetalMatrix`.
-- Implement metal shader.
-- logic test: `MetalPipeline` construction.
-    - Integrate metal shader.
-- logic test: `MetalPipeline` matrix factory.
-- logic test: `MetalPipeline` multiplication.
-    - Execute metal shader.
+- Verify 12x12 multiply.
 
 ### Implement `Experiment`
 - logic test: `Experiment` construction.

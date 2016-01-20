@@ -11,13 +11,11 @@
 
 import Accelerate.vecLib
 
-private let _columnCountAlignment = 8
-
 /// An interface for performing matrix mutliplication on the CPU.
 struct CPUPipeline {
 
-    static func multiplyData(
-        data: MultiplicationData,
+    static func multiplyData<Data: MultiplicationData>(
+        data: Data,
         repeatCount: Int = 0
     ) throws {
         guard data.inputDimensionsAreValid else {
@@ -38,7 +36,7 @@ struct CPUPipeline {
 
 
 // MARK: Private
-private func _multiply(data: MultiplicationData) {
+private func _multiply<Data: MultiplicationData>(data: Data) {
     assert(data.inputDimensionsAreValid)
     assert(data.outputDimensionsAreValid)
     
