@@ -13,6 +13,47 @@
 /// matrix multiplication.
 struct PerformanceTestCase {
     
+    struct Dimensions {
+    
+        let outputRowCount: Int
+        let outputColumnCount: Int
+        let innerInputDimension: Int
+        
+        var flops: Double {
+            // !!!: implemet me
+            return 0
+        }
+        
+        init?(
+            outputRowCount: Int,
+            outputColumnCount: Int,
+            innerInputDimension: Int
+        ) {
+            guard
+                outputRowCount > 0 &&
+                outputColumnCount > 0 &&
+                innerInputDimension > 0
+            else { return nil }
+            
+            self.outputRowCount = outputRowCount
+            self.outputColumnCount = outputColumnCount
+            self.innerInputDimension = innerInputDimension
+        }
+        
+    }
+    
+    struct Resources {
+    
+        let inputA: MetalMatrix
+        let inputB: MetalMatrix
+        let metalOutput: MetalMatrix
+        let cpuOutput: CPUMatrix
+        
+    }
+    
+    let targetDimensions: Dimensions
+    let resources: Resources
+    
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
     func invoke() {
