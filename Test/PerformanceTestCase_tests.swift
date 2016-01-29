@@ -56,6 +56,51 @@ class PerformanceTestCase_tests: XCTestCase {
         )
     }
 
+    func test_currentResourceSize_invokesSuccessfully() {
+        let dimensions = PerformanceTestCase.Dimensions(
+            outputRowCount: resources.inputA.columnCount,
+            outputColumnCount: resources.inputB.columnCount,
+            innerInputDimension: resources.inputB.rowCount
+        )!
+        let testCase = PerformanceTestCase(
+            targetDimensions: dimensions,
+            resources: resources
+        )
+        
+        do { try testCase.invoke() }
+        catch { XCTFail("Failed to invoke test case.") }
+    }
+    
+    func test_smallerTargetSize_invokesSuccessfully() {
+        let dimensions = PerformanceTestCase.Dimensions(
+            outputRowCount: resources.inputA.columnCount / 2,
+            outputColumnCount: resources.inputB.columnCount / 2,
+            innerInputDimension: resources.inputB.rowCount / 2
+        )!
+        let testCase = PerformanceTestCase(
+            targetDimensions: dimensions,
+            resources: resources
+        )
+
+        do { try testCase.invoke() }
+        catch { XCTFail("Failed to invoke test case.") }
+    }
+    
+    func test_largerTargetSize_invokesSuccessfully() {
+        let dimensions = PerformanceTestCase.Dimensions(
+            outputRowCount: resources.inputA.columnCount * 2,
+            outputColumnCount: resources.inputB.columnCount * 2,
+            innerInputDimension: resources.inputB.rowCount * 2
+        )!
+        let testCase = PerformanceTestCase(
+            targetDimensions: dimensions,
+            resources: resources
+        )
+
+        do { try testCase.invoke() }
+        catch { XCTFail("Failed to invoke test case.") }
+    }
+    
 }
 
 
@@ -86,6 +131,7 @@ private func _createResourcesForDevice(
     else { return nil }
     
     return PerformanceTestCase.Resources(
+        metalPipeline: pipeline,
         inputA: inputA, inputB: inputB,
         metalOutput: metalOutput, cpuOutput: cpuOutput
     )

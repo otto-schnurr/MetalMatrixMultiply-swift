@@ -46,6 +46,7 @@ struct PerformanceTestCase {
     
     struct Resources {
     
+        let metalPipeline: MetalPipeline
         let inputA: MetalMatrix
         let inputB: MetalMatrix
         let metalOutput: MetalMatrix
@@ -58,8 +59,62 @@ struct PerformanceTestCase {
     
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
-    func invoke() {
-        // !!!: implement me
+    func invoke() throws {
+        guard
+            resources.inputA.resizeToRowCount(
+                targetDimensions.innerInputDimension,
+                columnCount: targetDimensions.outputRowCount
+            ) &&
+            resources.inputB.resizeToRowCount(
+                targetDimensions.innerInputDimension,
+                columnCount: targetDimensions.outputColumnCount
+            ) &&
+            resources.metalOutput.resizeToRowCount(
+                targetDimensions.outputRowCount,
+                columnCount: targetDimensions.outputColumnCount
+            ) &&
+            resources.cpuOutput.resizeToRowCount(
+                targetDimensions.outputRowCount,
+                columnCount: targetDimensions.outputColumnCount
+            )
+        else { throw PipelineError.UnsupportedMatrixSize }
+        
+        let cpuData = CPUData(
+            inputA: resources.inputA,
+            inputB: resources.inputB,
+            output: resources.cpuOutput
+        )
+        let metalData = MetalData(
+            inputA: resources.inputA,
+            inputB: resources.inputB,
+            output: resources.metalOutput
+        )
+        
+        try CPUPipeline.multiplyData(cpuData)
+
+        try resources.metalPipeline.multiplyData(metalData)
     }
+    
+}
+
+
+// MARK: Private
+private struct MetalData: MultiplicationData {
+    
+    typealias MatrixType = MetalMatrix
+    
+    let inputA: MatrixType
+    let inputB: MatrixType
+    let output: MatrixType
+    
+}
+
+private struct CPUData: MultiplicationData {
+    
+    typealias MatrixType = BufferedMatrix
+    
+    let inputA: MatrixType
+    let inputB: MatrixType
+    let output: MatrixType
     
 }
