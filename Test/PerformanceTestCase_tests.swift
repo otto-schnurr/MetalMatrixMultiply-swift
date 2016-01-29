@@ -9,6 +9,24 @@ import XCTest
 
 class PerformanceTestCase_tests: XCTestCase {
 
+    var resources: PerformanceTestCase.Resources!
+    
+    override func setUp() {
+        super.setUp()
+        if let device = _metalDeviceForTesting {
+            resources = _createResourcesForDevice(device, dimensionCapacity: 16)
+        }
+    }
+    
+    override func tearDown() {
+        resources = nil
+        super.tearDown()
+    }
+
+    func test_resources_areAvailable() {
+        XCTAssertFalse(resources == nil)
+    }
+
     func test_validDimensions_areNotNil() {
         let dimensions = PerformanceTestCase.Dimensions(
             outputRowCount: 4,
@@ -38,4 +56,37 @@ class PerformanceTestCase_tests: XCTestCase {
         )
     }
 
+}
+
+
+// MARK: - Private
+
+// critical: Creating a Metal pipeline more than once with a discrete GPU
+//           appears to cause a kernel panic on OSX. Using the integrated
+//           device for testing when available.
+private var _metalDeviceForTesting: MTLDevice? = {
+#if os(OSX)
+    if let device = MTLCopyAllDevices().filter({ $0.lowPower }).first {
+        return device
+    }
+#endif
+    
+    return MTLCreateSystemDefaultDevice()
+}()
+
+private func _createResourcesForDevice(
+    device: MTLDevice, dimensionCapacity n: Int
+) -> PerformanceTestCase.Resources? {
+    guard
+        let pipeline = MetalPipeline(device: device, countAlignment: 8),
+        inputA = pipeline.newMatrixWithRowCount(n, columnCount: n),
+        inputB = pipeline.newMatrixWithRowCount(n, columnCount: n),
+        metalOutput = pipeline.newMatrixWithRowCount(n, columnCount: n),
+        cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
+    else { return nil }
+    
+    return PerformanceTestCase.Resources(
+        inputA: inputA, inputB: inputB,
+        metalOutput: metalOutput, cpuOutput: cpuOutput
+    )
 }
