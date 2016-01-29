@@ -26,5 +26,16 @@ class PerformanceTestCase_tests: XCTestCase {
         )
         XCTAssertNil(dimensions)
     }
+    
+    func test_dimensions_haveExpectedFlops() {
+        let dimensions = PerformanceTestCase.Dimensions(
+            outputRowCount: 4,
+            outputColumnCount: 6,
+            innerInputDimension: 2
+        )!
+        XCTAssertEqualWithAccuracy(
+            dimensions.flops, 2.0 * 4.0 * 6.0 * 2.0, accuracy: 0.001
+        )
+    }
 
 }

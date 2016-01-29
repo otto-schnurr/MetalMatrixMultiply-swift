@@ -20,8 +20,10 @@ struct PerformanceTestCase {
         let innerInputDimension: Int
         
         var flops: Double {
-            // !!!: implemet me
-            return 0
+            // Mutlipy and accumulate each inner product.
+            return
+                2.0  * Double(innerInputDimension) *
+                Double(outputRowCount) * Double(outputColumnCount)
         }
         
         init?(
