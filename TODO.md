@@ -3,7 +3,6 @@ TODO
 
 ### Implement `PerformanceTestCase`
 - logic test: `PerformanceTestCase` operation.
-    - Integrate random input values.
     - Integrate timing.
     - Integrate logging.
 

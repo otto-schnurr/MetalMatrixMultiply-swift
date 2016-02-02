@@ -9,6 +9,8 @@
 //     http://opensource.org/licenses/MIT
 //
 
+import Dispatch
+
 /// An operation for comparing Metal and CPU performance for
 /// matrix multiplication.
 struct PerformanceTestCase {
@@ -79,6 +81,9 @@ struct PerformanceTestCase {
             )
         else { throw PipelineError.UnsupportedMatrixSize }
         
+        resources.inputA.randomize()
+        resources.inputB.randomize()
+        
         let cpuData = CPUData(
             inputA: resources.inputA,
             inputB: resources.inputB,
@@ -98,7 +103,7 @@ struct PerformanceTestCase {
 }
 
 
-// MARK: Private
+// MARK: - Private
 private struct MetalData: MultiplicationData {
     
     typealias MatrixType = MetalMatrix
@@ -116,5 +121,38 @@ private struct CPUData: MultiplicationData {
     let inputA: MatrixType
     let inputB: MatrixType
     let output: MatrixType
+    
+}
+
+private extension Matrix {
+    
+    func randomize() {
+        guard rowCount * columnCount > 0 else { return }
+    
+        let seed = time(nil)
+        srand48(seed)
+        let queue = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
+        
+        dispatch_apply(rowCount, queue) {
+            rowIndex in
+            assert(rowIndex < self.rowCount)
+            let pRow = self.baseAddress + rowIndex * self.paddedColumnCount
+
+            for columnIndex in 0 ..< self.columnCount {
+                pRow[columnIndex] = MatrixElement.randomValue()
+            }
+        }
+    }
+    
+}
+
+private let _maxDeviation = MatrixElement(5.0)
+private let _mean = _maxDeviation / 2.0
+
+private extension MatrixElement {
+    
+    static func randomValue() -> MatrixElement {
+        return MatrixElement(drand48()) * _maxDeviation - _mean
+    }
     
 }
