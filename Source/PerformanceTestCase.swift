@@ -9,6 +9,7 @@
 //     http://opensource.org/licenses/MIT
 //
 
+import QuartzCore.CABase
 import Dispatch
 
 /// An operation for comparing Metal and CPU performance for
@@ -61,7 +62,7 @@ struct PerformanceTestCase {
     
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
-    func invoke() throws {
+    func invoke() throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
         guard
             resources.inputA.resizeToRowCount(
                 targetDimensions.innerInputDimension,
@@ -95,9 +96,13 @@ struct PerformanceTestCase {
             output: resources.metalOutput
         )
         
+        let cpuStart = CACurrentMediaTime()
         try CPUPipeline.multiplyData(cpuData)
-
+        let metalStart = CACurrentMediaTime()
         try resources.metalPipeline.multiplyData(metalData)
+        let metalEnd = CACurrentMediaTime()
+        
+        return (cpuTime: metalStart - cpuStart, metalTime: metalEnd - metalStart)
     }
     
 }

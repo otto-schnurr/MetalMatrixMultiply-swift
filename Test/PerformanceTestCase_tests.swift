@@ -67,8 +67,11 @@ class PerformanceTestCase_tests: XCTestCase {
             resources: resources
         )
         
-        do { try testCase.invoke() }
-        catch { XCTFail("Failed to invoke test case.") }
+        do {
+            let results = try testCase.invoke()
+            XCTAssertGreaterThan(results.cpuTime, 0.0)
+            XCTAssertGreaterThan(results.metalTime, 0.0)
+        } catch { XCTFail("Failed to invoke test case.") }
     }
     
     func test_smallerTargetSize_invokesSuccessfully() {
@@ -82,8 +85,11 @@ class PerformanceTestCase_tests: XCTestCase {
             resources: resources
         )
 
-        do { try testCase.invoke() }
-        catch { XCTFail("Failed to invoke test case.") }
+        do {
+            let results = try testCase.invoke()
+            XCTAssertGreaterThan(results.cpuTime, 0.0)
+            XCTAssertGreaterThan(results.metalTime, 0.0)
+        } catch { XCTFail("Failed to invoke test case.") }
     }
     
     func test_largerTargetSize_invokesSuccessfully() {
@@ -97,8 +103,11 @@ class PerformanceTestCase_tests: XCTestCase {
             resources: resources
         )
 
-        do { try testCase.invoke() }
-        catch { XCTFail("Failed to invoke test case.") }
+        do {
+            let results = try testCase.invoke()
+            XCTAssertGreaterThan(results.cpuTime, 0.0)
+            XCTAssertGreaterThan(results.metalTime, 0.0)
+        } catch { XCTFail("Failed to invoke test case.") }
     }
     
 }
