@@ -45,6 +45,8 @@
 		27E84CF81C34562C00B57034 /* MetalPipeline_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF71C34562C00B57034 /* MetalPipeline_tests.swift */; };
 		27E84CFA1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */; };
 		27E84CFB1C345C0D00B57034 /* MultiplyMatrices.metal in Sources */ = {isa = PBXBuildFile; fileRef = 27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */; };
+		27F1A2601C6281BA00902224 /* TestHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F1A25F1C6281BA00902224 /* TestHarness.swift */; };
+		27F1A2611C6281BA00902224 /* TestHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F1A25F1C6281BA00902224 /* TestHarness.swift */; };
 		27F5B5271C56A25500160A14 /* PerformanceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F5B5261C56A25500160A14 /* PerformanceTestCase.swift */; };
 		27F5B5281C56A25500160A14 /* PerformanceTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F5B5261C56A25500160A14 /* PerformanceTestCase.swift */; };
 		27F5B52A1C56A63000160A14 /* PerformanceTestCase_tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F5B5291C56A63000160A14 /* PerformanceTestCase_tests.swift */; };
@@ -87,6 +89,7 @@
 		27E84CF31C34555800B57034 /* MetalPipeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalPipeline.swift; sourceTree = "<group>"; };
 		27E84CF71C34562C00B57034 /* MetalPipeline_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalPipeline_tests.swift; sourceTree = "<group>"; };
 		27E84CF91C345C0D00B57034 /* MultiplyMatrices.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = MultiplyMatrices.metal; sourceTree = "<group>"; };
+		27F1A25F1C6281BA00902224 /* TestHarness.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHarness.swift; sourceTree = "<group>"; };
 		27F5B5261C56A25500160A14 /* PerformanceTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTestCase.swift; sourceTree = "<group>"; };
 		27F5B5291C56A63000160A14 /* PerformanceTestCase_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerformanceTestCase_tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -159,6 +162,7 @@
 				27E84CF71C34562C00B57034 /* MetalPipeline_tests.swift */,
 				2711196E1C330CE20078AE67 /* MultiplicationData_tests.swift */,
 				27F5B5291C56A63000160A14 /* PerformanceTestCase_tests.swift */,
+				27F1A25F1C6281BA00902224 /* TestHarness.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -347,6 +351,7 @@
 				27F5B5281C56A25500160A14 /* PerformanceTestCase.swift in Sources */,
 				272801281C4C2CB70077EABB /* Int+Alignment.swift in Sources */,
 				2711196C1C3309C40078AE67 /* CPUPipeline_tests.swift in Sources */,
+				27F1A2601C6281BA00902224 /* TestHarness.swift in Sources */,
 				27A15F051C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F1A2611C6281BA00902224 /* TestHarness.swift in Sources */,
 				27A15F061C24D13300C0F47A /* BufferedMatrix.swift in Sources */,
 				27A15EFF1C23338D00C0F47A /* MetalMatrix.swift in Sources */,
 				27E84CF61C34555E00B57034 /* MetalPipeline.swift in Sources */,

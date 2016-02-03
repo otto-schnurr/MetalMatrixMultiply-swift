@@ -22,7 +22,7 @@ class MetalMatrix_tests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        device = MTLCreateSystemDefaultDevice()
+        device = metalDeviceForTesting
         guard device != nil else {
             XCTFail("Failed to acquire Metal device.")
             return

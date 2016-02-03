@@ -4,6 +4,10 @@
 //  Created by Otto Schnurr on 1/25/2016.
 //  Copyright © 2016 Otto Schnurr. All rights reserved.
 //
+//  MIT License
+//     file: ../LICENSE.txt
+//     http://opensource.org/licenses/MIT
+//
 
 import XCTest
 
@@ -13,7 +17,7 @@ class PerformanceTestCase_tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        if let device = _metalDeviceForTesting {
+        if let device = metalDeviceForTesting {
             resources = _createResourcesForDevice(device, dimensionCapacity: 16)
         }
     }
@@ -114,19 +118,6 @@ class PerformanceTestCase_tests: XCTestCase {
 
 
 // MARK: - Private
-
-// critical: Creating a Metal pipeline more than once with a discrete GPU
-//           appears to cause a kernel panic on OSX. Using the integrated
-//           device for testing when available.
-private var _metalDeviceForTesting: MTLDevice? = {
-#if os(OSX)
-    if let device = MTLCopyAllDevices().filter({ $0.lowPower }).first {
-        return device
-    }
-#endif
-    
-    return MTLCreateSystemDefaultDevice()
-}()
 
 private func _createResourcesForDevice(
     device: MTLDevice, dimensionCapacity n: Int
