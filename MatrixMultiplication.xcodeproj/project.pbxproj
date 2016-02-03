@@ -141,9 +141,8 @@
 		27455EC01C190A2700D66961 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				27455EC11C190A2700D66961 /* main.swift */,
+				27F1A25E1C627E8700902224 /* Main */,
 				27E97DF31C29FD8900400330 /* Model */,
-				27F5B5261C56A25500160A14 /* PerformanceTestCase.swift */,
 				27E97DF41C29FDE700400330 /* Pipeline */,
 			);
 			path = Source;
@@ -186,6 +185,15 @@
 				27E84CEF1C3450F200B57034 /* PipelineError.swift */,
 			);
 			path = Pipeline;
+			sourceTree = "<group>";
+		};
+		27F1A25E1C627E8700902224 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				27455EC11C190A2700D66961 /* main.swift */,
+				27F5B5261C56A25500160A14 /* PerformanceTestCase.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
