@@ -1,15 +1,12 @@
 TODO
 ====
 
-### Implement `MetalPipeline`
-- Verify 12x12 multiply.
-
-### Implement `Experiment`
-- logic test: `Experiment` construction.
-- logic test: `Experiment` operation.
-- Integrate randomization.
-- Integrate timing.
-- Integrate logging.
+### Implement `PerformanceTest`
+- logic test: `PerformanceTest` construction.
+- logic test: `PerformanceTest` operation.
+    - Integrate threading.
+    - Integrate random sizes.
+    - Integrate logging.
 
 ### Implement Targets
 - Implement OSX command-line target.
