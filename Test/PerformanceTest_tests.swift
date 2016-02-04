@@ -14,17 +14,20 @@ import XCTest
 class PerformanceTest_tests: XCTestCase {
 
     func test_invalidTest_isNil() {
-        let test = PerformanceTest(testCount: 0, loopsPerTest: 0)
+        let device = metalDeviceForTesting!
+        let test = PerformanceTest(device: device, testCount: 0, loopsPerTest: 0)
         XCTAssertNil(test)
     }
     
     func test_validTest_isNotNil() {
-        let test = PerformanceTest(testCount: 20, loopsPerTest: 100)
+        let device = metalDeviceForTesting!
+        let test = PerformanceTest(device: device, testCount: 20, loopsPerTest: 100)
         XCTAssertNotNil(test)
     }
 
     func test_defaultTest_isNotNil() {
-        let test = PerformanceTest()
+        let device = metalDeviceForTesting!
+        let test = PerformanceTest(device: device)
         XCTAssertNotNil(test)
     }
 
