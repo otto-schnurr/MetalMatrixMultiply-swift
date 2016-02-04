@@ -2,8 +2,6 @@ TODO
 ====
 
 ### Implement `PerformanceTest`
-- logic test: `PerformanceTest` construction.
-    - Verify testCount and loopsPerTest.
 - logic test: `PerformanceTest` operation.
     - Integrate threading.
     - Integrate testCount and loopsPerTest.

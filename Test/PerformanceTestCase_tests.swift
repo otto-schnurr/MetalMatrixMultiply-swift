@@ -72,7 +72,7 @@ class PerformanceTestCase_tests: XCTestCase {
         )
         
         do {
-            let results = try testCase.invoke()
+            let results = try testCase.run()
             XCTAssertGreaterThan(results.cpuTime, 0.0)
             XCTAssertGreaterThan(results.metalTime, 0.0)
         } catch { XCTFail("Failed to invoke test case.") }
@@ -90,7 +90,7 @@ class PerformanceTestCase_tests: XCTestCase {
         )
 
         do {
-            let results = try testCase.invoke()
+            let results = try testCase.run()
             XCTAssertGreaterThan(results.cpuTime, 0.0)
             XCTAssertGreaterThan(results.metalTime, 0.0)
         } catch { XCTFail("Failed to invoke test case.") }
@@ -108,7 +108,7 @@ class PerformanceTestCase_tests: XCTestCase {
         )
 
         do {
-            let results = try testCase.invoke()
+            let results = try testCase.run()
             XCTAssertGreaterThan(results.cpuTime, 0.0)
             XCTAssertGreaterThan(results.metalTime, 0.0)
         } catch { XCTFail("Failed to invoke test case.") }

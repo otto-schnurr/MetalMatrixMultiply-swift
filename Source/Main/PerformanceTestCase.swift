@@ -62,7 +62,7 @@ struct PerformanceTestCase {
     
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
-    func invoke() throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
+    func run() throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
         guard
             resources.inputA.resizeToRowCount(
                 targetDimensions.innerInputDimension,
