@@ -17,5 +17,15 @@ class PerformanceTest_tests: XCTestCase {
         let test = PerformanceTest(testCount: 0, loopsPerTest: 0)
         XCTAssertNil(test)
     }
+    
+    func test_validTest_isNotNil() {
+        let test = PerformanceTest(testCount: 20, loopsPerTest: 100)
+        XCTAssertNotNil(test)
+    }
+
+    func test_defaultTest_isNotNil() {
+        let test = PerformanceTest()
+        XCTAssertNotNil(test)
+    }
 
 }

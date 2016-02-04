@@ -11,9 +11,10 @@
 
 struct PerformanceTest {
     
-    init?(testCount: Int, loopsPerTest: Int) {
+    init?(testCount: Int = 20, loopsPerTest: Int = 100) {
+        guard testCount > 0 && loopsPerTest > 0 else { return nil }
+
         // !!!: implement me
-        return nil
     }
 
 }
