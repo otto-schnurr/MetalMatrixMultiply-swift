@@ -1,14 +1,11 @@
 TODO
 ====
 
-- Add repeat count to performanceTestCase.run().
-
 ### Implement `PerformanceTest`
 - logic test: `PerformanceTest` operation.
-    - Integrate threading.
-    - Integrate testCount and loopsPerTest.
-    - Integrate random sizes.
     - Integrate logging.
+    - Integrate random sizes.
+    - Integrate testCount and loopsPerTest.
 
 ### Implement Targets
 - Implement OSX command-line target.

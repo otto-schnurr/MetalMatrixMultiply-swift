@@ -9,6 +9,7 @@
 //     http://opensource.org/licenses/MIT
 //
 
+import Dispatch
 import Metal
 
 struct PerformanceTest {
@@ -32,9 +33,26 @@ struct PerformanceTest {
         self.resources = resources
     }
 
-    func runAsync(completion: (PipelineError?) -> Void) {
-        // !!!: implement me
-        completion(nil)
+    func runAsync(completion: (success: Bool) -> Void) {
+        let background = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+        let foreground = dispatch_get_main_queue()
+        
+        dispatch_async(background) {
+            let result: Bool
+
+            do {
+                try self.run()
+                result = true
+            } catch is PipelineError {
+                // !!!: log pipeline error
+                result = false
+            } catch {
+                // !!!: log unknown error
+                result = false
+            }
+
+            dispatch_async(foreground) { completion(success: result) }
+        }
     }
 
     // MARK: Private
@@ -44,6 +62,14 @@ struct PerformanceTest {
 
 
 // MARK: - Private
+private extension PerformanceTest {
+    
+    func run() throws {
+        // !!!: implement me
+    }
+    
+}
+
 private func _createResourcesForDevice(
     device: MTLDevice, dimensionCapacity n: Int
 ) -> PerformanceTestCase.Resources? {
