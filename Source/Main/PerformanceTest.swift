@@ -31,6 +31,8 @@ struct PerformanceTest {
         else { return nil }
         
         self.resources = resources
+        self.testCount = testCount
+        self.loopsPerTest = loopsPerTest
     }
 
     func runAsync(completion: (success: Bool) -> Void) {
@@ -57,6 +59,8 @@ struct PerformanceTest {
 
     // MARK: Private
     let resources: PerformanceTestCase.Resources
+    let testCount: Int
+    let loopsPerTest: Int
 
 }
 
