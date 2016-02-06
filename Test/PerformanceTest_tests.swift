@@ -36,8 +36,8 @@ class PerformanceTest_tests: XCTestCase {
         let test = PerformanceTest(device: device, testCount: 2, loopsPerTest: 5)!
         let expectation = expectationWithDescription("complete performance test")
 
-        test.runAsync { error in
-            XCTAssertNil(error)
+        test.runAsync { success in
+            XCTAssertTrue(success)
             expectation.fulfill()
         }
         

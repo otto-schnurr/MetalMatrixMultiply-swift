@@ -43,11 +43,11 @@ struct PerformanceTest {
             do {
                 try self.run()
                 result = true
-            } catch is PipelineError {
-                // !!!: log pipeline error
+            } catch let error as PipelineError {
+                _log("failure: \(error)")
                 result = false
             } catch {
-                // !!!: log unknown error
+                _log("failure: unknown")
                 result = false
             }
 
@@ -86,4 +86,8 @@ private func _createResourcesForDevice(
         inputA: inputA, inputB: inputB,
         metalOutput: metalOutput, cpuOutput: cpuOutput
     )
+}
+
+private func _log(message: String) {
+    print(message)
 }
