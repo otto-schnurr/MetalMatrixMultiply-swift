@@ -22,11 +22,11 @@ struct PerformanceTestCase {
         let outputColumnCount: Int
         let innerInputDimension: Int
         
-        var flops: Double {
+        var operationCount: Int64 {
             // Mutlipy and accumulate each inner product.
             return
-                2.0  * Double(innerInputDimension) *
-                Double(outputRowCount) * Double(outputColumnCount)
+                2  * Int64(innerInputDimension) *
+                Int64(outputRowCount) * Int64(outputColumnCount)
         }
         
         init?(
