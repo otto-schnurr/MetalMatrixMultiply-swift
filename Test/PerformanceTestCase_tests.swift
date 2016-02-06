@@ -60,7 +60,7 @@ class PerformanceTestCase_tests: XCTestCase {
         )
     }
 
-    func test_currentResourceSize_invokesSuccessfully() {
+    func test_currentResourceSize_runsSuccessfully() {
         let dimensions = PerformanceTestCase.Dimensions(
             outputRowCount: resources.inputA.columnCount,
             outputColumnCount: resources.inputB.columnCount,
@@ -78,7 +78,7 @@ class PerformanceTestCase_tests: XCTestCase {
         } catch { XCTFail("Failed to invoke test case.") }
     }
     
-    func test_smallerTargetSize_invokesSuccessfully() {
+    func test_smallerTargetSize_runsSuccessfully() {
         let dimensions = PerformanceTestCase.Dimensions(
             outputRowCount: resources.inputA.columnCount / 2,
             outputColumnCount: resources.inputB.columnCount / 2,
@@ -96,7 +96,7 @@ class PerformanceTestCase_tests: XCTestCase {
         } catch { XCTFail("Failed to invoke test case.") }
     }
     
-    func test_largerTargetSize_invokesSuccessfully() {
+    func test_largerTargetSize_runsSuccessfully() {
         let dimensions = PerformanceTestCase.Dimensions(
             outputRowCount: resources.inputA.columnCount * 2,
             outputColumnCount: resources.inputB.columnCount * 2,
@@ -109,6 +109,24 @@ class PerformanceTestCase_tests: XCTestCase {
 
         do {
             let results = try testCase.run()
+            XCTAssertGreaterThan(results.cpuTime, 0.0)
+            XCTAssertGreaterThan(results.metalTime, 0.0)
+        } catch { XCTFail("Failed to invoke test case.") }
+    }
+    
+    func test_validRepeatCount_runsSuccessfully() {
+        let dimensions = PerformanceTestCase.Dimensions(
+            outputRowCount: resources.inputA.columnCount,
+            outputColumnCount: resources.inputB.columnCount,
+            innerInputDimension: resources.inputB.rowCount
+        )!
+        let testCase = PerformanceTestCase(
+            targetDimensions: dimensions,
+            resources: resources
+        )
+        
+        do {
+            let results = try testCase.run(repeatCount: 5)
             XCTAssertGreaterThan(results.cpuTime, 0.0)
             XCTAssertGreaterThan(results.metalTime, 0.0)
         } catch { XCTFail("Failed to invoke test case.") }

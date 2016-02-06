@@ -62,7 +62,13 @@ struct PerformanceTestCase {
     
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
-    func run() throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
+    func run(
+        repeatCount repeatCount: Int = 0
+    ) throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
+        guard
+            repeatCount >= 0
+        else { throw PipelineError.InvalidRepeatCount }
+
         guard
             resources.inputA.resizeToRowCount(
                 targetDimensions.innerInputDimension,
@@ -97,9 +103,9 @@ struct PerformanceTestCase {
         )
         
         let cpuStart = CACurrentMediaTime()
-        try CPUPipeline.multiplyData(cpuData)
+        try CPUPipeline.multiplyData(cpuData, repeatCount: repeatCount)
         let metalStart = CACurrentMediaTime()
-        try resources.metalPipeline.multiplyData(metalData)
+        try resources.metalPipeline.multiplyData(metalData, repeatCount: repeatCount)
         let metalEnd = CACurrentMediaTime()
         
         return (cpuTime: metalStart - cpuStart, metalTime: metalEnd - metalStart)
