@@ -32,6 +32,11 @@ struct PerformanceTest {
         self.resources = resources
     }
 
+    func runAsync(completion: (PipelineError?) -> Void) {
+        // !!!: implement me
+        completion(nil)
+    }
+
     // MARK: Private
     let resources: PerformanceTestCase.Resources
 

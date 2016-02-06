@@ -1,6 +1,8 @@
 TODO
 ====
 
+- Add repeat count to performanceTestCase.run().
+
 ### Implement `PerformanceTest`
 - logic test: `PerformanceTest` operation.
     - Integrate threading.

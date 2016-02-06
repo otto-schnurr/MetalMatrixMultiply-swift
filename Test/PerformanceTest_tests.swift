@@ -31,4 +31,17 @@ class PerformanceTest_tests: XCTestCase {
         XCTAssertNotNil(test)
     }
 
+    func test_validTest_completesSuccessfully() {
+        let device = metalDeviceForTesting!
+        let test = PerformanceTest(device: device, testCount: 2, loopsPerTest: 5)!
+        let expectation = expectationWithDescription("complete performance test")
+
+        test.runAsync { error in
+            XCTAssertNil(error)
+            expectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(10) { error in XCTAssertNil(error) }
+    }
+
 }
