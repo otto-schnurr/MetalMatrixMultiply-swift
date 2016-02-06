@@ -16,7 +16,7 @@ import Dispatch
 /// matrix multiplication.
 struct PerformanceTestCase {
     
-    struct Dimensions {
+    struct Dimensions: CustomStringConvertible {
     
         let outputRowCount: Int
         let outputColumnCount: Int
@@ -43,6 +43,13 @@ struct PerformanceTestCase {
             self.outputRowCount = outputRowCount
             self.outputColumnCount = outputColumnCount
             self.innerInputDimension = innerInputDimension
+        }
+        
+        var description: String {
+            return
+               "[\(innerInputDimension) x \(outputRowCount)]T" +
+               "[\(innerInputDimension) x \(outputColumnCount)] -> " +
+               "[\(outputRowCount) x \(outputColumnCount)]"
         }
         
     }
