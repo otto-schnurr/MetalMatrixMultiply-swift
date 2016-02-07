@@ -74,16 +74,25 @@ private extension PerformanceTest {
             PerformanceTestCase(targetDimensions: $0, resources: self.resources)
         }
         guard testCases.count == testCount else { throw PipelineError.UnsupportedMatrixSize }
+        let flopsToGflops = 1 / 1_000_000_000.0
         
         for testCase in testCases {
             let operationCount =
-                testCase.targetDimensions.operationCount * Int64(loopsPerTest)
+                Double(testCase.targetDimensions.operationCount) *
+                Double(loopsPerTest)
             _log(
                 ">> Dimensions: \(testCase.targetDimensions), " +
                 "\(loopsPerTest) times, " +
-                "\(operationCount / 1_000_000) million operations"
+                "\(operationCount / 1_000_000.0) million operations"
             )
-            try testCase.run(repeatCount: loopsPerTest - 1)
+            let result = try testCase.run(repeatCount: loopsPerTest - 1)
+
+            let cpuFlops = operationCount / result.cpuTime
+            let metalFlops = operationCount / result.metalTime
+            _log(
+                "   Accelerate: \(cpuFlops * flopsToGflops) gflops, " +
+                "Metal: \(metalFlops * flopsToGflops) gflops"
+            )
         }
     }
     
