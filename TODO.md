@@ -3,8 +3,7 @@ TODO
 
 ### Implement `PerformanceTest`
 - logic test: `PerformanceTest` operation.
-    - Integrate random sizes.
-    - Integrate testCount and loopsPerTest.
+    - Log gflops.
 
 ### Implement Targets
 - Implement OSX command-line target.

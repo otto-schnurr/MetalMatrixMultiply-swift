@@ -69,9 +69,48 @@ struct PerformanceTest {
 private extension PerformanceTest {
     
     func run() throws {
-        // !!!: implement me
+        let dimensions = GeneratorSequence(RandomDimensionGenerator(count: testCount))
+        let testCases = dimensions.flatMap {
+            PerformanceTestCase(targetDimensions: $0, resources: self.resources)
+        }
+        guard testCases.count == testCount else { throw PipelineError.UnsupportedMatrixSize }
+        
+        for testCase in testCases {
+            let operationCount =
+                testCase.targetDimensions.operationCount * Int64(loopsPerTest)
+            _log(
+                ">> Dimensions: \(testCase.targetDimensions), " +
+                "\(loopsPerTest) times, " +
+                "\(operationCount / 1_000_000) million operations"
+            )
+            try testCase.run(repeatCount: loopsPerTest - 1)
+        }
     }
     
+}
+
+private struct RandomDimensionGenerator: GeneratorType {
+
+    typealias Element = PerformanceTestCase.Dimensions
+    var count: Int
+
+    private mutating func next() -> RandomDimensionGenerator.Element? {
+        guard count > 0 else { return nil }
+        count -= 1
+        return Element(
+            outputRowCount: _randomDimensionLength(),
+            outputColumnCount: _randomDimensionLength(),
+            innerInputDimension: _randomDimensionLength()
+        )
+    }
+
+}
+
+private let _min = UInt32(256)
+private let _max = UInt32(2048)
+
+private func _randomDimensionLength() -> Int {
+    return Int(arc4random_uniform(_max + 1 - _min) + _min)
 }
 
 private func _createResourcesForDevice(
