@@ -16,7 +16,6 @@ struct PerformanceTest {
     
     init?(
         device: MTLDevice,
-        dimensionCapacity: Int = 2048,
         testCount: Int = 20,
         loopsPerTest: Int = 100
     ) {
@@ -25,9 +24,7 @@ struct PerformanceTest {
         else { return nil }
         
         guard
-            let resources = _createResourcesForDevice(
-                device, dimensionCapacity: dimensionCapacity
-            )
+            let resources = _createResourcesForDevice(device)
         else { return nil }
         
         self.resources = resources
@@ -123,14 +120,14 @@ private func _randomDimensionLength() -> Int {
 }
 
 private func _createResourcesForDevice(
-    device: MTLDevice, dimensionCapacity n: Int
+    device: MTLDevice
 ) -> PerformanceTestCase.Resources? {
     guard
         let pipeline = MetalPipeline(device: device, countAlignment: 8),
-        inputA = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        inputB = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        metalOutput = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
+        inputA = pipeline.newMatrixWithRowCount(1, columnCount: 1),
+        inputB = pipeline.newMatrixWithRowCount(1, columnCount: 1),
+        metalOutput = pipeline.newMatrixWithRowCount(1, columnCount: 1),
+        cpuOutput = CPUMatrix(rowCount: 1, columnCount: 1, countAlignment: 8)
     else { return nil }
     
     return PerformanceTestCase.Resources(
