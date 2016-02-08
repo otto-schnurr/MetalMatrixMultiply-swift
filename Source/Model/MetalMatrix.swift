@@ -80,7 +80,7 @@ private extension MTLBuffer {
         
         let newBuffer: MTLBuffer
         
-        if newLength > length {
+        if newLength <= length {
             newBuffer = device.newBufferWithBytes(
                 self.contents(),
                 length: newLength,
@@ -90,7 +90,7 @@ private extension MTLBuffer {
             newBuffer = device.newBufferWithLength(
                 newLength, options: .CPUCacheModeDefaultCache
             )
-            newBuffer.contents().assignFrom(self.contents(), count: newLength)
+            newBuffer.contents().assignFrom(self.contents(), count: length)
         }
         
         return newBuffer

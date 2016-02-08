@@ -96,9 +96,9 @@ class PerformanceTestCase_tests: XCTestCase {
     
     func test_largerTargetSize_runsSuccessfully() {
         let dimensions = PerformanceTestCase.Dimensions(
-            outputRowCount: resources.inputA.columnCount * 2,
-            outputColumnCount: resources.inputB.columnCount * 2,
-            innerInputDimension: resources.inputB.rowCount * 2
+            outputRowCount: resources.inputA.columnCount * 40,
+            outputColumnCount: resources.inputB.columnCount * 80,
+            innerInputDimension: resources.inputB.rowCount * 40
         )!
         let testCase = PerformanceTestCase(
             targetDimensions: dimensions,
