@@ -13,7 +13,7 @@ class MetalPipeline_tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        if let device = _metalDeviceForPipelineTesting {
+        if let device = metalDeviceForTesting {
             pipeline = MetalPipeline(device: device, countAlignment: 8)
         }
     }
@@ -28,7 +28,7 @@ class MetalPipeline_tests: XCTestCase {
     }
 
     func test_pipelineWithBadAlignment_cannnotBeCreated() {
-        let device = _metalDeviceForPipelineTesting!
+        let device = metalDeviceForTesting!
         let pipeline = MetalPipeline(device: device, countAlignment: 0)
         XCTAssertTrue(pipeline == nil)
     }
@@ -187,19 +187,6 @@ class MetalPipeline_tests: XCTestCase {
 
 
 // MARK: - Private
-
-// critical: Creating a Metal pipeline more than once with a discrete GPU
-//           appears to cause a kernel panic on OSX. Using the integrated
-//           device for testing when available.
-private var _metalDeviceForPipelineTesting: MTLDevice? = {
-#if os(OSX)
-    if let device = MTLCopyAllDevices().filter({ $0.lowPower }).first {
-        return device
-    }
-#endif
-
-    return MTLCreateSystemDefaultDevice()
-}()
 
 private struct MetalData: MultiplicationData {
     

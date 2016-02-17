@@ -16,17 +16,17 @@ import Dispatch
 /// matrix multiplication.
 struct PerformanceTestCase {
     
-    struct Dimensions {
+    struct Dimensions: CustomStringConvertible {
     
         let outputRowCount: Int
         let outputColumnCount: Int
         let innerInputDimension: Int
         
-        var flops: Double {
+        var operationCount: Int64 {
             // Mutlipy and accumulate each inner product.
             return
-                2.0  * Double(innerInputDimension) *
-                Double(outputRowCount) * Double(outputColumnCount)
+                2  * Int64(innerInputDimension) *
+                Int64(outputRowCount) * Int64(outputColumnCount)
         }
         
         init?(
@@ -43,6 +43,13 @@ struct PerformanceTestCase {
             self.outputRowCount = outputRowCount
             self.outputColumnCount = outputColumnCount
             self.innerInputDimension = innerInputDimension
+        }
+        
+        var description: String {
+            return
+               "[\(innerInputDimension) x \(outputRowCount)]T" +
+               "[\(innerInputDimension) x \(outputColumnCount)] -> " +
+               "[\(outputRowCount) x \(outputColumnCount)]"
         }
         
     }
@@ -62,7 +69,13 @@ struct PerformanceTestCase {
     
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
-    func invoke() throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
+    func run(
+        repeatCount repeatCount: Int = 0
+    ) throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
+        guard
+            repeatCount >= 0
+        else { throw PipelineError.InvalidRepeatCount }
+
         guard
             resources.inputA.resizeToRowCount(
                 targetDimensions.innerInputDimension,
@@ -97,9 +110,9 @@ struct PerformanceTestCase {
         )
         
         let cpuStart = CACurrentMediaTime()
-        try CPUPipeline.multiplyData(cpuData)
+        try CPUPipeline.multiplyData(cpuData, repeatCount: repeatCount)
         let metalStart = CACurrentMediaTime()
-        try resources.metalPipeline.multiplyData(metalData)
+        try resources.metalPipeline.multiplyData(metalData, repeatCount: repeatCount)
         let metalEnd = CACurrentMediaTime()
         
         return (cpuTime: metalStart - cpuStart, metalTime: metalEnd - metalStart)
