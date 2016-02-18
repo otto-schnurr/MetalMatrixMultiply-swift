@@ -9,7 +9,8 @@
 //     http://opensource.org/licenses/MIT
 //
 
-import Foundation
+import Darwin
 
+var result = EXIT_SUCCESS
 print("Hello, World!")
-
+exit(result)
