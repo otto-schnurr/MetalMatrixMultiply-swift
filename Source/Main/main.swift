@@ -9,7 +9,12 @@
 //     http://opensource.org/licenses/MIT
 //
 
-import Darwin
+import Metal
+
+guard let device = MTLCreateSystemDefaultDevice() else {
+    print("error: Failed to acquire a Metal device.")
+    exit(EXIT_FAILURE)
+}
 
 var result = EXIT_SUCCESS
 print("Hello, World!")
