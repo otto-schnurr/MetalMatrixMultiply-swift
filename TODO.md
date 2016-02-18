@@ -4,6 +4,3 @@ TODO
 ### Implement Targets
 - Implement OSX command-line target.
 - Implement iOS app target.
-
-### Misc
-- Investigate why integrated GPU is slower than Accelerate CPU.
