@@ -20,7 +20,7 @@ guard let device = MTLCreateSystemDefaultDevice() else {
     exit(EXIT_FAILURE)
 }
 
-guard let test = PerformanceTest(device: device, testCount: 5) else {
+guard let test = PerformanceTest(device: device) else {
     _logErrorMessage("Failed create performance test.")
     exit(EXIT_FAILURE)
 }

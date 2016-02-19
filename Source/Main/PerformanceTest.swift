@@ -16,7 +16,7 @@ struct PerformanceTest {
     
     init?(
         device: MTLDevice,
-        testCount: Int = 20,
+        testCount: Int = 5,
         loopsPerTest: Int = 100
     ) {
         guard
@@ -77,17 +77,21 @@ private extension PerformanceTest {
                 Double(testCase.targetDimensions.operationCount) *
                 Double(loopsPerTest)
             _log(
-                ">> Dimensions: \(testCase.targetDimensions), " +
-                "\(loopsPerTest) times, " +
+                ">> Dimensions: \(testCase.targetDimensions)\n" +
+                "   \(loopsPerTest) times -> " +
                 "\(operationCount / 1_000_000.0) million operations"
             )
             let result = try testCase.run(repeatCount: loopsPerTest - 1)
 
             let cpuFlops = operationCount / result.cpuTime
+            let cpuResults = NSString(format: "%.1f", cpuFlops * flopsToGflops)
+
             let metalFlops = operationCount / result.metalTime
+            let metalResults = NSString(format: "%.1f", metalFlops * flopsToGflops)
+            
             _log(
-                "   Accelerate: \(cpuFlops * flopsToGflops) gflops, " +
-                "Metal: \(metalFlops * flopsToGflops) gflops"
+                "   Accelerate: \(cpuResults) gflops, " +
+                "Metal: \(metalResults) gflops"
             )
         }
     }
