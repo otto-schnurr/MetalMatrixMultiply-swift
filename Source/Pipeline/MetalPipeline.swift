@@ -194,7 +194,7 @@ private extension MTLSize {
         guard
            let paddedWidth = width.paddedToAlignment(groupSize.width),
            paddedHeight = width.paddedToAlignment(groupSize.height),
-           paddedDepth = width.paddedToAlignment(groupSize.depth)
+           paddedDepth = depth.paddedToAlignment(groupSize.depth)
         else { return nil }
         
         return MTLSize(width: paddedWidth, height: paddedHeight, depth: paddedDepth)
