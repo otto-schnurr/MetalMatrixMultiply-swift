@@ -34,7 +34,6 @@ struct PerformanceTest {
 
     func runAsync(completion: (success: Bool) -> Void) {
         let background = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
-        let foreground = dispatch_get_main_queue()
         
         dispatch_async(background) {
             let result: Bool
@@ -50,7 +49,7 @@ struct PerformanceTest {
                 result = false
             }
 
-            dispatch_async(foreground) { completion(success: result) }
+            completion(success: result)
         }
     }
 
