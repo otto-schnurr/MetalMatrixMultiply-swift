@@ -149,14 +149,11 @@ private extension Matrix {
     
         let seed = time(nil)
         srand48(seed)
-        let queue = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
         
-        dispatch_apply(rowCount, queue) {
-            rowIndex in
-            assert(rowIndex < self.rowCount)
-            let pRow = self.baseAddress + rowIndex * self.paddedColumnCount
+        for rowIndex in 0 ..< rowCount {
+            let pRow = baseAddress + rowIndex * paddedColumnCount
 
-            for columnIndex in 0 ..< self.columnCount {
+            for columnIndex in 0 ..< columnCount {
                 pRow[columnIndex] = MatrixElement.randomValue()
             }
         }
