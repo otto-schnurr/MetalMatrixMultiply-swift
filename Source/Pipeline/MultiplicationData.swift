@@ -15,7 +15,7 @@
 /// ```
 protocol MultiplicationData {
 
-    typealias MatrixType: Matrix
+    associatedtype MatrixType: Matrix
 
     var inputA: MatrixType { get }
     var inputB: MatrixType { get }
