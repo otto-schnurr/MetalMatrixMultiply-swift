@@ -35,14 +35,14 @@ class MetalBuffer: ResizableBuffer {
     
     let device: MTLDevice
     
-    var memory: UnsafeMutablePointer<Void> {
+    var memory: UnsafeMutableRawPointer {
         guard let buffer = buffer else { return nil }
         return buffer.contents()
     }
     
     var length: Int { return buffer?.length ?? 0 }
     
-    func resizeToLength(newLength: Int) -> Bool {
+    func resizeToLength(_ newLength: Int) -> Bool {
         guard newLength >= 0 else { return false }
         guard newLength != length else { return true }
         
@@ -51,8 +51,8 @@ class MetalBuffer: ResizableBuffer {
         } else if let buffer = buffer {
             self.buffer = buffer.resizedToLength(newLength)
         } else {
-            buffer = device.newBufferWithLength(
-                newLength, options: .CPUCacheModeDefaultCache
+            buffer = device.makeBuffer(
+                length: newLength, options: MTLResourceOptions()
             )
         }
         
@@ -62,7 +62,7 @@ class MetalBuffer: ResizableBuffer {
     init(device: MTLDevice) { self.device = device }
 
     // MARK: Private
-    private var buffer: MTLBuffer?
+    fileprivate var buffer: MTLBuffer?
 
 }
 
@@ -70,7 +70,7 @@ class MetalBuffer: ResizableBuffer {
 // MARK: - Private
 private extension MTLBuffer {
     
-    func resizedToLength(newLength: Int) -> MTLBuffer? {
+    func resizedToLength(_ newLength: Int) -> MTLBuffer? {
         guard newLength != length else {
             return self
         }
@@ -81,14 +81,14 @@ private extension MTLBuffer {
         let newBuffer: MTLBuffer
         
         if newLength <= length {
-            newBuffer = device.newBufferWithBytes(
-                self.contents(),
+            newBuffer = device.makeBuffer(
+                bytes: self.contents(),
                 length: newLength,
-                options: .CPUCacheModeDefaultCache
+                options: MTLResourceOptions()
             )
         } else {
-            newBuffer = device.newBufferWithLength(
-                newLength, options: .CPUCacheModeDefaultCache
+            newBuffer = device.makeBuffer(
+                length: newLength, options: MTLResourceOptions()
             )
             newBuffer.contents().assignFrom(self.contents(), count: length)
         }

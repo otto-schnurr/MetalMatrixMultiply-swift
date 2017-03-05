@@ -26,14 +26,14 @@ class CPUMatrix: ResizableBufferedMatrix {
 
 class CPUBuffer: ResizableBuffer {
     
-    var memory: UnsafeMutablePointer<Void> {
+    var memory: UnsafeMutableRawPointer {
         guard let data = data else { return nil }
         return data.mutableBytes
     }
 
     var length: Int { return data?.length ?? 0 }
     
-    func resizeToLength(newLength: Int) -> Bool {
+    func resizeToLength(_ newLength: Int) -> Bool {
         guard newLength >= 0 else { return false }
         guard newLength != length else { return true }
         
@@ -49,7 +49,7 @@ class CPUBuffer: ResizableBuffer {
     }
 
     // MARK: Private
-    private var data: NSMutableData?
+    fileprivate var data: NSMutableData?
     
 }
 
@@ -57,20 +57,20 @@ class CPUBuffer: ResizableBuffer {
 // MARK: - Private
 private extension NSMutableData {
     
-    func resizeToLength(newLength: Int) {
+    func resizeToLength(_ newLength: Int) {
         guard newLength != length else {
             return
         }
         guard newLength > 0 else {
-            setData(NSData())
+            setData(Data())
             return
         }
         
         if newLength > length {
-            increaseLengthBy(newLength - length)
+            increaseLength(by: newLength - length)
         } else {
             let range = NSMakeRange(0, newLength)
-            setData(subdataWithRange(range))
+            setData(subdata(with: range))
         }
     }
     

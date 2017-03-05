@@ -10,21 +10,21 @@
 //
 
 protocol Buffer {
-    var memory: UnsafeMutablePointer<Void> { get }
+    var memory: UnsafeMutableRawPointer { get }
     var length: Int { get }
 }
 
 protocol ResizableBuffer: Buffer {
-    func resizeToLength(newLength: Int) -> Bool
+    func resizeToLength(_ newLength: Int) -> Bool
 }
 
 class BufferedMatrix: Matrix {
     
     let buffer: ResizableBuffer
-    private(set) var rowCount: Int
-    private(set) var columnCount: Int
-    private(set) var paddedRowCount: Int
-    private(set) var paddedColumnCount: Int
+    fileprivate(set) var rowCount: Int
+    fileprivate(set) var columnCount: Int
+    fileprivate(set) var paddedRowCount: Int
+    fileprivate(set) var paddedColumnCount: Int
     
     var baseAddress: UnsafeMutablePointer<MatrixElement> {
         return UnsafeMutablePointer<MatrixElement>(buffer.memory)
@@ -55,7 +55,7 @@ class BufferedMatrix: Matrix {
             let paddedColumnCount = columnCount.paddedToAlignment(countAlignment),
             let byteCount = _byteCountForPaddedRowCount(
                 paddedRowCount, paddedColumnCount: paddedColumnCount
-            ) where buffer.resizeToLength(byteCount)
+            ), buffer.resizeToLength(byteCount)
         else {
             self.rowCount = 0
             self.columnCount = 0
@@ -83,14 +83,14 @@ class BufferedMatrix: Matrix {
     }
     
     // MARK: Private
-    private let countAlignment: Int
+    fileprivate let countAlignment: Int
 
 }
 
 class ResizableBufferedMatrix: BufferedMatrix {
     
     func resizeToRowCount(
-        newRowCount: Int, columnCount newColumnCount: Int
+        _ newRowCount: Int, columnCount newColumnCount: Int
     ) -> Bool {
         assert(countAlignment > 0)
         guard
@@ -135,8 +135,8 @@ class ResizableBufferedMatrix: BufferedMatrix {
 
 // MARK: - Private
 private func _byteCountForPaddedRowCount(
-    paddedRowCount: Int, paddedColumnCount: Int
+    _ paddedRowCount: Int, paddedColumnCount: Int
 ) -> Int? {
     guard paddedRowCount > 0 && paddedColumnCount > 0 else { return nil }
-    return paddedRowCount * paddedColumnCount * sizeof(MatrixElement)
+    return paddedRowCount * paddedColumnCount * MemoryLayout<MatrixElement>.size
 }

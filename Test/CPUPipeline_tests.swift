@@ -22,7 +22,7 @@ class CPUPipeline_tests: XCTestCase {
         do {
             try CPUPipeline.multiplyData(badData)
             XCTFail("Multiplied matrices with bad output dimensions.")
-        } catch PipelineError.InvalidOutputDimensions {
+        } catch PipelineError.invalidOutputDimensions {
         } catch {
             XCTFail("Failed to report bad output dimensions.")
         }
@@ -37,7 +37,7 @@ class CPUPipeline_tests: XCTestCase {
         do {
             try CPUPipeline.multiplyData(data, repeatCount: -1)
             XCTFail("Multiplied matrices with bad repeat count.")
-        } catch PipelineError.InvalidRepeatCount {
+        } catch PipelineError.invalidRepeatCount {
         } catch {
             XCTFail("Failed to report bad repeat count.")
         }

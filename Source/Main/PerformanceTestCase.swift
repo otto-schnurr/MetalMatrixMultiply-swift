@@ -70,11 +70,11 @@ struct PerformanceTestCase {
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
     func run(
-        repeatCount repeatCount: Int = 0
+        repeatCount: Int = 0
     ) throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
         guard
             repeatCount >= 0
-        else { throw PipelineError.InvalidRepeatCount }
+        else { throw PipelineError.invalidRepeatCount }
 
         guard
             resources.inputA.resizeToRowCount(
@@ -93,7 +93,7 @@ struct PerformanceTestCase {
                 targetDimensions.outputRowCount,
                 columnCount: targetDimensions.outputColumnCount
             )
-        else { throw PipelineError.UnsupportedMatrixSize }
+        else { throw PipelineError.unsupportedMatrixSize }
         
         resources.inputA.randomize()
         resources.inputB.randomize()

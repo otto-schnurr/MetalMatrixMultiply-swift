@@ -136,14 +136,14 @@ class PerformanceTestCase_tests: XCTestCase {
 // MARK: - Private
 
 private func _createResourcesForDevice(
-    device: MTLDevice, dimensionCapacity n: Int
+    _ device: MTLDevice, dimensionCapacity n: Int
 ) -> PerformanceTestCase.Resources? {
     guard
         let pipeline = MetalPipeline(device: device, countAlignment: 8),
-        inputA = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        inputB = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        metalOutput = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
+        let inputA = pipeline.newMatrixWithRowCount(n, columnCount: n),
+        let inputB = pipeline.newMatrixWithRowCount(n, columnCount: n),
+        let metalOutput = pipeline.newMatrixWithRowCount(n, columnCount: n),
+        let cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
     else { return nil }
     
     return PerformanceTestCase.Resources(

@@ -52,7 +52,7 @@ class MetalPipeline_tests: XCTestCase {
         do {
             try pipeline.multiplyData(badData)
             XCTFail("Multiplied matrices with bad output dimensions.")
-        } catch PipelineError.InvalidOutputDimensions {
+        } catch PipelineError.invalidOutputDimensions {
         } catch {
             XCTFail("Failed to report bad output dimensions.")
         }
@@ -67,7 +67,7 @@ class MetalPipeline_tests: XCTestCase {
         do {
             try pipeline.multiplyData(data, repeatCount: -1)
             XCTFail("Multiplied matrices with bad repeat count.")
-        } catch PipelineError.InvalidRepeatCount {
+        } catch PipelineError.invalidRepeatCount {
         } catch {
             XCTFail("Failed to report bad repeat count.")
         }
@@ -76,7 +76,7 @@ class MetalPipeline_tests: XCTestCase {
     func test_incompatibleDevice_failsToMultiply() {
         let defaultDevice = MTLCreateSystemDefaultDevice()!
         let canCreateIncompatibleDevice =
-            unsafeAddressOf(defaultDevice) != unsafeAddressOf(pipeline.device)
+            Unmanaged.passUnretained(defaultDevice).toOpaque() != Unmanaged.passUnretained(pipeline.device).toOpaque()
         guard canCreateIncompatibleDevice else { return }
         
         let inputA = MetalMatrix(rowCount: 2, columnCount: 4, countAlignment: 8, device: defaultDevice)!
@@ -87,7 +87,7 @@ class MetalPipeline_tests: XCTestCase {
         do {
             try pipeline.multiplyData(data)
             XCTFail("Multiplied matrices with incompatible device.")
-        } catch PipelineError.IncompatibleDevice {
+        } catch PipelineError.incompatibleDevice {
         } catch {
             XCTFail("Failed to report incompatible device.")
         }

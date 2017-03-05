@@ -66,14 +66,14 @@ class MetalMatrix_tests: XCTestCase {
             let matrix = MetalMatrix(rowCount: 1, columnCount: columnCount, countAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
       
         for columnCount in 9...16 {
             let matrix = MetalMatrix(rowCount: 1, columnCount: columnCount, countAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, 2 * alignment)
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
     }
 
@@ -84,14 +84,14 @@ class MetalMatrix_tests: XCTestCase {
             let matrix = MetalMatrix(rowCount: rowCount, columnCount: 1, countAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
 
         for rowCount in 9...16 {
             let matrix = MetalMatrix(rowCount: rowCount, columnCount: 1, countAlignment: alignment, device: device)!
             XCTAssertEqual(matrix.paddedRowCount, 2 * alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
     }
 
@@ -115,28 +115,28 @@ class MetalMatrix_tests: XCTestCase {
             resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
             XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
         
         for columnCount in 9...16 {
             resizableMatrix.resizeToRowCount(1, columnCount: columnCount)
             XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, 2 * alignment)
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
 
         for rowCount in 1...5 {
             resizableMatrix.resizeToRowCount(rowCount, columnCount: 1)
             XCTAssertEqual(matrix.paddedRowCount, alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
 
         for rowCount in 9...16 {
             resizableMatrix.resizeToRowCount(rowCount, columnCount: 1)
             XCTAssertEqual(matrix.paddedRowCount, 2 * alignment)
             XCTAssertEqual(matrix.paddedColumnCount, alignment)
-            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * sizeof(MatrixElement))
+            XCTAssertEqual(matrix.byteCount, 2 * alignment * alignment * MemoryLayout<MatrixElement>.size)
         }
     }
 

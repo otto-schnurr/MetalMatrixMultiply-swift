@@ -11,7 +11,7 @@
 
 import Metal
 
-private func _logErrorMessage(message: String) {
+private func _logErrorMessage(_ message: String) {
     print("error: \(message)")
 }
 
@@ -25,13 +25,13 @@ guard let test = PerformanceTest(device: device) else {
     exit(EXIT_FAILURE)
 }
 
-let signal = dispatch_semaphore_create(0)
+let signal = DispatchSemaphore(value: 0)
 var result = EXIT_SUCCESS
 
 test.runAsync { success in
     if !success { result = EXIT_FAILURE }
-    dispatch_semaphore_signal(signal)
+    signal.signal()
 }
 
-dispatch_semaphore_wait(signal, DISPATCH_TIME_FOREVER)
+signal.wait(timeout: DispatchTime.distantFuture)
 exit(result)

@@ -59,6 +59,6 @@ extension Matrix {
     /// ```
     /// m.bytesPerRow == m.paddedColumnCount * sizeof(MatrixElement)
     /// ```
-    var bytesPerRow: Int { return paddedColumnCount * sizeof(MatrixElement) }
+    var bytesPerRow: Int { return paddedColumnCount * MemoryLayout<MatrixElement>.size }
 
 }
