@@ -35,7 +35,7 @@ class MetalBuffer: ResizableBuffer {
     
     let device: MTLDevice
     
-    var memory: UnsafeMutableRawPointer {
+    var memory: UnsafeMutableRawPointer? {
         guard let buffer = buffer else { return nil }
         return buffer.contents()
     }
@@ -90,7 +90,13 @@ private extension MTLBuffer {
             newBuffer = device.makeBuffer(
                 length: newLength, options: MTLResourceOptions()
             )
-            newBuffer.contents().assignFrom(self.contents(), count: length)
+            let newBytes = UnsafeMutableRawBufferPointer(
+                start: newBuffer.contents(), count: length
+            )
+            let oldBytes = UnsafeMutableRawBufferPointer(
+                start: self.contents(), count: length
+            )
+            newBytes.copyBytes(from: oldBytes)
         }
         
         return newBuffer

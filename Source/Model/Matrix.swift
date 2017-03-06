@@ -40,7 +40,7 @@ protocol Matrix: class {
     /// ```
     var paddedColumnCount: Int { get }
     
-    var baseAddress: UnsafeMutablePointer<MatrixElement> { get }
+    var baseAddress: UnsafeMutablePointer<MatrixElement>? { get }
     
     /// - Invariant:
     /// ```

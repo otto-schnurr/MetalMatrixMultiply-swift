@@ -33,5 +33,5 @@ test.runAsync { success in
     signal.signal()
 }
 
-signal.wait(timeout: DispatchTime.distantFuture)
+let _ = signal.wait(timeout: DispatchTime.distantFuture)
 exit(result)

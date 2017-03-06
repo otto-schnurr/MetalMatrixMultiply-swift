@@ -145,7 +145,9 @@ private struct CPUData: MultiplicationData {
 private extension Matrix {
     
     func randomize() {
-        guard rowCount * columnCount > 0 else { return }
+        guard
+            let baseAddress = baseAddress, rowCount * columnCount > 0
+        else { return }
     
         let seed = time(nil)
         srand48(seed)

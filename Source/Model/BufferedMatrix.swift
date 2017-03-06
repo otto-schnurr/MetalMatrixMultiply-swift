@@ -10,7 +10,7 @@
 //
 
 protocol Buffer {
-    var memory: UnsafeMutableRawPointer { get }
+    var memory: UnsafeMutableRawPointer? { get }
     var length: Int { get }
 }
 
@@ -26,8 +26,9 @@ class BufferedMatrix: Matrix {
     fileprivate(set) var paddedRowCount: Int
     fileprivate(set) var paddedColumnCount: Int
     
-    var baseAddress: UnsafeMutablePointer<MatrixElement> {
-        return UnsafeMutablePointer<MatrixElement>(buffer.memory)
+    var baseAddress: UnsafeMutablePointer<MatrixElement>? {
+        // FIXME: Technically, this is undefined behavior.
+        return buffer.memory?.assumingMemoryBound(to: MatrixElement.self)
     }
     
     var byteCount: Int {

@@ -155,14 +155,16 @@ private extension MTLBuffer {
             data.output.canEncodeDimensions
         else { throw PipelineError.unsupportedMatrixSize }
         
-        let pointer = UnsafeMutablePointer<_Dimension>(contents())
         guard
-            _dimensionBufferByteCount <= length && pointer != nil
+            _dimensionBufferByteCount <= length
         else { throw PipelineError.invalidBuffer }
         
+        // FIXME: Technically, this is undefined behavior.
+        let pointer = contents().assumingMemoryBound(to: _Dimension.self)
         let dimensions = UnsafeMutableBufferPointer<_Dimension>(
             start: pointer, count: _dimensionCount
         )
+        
         dimensions[0] = _Dimension(data.output.rowCount)
         dimensions[1] = _Dimension(data.output.columnCount)
         dimensions[2] = _Dimension(data.inputB.rowCount)
