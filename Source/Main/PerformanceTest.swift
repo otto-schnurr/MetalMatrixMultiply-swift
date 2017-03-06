@@ -24,7 +24,7 @@ struct PerformanceTest {
         else { return nil }
         
         guard
-            let resources = _createResourcesForDevice(device)
+            let resources = _createResources(for: device)
         else { return nil }
         
         self.resources = resources
@@ -122,14 +122,14 @@ private func _randomDimensionLength() -> Int {
     return Int(arc4random_uniform(_max + 1 - _min) + _min)
 }
 
-private func _createResourcesForDevice(
-    _ device: MTLDevice
+private func _createResources(
+    for device: MTLDevice
 ) -> PerformanceTestCase.Resources? {
     guard
         let pipeline = MetalPipeline(device: device, countAlignment: 8),
-        let inputA = pipeline.newMatrixWithRowCount(1, columnCount: 1),
-        let inputB = pipeline.newMatrixWithRowCount(1, columnCount: 1),
-        let metalOutput = pipeline.newMatrixWithRowCount(1, columnCount: 1),
+        let inputA = pipeline.createMatrix(rowCount: 1, columnCount: 1),
+        let inputB = pipeline.createMatrix(rowCount: 1, columnCount: 1),
+        let metalOutput = pipeline.createMatrix(rowCount: 1, columnCount: 1),
         let cpuOutput = CPUMatrix(rowCount: 1, columnCount: 1, countAlignment: 8)
     else { return nil }
     

@@ -11,7 +11,7 @@
 
 extension Int {
     
-    func paddedToAlignment(_ alignment: Int) -> Int? {
+    func padded(to alignment: Int) -> Int? {
         guard self > 0 && alignment > 0 else { return nil }
         
         let remainder = self % alignment

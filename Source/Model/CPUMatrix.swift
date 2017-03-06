@@ -33,14 +33,14 @@ class CPUBuffer: ResizableBuffer {
 
     var length: Int { return data?.length ?? 0 }
     
-    func resizeToLength(_ newLength: Int) -> Bool {
+    func resize(to newLength: Int) -> Bool {
         guard newLength >= 0 else { return false }
         guard newLength != length else { return true }
         
         if newLength == 0 {
             data = nil
         } else if let data = data {
-            data.resizeToLength(newLength)
+            data.resize(to: newLength)
         } else {
             data = NSMutableData(length: newLength)
         }
@@ -57,7 +57,7 @@ class CPUBuffer: ResizableBuffer {
 // MARK: - Private
 private extension NSMutableData {
     
-    func resizeToLength(_ newLength: Int) {
+    func resize(to newLength: Int) {
         guard newLength != length else {
             return
         }

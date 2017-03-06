@@ -20,7 +20,7 @@ class CPUPipeline_tests: XCTestCase {
         let badData = TestData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try CPUPipeline.multiplyData(badData)
+            try CPUPipeline.multiply(badData)
             XCTFail("Multiplied matrices with bad output dimensions.")
         } catch PipelineError.invalidOutputDimensions {
         } catch {
@@ -35,7 +35,7 @@ class CPUPipeline_tests: XCTestCase {
         let data = TestData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try CPUPipeline.multiplyData(data, repeatCount: -1)
+            try CPUPipeline.multiply(data, repeatCount: -1)
             XCTFail("Multiplied matrices with bad repeat count.")
         } catch PipelineError.invalidRepeatCount {
         } catch {
@@ -64,7 +64,7 @@ class CPUPipeline_tests: XCTestCase {
         secondRowB[1] = 8.0
 
         do {
-            try CPUPipeline.multiplyData(data)
+            try CPUPipeline.multiply(data)
 
             let epsilon = MatrixElement(0.000001)
             let firstRow = output.baseAddress!

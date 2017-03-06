@@ -42,14 +42,14 @@ class MetalBuffer: ResizableBuffer {
     
     var length: Int { return buffer?.length ?? 0 }
     
-    func resizeToLength(_ newLength: Int) -> Bool {
+    func resize(to newLength: Int) -> Bool {
         guard newLength >= 0 else { return false }
         guard newLength != length else { return true }
         
         if newLength == 0 {
             buffer = nil
         } else if let buffer = buffer {
-            self.buffer = buffer.resizedToLength(newLength)
+            self.buffer = buffer.resized(to: newLength)
         } else {
             buffer = device.makeBuffer(
                 length: newLength, options: MTLResourceOptions()
@@ -70,7 +70,7 @@ class MetalBuffer: ResizableBuffer {
 // MARK: - Private
 private extension MTLBuffer {
     
-    func resizedToLength(_ newLength: Int) -> MTLBuffer? {
+    func resized(to newLength: Int) -> MTLBuffer? {
         guard newLength != length else {
             return self
         }

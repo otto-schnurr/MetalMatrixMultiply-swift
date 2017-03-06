@@ -34,23 +34,23 @@ class MetalPipeline_tests: XCTestCase {
     }
 
     func test_pipeline_vendsValidMatrix() {
-        let matrix = pipeline.newMatrixWithRowCount(4, columnCount: 4)
+        let matrix = pipeline.createMatrix(rowCount: 4, columnCount: 4)
         XCTAssertFalse(matrix == nil)
     }
     
     func test_pipeline_doesNotVendInvalidMatrix() {
-        let matrix = pipeline.newMatrixWithRowCount(0, columnCount: 4)
+        let matrix = pipeline.createMatrix(rowCount: 0, columnCount: 4)
         XCTAssertTrue(matrix == nil)
     }
     
     func test_invalidMatrices_failToMultiply() {
-        let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 4)!
-        let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 6)!
-        let output = pipeline.newMatrixWithRowCount(5, columnCount: 6)!
+        let inputA = pipeline.createMatrix(rowCount: 2, columnCount: 4)!
+        let inputB = pipeline.createMatrix(rowCount: 2, columnCount: 6)!
+        let output = pipeline.createMatrix(rowCount: 5, columnCount: 6)!
         let badData = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try pipeline.multiplyData(badData)
+            try pipeline.multiply(badData)
             XCTFail("Multiplied matrices with bad output dimensions.")
         } catch PipelineError.invalidOutputDimensions {
         } catch {
@@ -59,13 +59,13 @@ class MetalPipeline_tests: XCTestCase {
     }
     
     func test_invalidRepeatCount_failsToMultiply() {
-        let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 4)!
-        let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 6)!
-        let output = pipeline.newMatrixWithRowCount(4, columnCount: 6)!
+        let inputA = pipeline.createMatrix(rowCount: 2, columnCount: 4)!
+        let inputB = pipeline.createMatrix(rowCount: 2, columnCount: 6)!
+        let output = pipeline.createMatrix(rowCount: 4, columnCount: 6)!
         let data = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try pipeline.multiplyData(data, repeatCount: -1)
+            try pipeline.multiply(data, repeatCount: -1)
             XCTFail("Multiplied matrices with bad repeat count.")
         } catch PipelineError.invalidRepeatCount {
         } catch {
@@ -85,7 +85,7 @@ class MetalPipeline_tests: XCTestCase {
         let data = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try pipeline.multiplyData(data)
+            try pipeline.multiply(data)
             XCTFail("Multiplied matrices with incompatible device.")
         } catch PipelineError.incompatibleDevice {
         } catch {
@@ -94,9 +94,9 @@ class MetalPipeline_tests: XCTestCase {
     }
     
     func test_simpleMultiplication_hasExpectedOutput() {
-        let inputA = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
-        let inputB = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
-        let output = pipeline.newMatrixWithRowCount(2, columnCount: 2)!
+        let inputA = pipeline.createMatrix(rowCount: 2, columnCount: 2)!
+        let inputB = pipeline.createMatrix(rowCount: 2, columnCount: 2)!
+        let output = pipeline.createMatrix(rowCount: 2, columnCount: 2)!
         let data = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         let firstRowA = inputA.baseAddress!
@@ -114,7 +114,7 @@ class MetalPipeline_tests: XCTestCase {
         secondRowB[1] = 8.0
 
         do {
-            try pipeline.multiplyData(data)
+            try pipeline.multiply(data)
 
             let epsilon = MatrixElement(0.000001)
             let firstRow = output.baseAddress!
@@ -130,19 +130,19 @@ class MetalPipeline_tests: XCTestCase {
     }
 
     func test_multiplications_haveExpectedOutput() {
-        let inputA = pipeline.newMatrixWithRowCount(17, columnCount: 17)!
-        let inputB = pipeline.newMatrixWithRowCount(17, columnCount: 17)!
-        let output = pipeline.newMatrixWithRowCount(17, columnCount: 17)!
+        let inputA = pipeline.createMatrix(rowCount: 17, columnCount: 17)!
+        let inputB = pipeline.createMatrix(rowCount: 17, columnCount: 17)!
+        let output = pipeline.createMatrix(rowCount: 17, columnCount: 17)!
         let metalData = MetalData(inputA: inputA, inputB: inputB, output: output)
 
         let referenceOutput = CPUMatrix(rowCount: 17, columnCount: 17, countAlignment: 8)!
         let referenceData = CPUData(inputA: inputA, inputB: inputB, output: referenceOutput)
     
         for n in [7, 8, 9, 15, 16, 17] {
-            XCTAssert(inputA.resizeToRowCount(n, columnCount: n))
-            XCTAssert(inputB.resizeToRowCount(n, columnCount: n))
-            XCTAssert(output.resizeToRowCount(n, columnCount: n))
-            XCTAssert(referenceOutput.resizeToRowCount(n, columnCount: n))
+            XCTAssert(inputA.resizeTo(rowCount: n, columnCount: n))
+            XCTAssert(inputB.resizeTo(rowCount: n, columnCount: n))
+            XCTAssert(output.resizeTo(rowCount: n, columnCount: n))
+            XCTAssert(referenceOutput.resizeTo(rowCount: n, columnCount: n))
             
             for rowIndex in 0 ..< inputA.rowCount {
                 let row = inputA.baseAddress! + rowIndex * inputA.paddedColumnCount
@@ -159,8 +159,8 @@ class MetalPipeline_tests: XCTestCase {
             }
             
             do {
-                try pipeline.multiplyData(metalData)
-                try CPUPipeline.multiplyData(referenceData)
+                try pipeline.multiply(metalData)
+                try CPUPipeline.multiply(referenceData)
                 
                 let epsilon = MatrixElement(0.001)
                 

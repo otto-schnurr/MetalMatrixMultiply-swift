@@ -35,7 +35,7 @@ class MetalPipeline {
             length: _dimensionBufferByteCount,
             options: MTLResourceOptions()
         )
-        library = _loadLibraryForDevice(device)
+        library = _loadLibrary(for: device)
 
         if let kernelFunction = library?.makeFunction(name: "MultiplyMatrices") {
             state = try? device.makeComputePipelineState(function: kernelFunction)
@@ -55,8 +55,8 @@ class MetalPipeline {
         assert(state != nil)
     }
     
-    func newMatrixWithRowCount(
-        _ rowCount: Int,
+    func createMatrix(
+        rowCount: Int,
         columnCount: Int
     ) -> MetalMatrix? {
         return MetalMatrix(
@@ -68,9 +68,9 @@ class MetalPipeline {
     }
 
     /// - important: Synchronous. Not thread safe.
-    func multiplyData<
-        Data: MultiplicationData>(_ data: Data, repeatCount: Int = 0) throws where Data.MatrixType: MetalMatrix
-     {
+    func multiply<Data: MultiplicationData>(
+        _ data: Data, repeatCount: Int = 0
+    ) throws where Data.MatrixType: MetalMatrix {
         guard
             data.inputDimensionsAreValid
         else { throw PipelineError.invalidInputDimensions }
@@ -104,10 +104,10 @@ class MetalPipeline {
         
         guard
             let paddedSectorCount =
-                outputSectorCount.paddedToThreadGroupSize(_threadGroupSize)
+                outputSectorCount.padded(toThreadGroupSize:_threadGroupSize)
         else { throw PipelineError.invalidOutputDimensions }
 
-        try dimensionBuffer.encodeDimensionsForData(data)
+        try dimensionBuffer.encodeDimensions(for: data)
         
         let commandBuffer = commandQueue.makeCommandBuffer()
         let encoder = commandBuffer.makeComputeCommandEncoder()
@@ -148,7 +148,7 @@ private let _dimensionBufferByteCount = _dimensionCount * MemoryLayout<_Dimensio
 
 private extension MTLBuffer {
 
-    func encodeDimensionsForData<Data: MultiplicationData>(_ data: Data) throws {
+    func encodeDimensions<Data: MultiplicationData>(for data: Data) throws {
         guard
             data.inputA.canEncodeDimensions &&
             data.inputB.canEncodeDimensions &&
@@ -192,11 +192,11 @@ private extension Matrix {
 
 private extension MTLSize {
     
-    func paddedToThreadGroupSize(_ groupSize: MTLSize) -> MTLSize? {
+    func padded(toThreadGroupSize groupSize: MTLSize) -> MTLSize? {
         guard
-           let paddedWidth = width.paddedToAlignment(groupSize.width),
-           let paddedHeight = width.paddedToAlignment(groupSize.height),
-           let paddedDepth = depth.paddedToAlignment(groupSize.depth)
+           let paddedWidth = width.padded(to: groupSize.width),
+           let paddedHeight = width.padded(to: groupSize.height),
+           let paddedDepth = depth.padded(to: groupSize.depth)
         else { return nil }
         
         return MTLSize(width: paddedWidth, height: paddedHeight, depth: paddedDepth)
@@ -212,7 +212,7 @@ private func /(numerator: MTLSize, denominator: MTLSize) -> MTLSize {
     )
 }
 
-private func _loadLibraryForDevice(_ device: MTLDevice) -> MTLLibrary? {
+private func _loadLibrary(for device: MTLDevice) -> MTLLibrary? {
     let bundle = Bundle(for: MetalPipeline.self)
     guard
         let filePath = bundle.path(forResource: nil, ofType: "metallib")

@@ -11,17 +11,17 @@
 
 import Metal
 
-private func _logErrorMessage(_ message: String) {
+private func _log(_ message: String) {
     print("error: \(message)")
 }
 
 guard let device = MTLCreateSystemDefaultDevice() else {
-    _logErrorMessage("Failed to acquire a Metal device.")
+    _log("Failed to acquire a Metal device.")
     exit(EXIT_FAILURE)
 }
 
 guard let test = PerformanceTest(device: device) else {
-    _logErrorMessage("Failed create performance test.")
+    _log("Failed create performance test.")
     exit(EXIT_FAILURE)
 }
 

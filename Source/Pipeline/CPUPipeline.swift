@@ -14,7 +14,7 @@ import Accelerate.vecLib
 /// An interface for performing matrix mutliplication on the CPU.
 struct CPUPipeline {
 
-    static func multiplyData<Data: MultiplicationData>(
+    static func multiply<Data: MultiplicationData>(
         _ data: Data,
         repeatCount: Int = 0
     ) throws {
