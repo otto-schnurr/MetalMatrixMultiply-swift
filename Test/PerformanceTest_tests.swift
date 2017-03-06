@@ -34,14 +34,14 @@ class PerformanceTest_tests: XCTestCase {
     func test_validTest_completesSuccessfully() {
         let device = metalDeviceForTesting!
         let test = PerformanceTest(device: device, testCount: 2, loopsPerTest: 2)!
-        let expectation = expectationWithDescription("complete performance test")
+        let expectation = self.expectation(description: "complete performance test")
 
         test.runAsync { success in
             XCTAssertTrue(success)
             expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(60) { error in XCTAssertNil(error) }
+        waitForExpectations(timeout: 60) { error in XCTAssertNil(error) }
     }
 
 }

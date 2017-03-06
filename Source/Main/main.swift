@@ -11,27 +11,27 @@
 
 import Metal
 
-private func _logErrorMessage(message: String) {
+private func _log(_ message: String) {
     print("error: \(message)")
 }
 
 guard let device = MTLCreateSystemDefaultDevice() else {
-    _logErrorMessage("Failed to acquire a Metal device.")
+    _log("Failed to acquire a Metal device.")
     exit(EXIT_FAILURE)
 }
 
 guard let test = PerformanceTest(device: device) else {
-    _logErrorMessage("Failed create performance test.")
+    _log("Failed create performance test.")
     exit(EXIT_FAILURE)
 }
 
-let signal = dispatch_semaphore_create(0)
+let signal = DispatchSemaphore(value: 0)
 var result = EXIT_SUCCESS
 
 test.runAsync { success in
     if !success { result = EXIT_FAILURE }
-    dispatch_semaphore_signal(signal)
+    signal.signal()
 }
 
-dispatch_semaphore_wait(signal, DISPATCH_TIME_FOREVER)
+let _ = signal.wait(timeout: DispatchTime.distantFuture)
 exit(result)

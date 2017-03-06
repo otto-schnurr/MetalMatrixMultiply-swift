@@ -30,15 +30,15 @@ class MetalPipeline {
     ///   to achieve this alignment. See `BufferedMatrix`.
     init?(device: MTLDevice, countAlignment: Int) {
         self.device = device
-        commandQueue = self.device.newCommandQueue()
-        dimensionBuffer = device.newBufferWithLength(
-            _dimensionBufferByteCount,
-            options: .CPUCacheModeDefaultCache
+        commandQueue = self.device.makeCommandQueue()
+        dimensionBuffer = device.makeBuffer(
+            length: _dimensionBufferByteCount,
+            options: MTLResourceOptions()
         )
-        library = _loadLibraryForDevice(device)
+        library = _loadLibrary(for: device)
 
-        if let kernelFunction = library?.newFunctionWithName("MultiplyMatrices") {
-            state = try? device.newComputePipelineStateWithFunction(kernelFunction)
+        if let kernelFunction = library?.makeFunction(name: "MultiplyMatrices") {
+            state = try? device.makeComputePipelineState(function: kernelFunction)
         } else {
             state = nil
         }
@@ -55,7 +55,7 @@ class MetalPipeline {
         assert(state != nil)
     }
     
-    func newMatrixWithRowCount(
+    func createMatrix(
         rowCount: Int,
         columnCount: Int
     ) -> MetalMatrix? {
@@ -68,32 +68,32 @@ class MetalPipeline {
     }
 
     /// - important: Synchronous. Not thread safe.
-    func multiplyData<
-        Data: MultiplicationData where Data.MatrixType: MetalMatrix
-    >(data: Data, repeatCount: Int = 0) throws {
+    func multiply<Data: MultiplicationData>(
+        _ data: Data, repeatCount: Int = 0
+    ) throws where Data.MatrixType: MetalMatrix {
         guard
             data.inputDimensionsAreValid
-        else { throw PipelineError.InvalidInputDimensions }
+        else { throw PipelineError.invalidInputDimensions }
 
         guard
             data.outputDimensionsAreValid
-        else { throw PipelineError.InvalidOutputDimensions }
+        else { throw PipelineError.invalidOutputDimensions }
 
         guard
             repeatCount >= 0
-        else { throw PipelineError.InvalidRepeatCount }
+        else { throw PipelineError.invalidRepeatCount }
 
         guard
             let bufferA = data.inputA.metalBuffer,
-            bufferB = data.inputB.metalBuffer,
-            outputBuffer = data.output.metalBuffer
-        else { throw PipelineError.InvalidBuffer }
+            let bufferB = data.inputB.metalBuffer,
+            let outputBuffer = data.output.metalBuffer
+        else { throw PipelineError.invalidBuffer }
 
         guard
             bufferA.device == device &&
             bufferB.device == device &&
             outputBuffer.device == device
-        else { throw PipelineError.IncompatibleDevice }
+        else { throw PipelineError.incompatibleDevice }
         
         // important: One device thread computes an (8x8) sector of output.
         let outputSectorCount = MTLSize(
@@ -104,18 +104,18 @@ class MetalPipeline {
         
         guard
             let paddedSectorCount =
-                outputSectorCount.paddedToThreadGroupSize(_threadGroupSize)
-        else { throw PipelineError.InvalidOutputDimensions }
+                outputSectorCount.padded(toThreadGroupSize:_threadGroupSize)
+        else { throw PipelineError.invalidOutputDimensions }
 
-        try dimensionBuffer.encodeDimensionsForData(data)
+        try dimensionBuffer.encodeDimensions(for: data)
         
-        let commandBuffer = commandQueue.commandBuffer()
-        let encoder = commandBuffer.computeCommandEncoder()
+        let commandBuffer = commandQueue.makeCommandBuffer()
+        let encoder = commandBuffer.makeComputeCommandEncoder()
         encoder.setComputePipelineState(state)
-        encoder.setBuffer(dimensionBuffer, offset: 0, atIndex: 0)
-        encoder.setBuffer(bufferA, offset: 0, atIndex: 1)
-        encoder.setBuffer(bufferB, offset: 0, atIndex: 2)
-        encoder.setBuffer(outputBuffer, offset: 0, atIndex: 3)
+        encoder.setBuffer(dimensionBuffer, offset: 0, at: 0)
+        encoder.setBuffer(bufferA, offset: 0, at: 1)
+        encoder.setBuffer(bufferB, offset: 0, at: 2)
+        encoder.setBuffer(outputBuffer, offset: 0, at: 3)
         
         let threadGroupCount = paddedSectorCount / _threadGroupSize
         let count = 1 + repeatCount
@@ -132,11 +132,11 @@ class MetalPipeline {
     }
 
     // MARK: Private
-    private let commandQueue: MTLCommandQueue
-    private let dimensionBuffer: MTLBuffer!
-    private let library: MTLLibrary!
-    private let state: MTLComputePipelineState!
-    private let countAlignment: Int
+    fileprivate let commandQueue: MTLCommandQueue
+    fileprivate let dimensionBuffer: MTLBuffer!
+    fileprivate let library: MTLLibrary!
+    fileprivate let state: MTLComputePipelineState!
+    fileprivate let countAlignment: Int
     
 }
 
@@ -144,25 +144,27 @@ class MetalPipeline {
 // MARK: - Private
 private typealias _Dimension = UInt16
 private let _dimensionCount = 6
-private let _dimensionBufferByteCount = _dimensionCount * sizeof(_Dimension)
+private let _dimensionBufferByteCount = _dimensionCount * MemoryLayout<_Dimension>.size
 
 private extension MTLBuffer {
 
-    func encodeDimensionsForData<Data: MultiplicationData>(data: Data) throws {
+    func encodeDimensions<Data: MultiplicationData>(for data: Data) throws {
         guard
             data.inputA.canEncodeDimensions &&
             data.inputB.canEncodeDimensions &&
             data.output.canEncodeDimensions
-        else { throw PipelineError.UnsupportedMatrixSize }
+        else { throw PipelineError.unsupportedMatrixSize }
         
-        let pointer = UnsafeMutablePointer<_Dimension>(contents())
         guard
-            _dimensionBufferByteCount <= length && pointer != nil
-        else { throw PipelineError.InvalidBuffer }
+            _dimensionBufferByteCount <= length
+        else { throw PipelineError.invalidBuffer }
         
+        // FIXME: Technically, this is undefined behavior.
+        let pointer = contents().assumingMemoryBound(to: _Dimension.self)
         let dimensions = UnsafeMutableBufferPointer<_Dimension>(
             start: pointer, count: _dimensionCount
         )
+        
         dimensions[0] = _Dimension(data.output.rowCount)
         dimensions[1] = _Dimension(data.output.columnCount)
         dimensions[2] = _Dimension(data.inputB.rowCount)
@@ -179,7 +181,7 @@ private extension Matrix {
     var canEncodeDimensions: Bool {
         let maxValue = Int(_Dimension.max)
         
-        func canEncode(value: Int) -> Bool {
+        func canEncode(_ value: Int) -> Bool {
             return 0 <= value && value <= maxValue
         }
         
@@ -190,11 +192,11 @@ private extension Matrix {
 
 private extension MTLSize {
     
-    func paddedToThreadGroupSize(groupSize: MTLSize) -> MTLSize? {
+    func padded(toThreadGroupSize groupSize: MTLSize) -> MTLSize? {
         guard
-           let paddedWidth = width.paddedToAlignment(groupSize.width),
-           paddedHeight = width.paddedToAlignment(groupSize.height),
-           paddedDepth = depth.paddedToAlignment(groupSize.depth)
+           let paddedWidth = width.padded(to: groupSize.width),
+           let paddedHeight = width.padded(to: groupSize.height),
+           let paddedDepth = depth.padded(to: groupSize.depth)
         else { return nil }
         
         return MTLSize(width: paddedWidth, height: paddedHeight, depth: paddedDepth)
@@ -210,15 +212,15 @@ private func /(numerator: MTLSize, denominator: MTLSize) -> MTLSize {
     )
 }
 
-private func _loadLibraryForDevice(device: MTLDevice) -> MTLLibrary? {
-    let bundle = NSBundle(forClass: MetalPipeline.self)
+private func _loadLibrary(for device: MTLDevice) -> MTLLibrary? {
+    let bundle = Bundle(for: MetalPipeline.self)
     guard
-        let filePath = bundle.pathForResource(nil, ofType: "metallib")
+        let filePath = bundle.path(forResource: nil, ofType: "metallib")
     else { return nil }
     
-    return try? device.newLibraryWithFile(filePath)
+    return try? device.makeLibrary(filepath: filePath)
 }
 
 private func ==(deviceA: MTLDevice, deviceB: MTLDevice) -> Bool {
-    return unsafeAddressOf(deviceA) == unsafeAddressOf(deviceB)
+    return Unmanaged.passUnretained(deviceA).toOpaque() == Unmanaged.passUnretained(deviceB).toOpaque()
 }

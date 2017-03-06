@@ -16,7 +16,7 @@ import Metal
 //           device for testing when available.
 var metalDeviceForTesting: MTLDevice? = {
     #if os(OSX)
-        if let device = MTLCopyAllDevices().filter({ $0.lowPower }).first {
+        if let device = MTLCopyAllDevices().filter({ $0.isLowPower }).first {
             return device
         }
     #endif

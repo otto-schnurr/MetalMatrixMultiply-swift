@@ -70,30 +70,30 @@ struct PerformanceTestCase {
     /// Sets up and executes a matrix matrix multiplication operation on Metal
     /// and the CPU and logs performance.
     func run(
-        repeatCount repeatCount: Int = 0
+        repeatCount: Int = 0
     ) throws -> (cpuTime: CFTimeInterval, metalTime: CFTimeInterval) {
         guard
             repeatCount >= 0
-        else { throw PipelineError.InvalidRepeatCount }
+        else { throw PipelineError.invalidRepeatCount }
 
         guard
-            resources.inputA.resizeToRowCount(
-                targetDimensions.innerInputDimension,
+            resources.inputA.resizeTo(
+                rowCount: targetDimensions.innerInputDimension,
                 columnCount: targetDimensions.outputRowCount
             ) &&
-            resources.inputB.resizeToRowCount(
-                targetDimensions.innerInputDimension,
+            resources.inputB.resizeTo(
+                rowCount: targetDimensions.innerInputDimension,
                 columnCount: targetDimensions.outputColumnCount
             ) &&
-            resources.metalOutput.resizeToRowCount(
-                targetDimensions.outputRowCount,
+            resources.metalOutput.resizeTo(
+                rowCount: targetDimensions.outputRowCount,
                 columnCount: targetDimensions.outputColumnCount
             ) &&
-            resources.cpuOutput.resizeToRowCount(
-                targetDimensions.outputRowCount,
+            resources.cpuOutput.resizeTo(
+                rowCount: targetDimensions.outputRowCount,
                 columnCount: targetDimensions.outputColumnCount
             )
-        else { throw PipelineError.UnsupportedMatrixSize }
+        else { throw PipelineError.unsupportedMatrixSize }
         
         resources.inputA.randomize()
         resources.inputB.randomize()
@@ -110,9 +110,9 @@ struct PerformanceTestCase {
         )
         
         let cpuStart = CACurrentMediaTime()
-        try CPUPipeline.multiplyData(cpuData, repeatCount: repeatCount)
+        try CPUPipeline.multiply(cpuData, repeatCount: repeatCount)
         let metalStart = CACurrentMediaTime()
-        try resources.metalPipeline.multiplyData(metalData, repeatCount: repeatCount)
+        try resources.metalPipeline.multiply(metalData, repeatCount: repeatCount)
         let metalEnd = CACurrentMediaTime()
         
         return (cpuTime: metalStart - cpuStart, metalTime: metalEnd - metalStart)
@@ -145,7 +145,9 @@ private struct CPUData: MultiplicationData {
 private extension Matrix {
     
     func randomize() {
-        guard rowCount * columnCount > 0 else { return }
+        guard
+            let baseAddress = baseAddress, rowCount * columnCount > 0
+        else { return }
     
         let seed = time(nil)
         srand48(seed)

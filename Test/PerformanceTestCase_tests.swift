@@ -18,7 +18,7 @@ class PerformanceTestCase_tests: XCTestCase {
     override func setUp() {
         super.setUp()
         if let device = metalDeviceForTesting {
-            resources = _createResourcesForDevice(device, dimensionCapacity: 16)
+            resources = _createResources(for: device, dimensionCapacity: 16)
         }
     }
     
@@ -135,15 +135,15 @@ class PerformanceTestCase_tests: XCTestCase {
 
 // MARK: - Private
 
-private func _createResourcesForDevice(
-    device: MTLDevice, dimensionCapacity n: Int
+private func _createResources(
+    for device: MTLDevice, dimensionCapacity n: Int
 ) -> PerformanceTestCase.Resources? {
     guard
         let pipeline = MetalPipeline(device: device, countAlignment: 8),
-        inputA = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        inputB = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        metalOutput = pipeline.newMatrixWithRowCount(n, columnCount: n),
-        cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
+        let inputA = pipeline.createMatrix(rowCount: n, columnCount: n),
+        let inputB = pipeline.createMatrix(rowCount: n, columnCount: n),
+        let metalOutput = pipeline.createMatrix(rowCount: n, columnCount: n),
+        let cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
     else { return nil }
     
     return PerformanceTestCase.Resources(

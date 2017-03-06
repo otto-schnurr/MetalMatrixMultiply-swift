@@ -14,18 +14,18 @@ import Accelerate.vecLib
 /// An interface for performing matrix mutliplication on the CPU.
 struct CPUPipeline {
 
-    static func multiplyData<Data: MultiplicationData>(
-        data: Data,
+    static func multiply<Data: MultiplicationData>(
+        _ data: Data,
         repeatCount: Int = 0
     ) throws {
         guard data.inputDimensionsAreValid else {
-            throw PipelineError.InvalidInputDimensions
+            throw PipelineError.invalidInputDimensions
         }
         guard data.outputDimensionsAreValid else {
-            throw PipelineError.InvalidOutputDimensions
+            throw PipelineError.invalidOutputDimensions
         }
         guard repeatCount >= 0 else {
-            throw PipelineError.InvalidRepeatCount
+            throw PipelineError.invalidRepeatCount
         }
     
         let count = 1 + repeatCount
@@ -36,7 +36,7 @@ struct CPUPipeline {
 
 
 // MARK: Private
-private func _multiply<Data: MultiplicationData>(data: Data) {
+private func _multiply<Data: MultiplicationData>(_ data: Data) {
     assert(data.inputDimensionsAreValid)
     assert(data.outputDimensionsAreValid)
     

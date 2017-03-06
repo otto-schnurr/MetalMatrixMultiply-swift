@@ -10,24 +10,25 @@
 //
 
 protocol Buffer {
-    var memory: UnsafeMutablePointer<Void> { get }
+    var memory: UnsafeMutableRawPointer? { get }
     var length: Int { get }
 }
 
 protocol ResizableBuffer: Buffer {
-    func resizeToLength(newLength: Int) -> Bool
+    func resize(to newLength: Int) -> Bool
 }
 
 class BufferedMatrix: Matrix {
     
     let buffer: ResizableBuffer
-    private(set) var rowCount: Int
-    private(set) var columnCount: Int
-    private(set) var paddedRowCount: Int
-    private(set) var paddedColumnCount: Int
+    fileprivate(set) var rowCount: Int
+    fileprivate(set) var columnCount: Int
+    fileprivate(set) var paddedRowCount: Int
+    fileprivate(set) var paddedColumnCount: Int
     
-    var baseAddress: UnsafeMutablePointer<MatrixElement> {
-        return UnsafeMutablePointer<MatrixElement>(buffer.memory)
+    var baseAddress: UnsafeMutablePointer<MatrixElement>? {
+        // FIXME: Technically, this is undefined behavior.
+        return buffer.memory?.assumingMemoryBound(to: MatrixElement.self)
     }
     
     var byteCount: Int {
@@ -51,11 +52,12 @@ class BufferedMatrix: Matrix {
         buffer: ResizableBuffer
     ) {
         guard
-            let paddedRowCount = rowCount.paddedToAlignment(countAlignment),
-            let paddedColumnCount = columnCount.paddedToAlignment(countAlignment),
-            let byteCount = _byteCountForPaddedRowCount(
-                paddedRowCount, paddedColumnCount: paddedColumnCount
-            ) where buffer.resizeToLength(byteCount)
+            let paddedRowCount = rowCount.padded(to: countAlignment),
+            let paddedColumnCount = columnCount.padded(to: countAlignment),
+            let byteCount = _byteCountFor(
+                paddedRowCount: paddedRowCount,
+                paddedColumnCount: paddedColumnCount
+            ), buffer.resize(to: byteCount)
         else {
             self.rowCount = 0
             self.columnCount = 0
@@ -83,14 +85,14 @@ class BufferedMatrix: Matrix {
     }
     
     // MARK: Private
-    private let countAlignment: Int
+    fileprivate let countAlignment: Int
 
 }
 
 class ResizableBufferedMatrix: BufferedMatrix {
     
-    func resizeToRowCount(
-        newRowCount: Int, columnCount newColumnCount: Int
+    func resizeTo(
+        rowCount newRowCount: Int, columnCount newColumnCount: Int
     ) -> Bool {
         assert(countAlignment > 0)
         guard
@@ -99,11 +101,12 @@ class ResizableBufferedMatrix: BufferedMatrix {
         
         guard
             let newPaddedRowCount =
-                newRowCount.paddedToAlignment(countAlignment),
+                newRowCount.padded(to: countAlignment),
             let newPaddedColumnCount =
-                newColumnCount.paddedToAlignment(countAlignment),
-            let newByteCount = _byteCountForPaddedRowCount(
-                newPaddedRowCount, paddedColumnCount: newPaddedColumnCount
+                newColumnCount.padded(to: countAlignment),
+            let newByteCount = _byteCountFor(
+                paddedRowCount: newPaddedRowCount,
+                paddedColumnCount: newPaddedColumnCount
             )
         else { return false }
         
@@ -114,7 +117,7 @@ class ResizableBufferedMatrix: BufferedMatrix {
         assert(newByteCount > 0)
         
         if buffer.length < newByteCount {
-            guard buffer.resizeToLength(newByteCount) else {
+            guard buffer.resize(to: newByteCount) else {
                 return false
             }
         }
@@ -134,9 +137,7 @@ class ResizableBufferedMatrix: BufferedMatrix {
 
 
 // MARK: - Private
-private func _byteCountForPaddedRowCount(
-    paddedRowCount: Int, paddedColumnCount: Int
-) -> Int? {
+private func _byteCountFor(paddedRowCount: Int, paddedColumnCount: Int) -> Int? {
     guard paddedRowCount > 0 && paddedColumnCount > 0 else { return nil }
-    return paddedRowCount * paddedColumnCount * sizeof(MatrixElement)
+    return paddedRowCount * paddedColumnCount * MemoryLayout<MatrixElement>.size
 }

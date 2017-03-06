@@ -20,9 +20,9 @@ class CPUPipeline_tests: XCTestCase {
         let badData = TestData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try CPUPipeline.multiplyData(badData)
+            try CPUPipeline.multiply(badData)
             XCTFail("Multiplied matrices with bad output dimensions.")
-        } catch PipelineError.InvalidOutputDimensions {
+        } catch PipelineError.invalidOutputDimensions {
         } catch {
             XCTFail("Failed to report bad output dimensions.")
         }
@@ -35,9 +35,9 @@ class CPUPipeline_tests: XCTestCase {
         let data = TestData(inputA: inputA, inputB: inputB, output: output)
         
         do {
-            try CPUPipeline.multiplyData(data, repeatCount: -1)
+            try CPUPipeline.multiply(data, repeatCount: -1)
             XCTFail("Multiplied matrices with bad repeat count.")
-        } catch PipelineError.InvalidRepeatCount {
+        } catch PipelineError.invalidRepeatCount {
         } catch {
             XCTFail("Failed to report bad repeat count.")
         }
@@ -49,26 +49,26 @@ class CPUPipeline_tests: XCTestCase {
         let output = CPUMatrix(rowCount: 2, columnCount: 2, countAlignment: 8)!
         let data = TestData(inputA: inputA, inputB: inputB, output: output)
         
-        let firstRowA = inputA.baseAddress
-        let secondRowA = inputA.baseAddress + inputA.paddedColumnCount
+        let firstRowA = inputA.baseAddress!
+        let secondRowA = firstRowA + inputA.paddedColumnCount
         firstRowA[0] = 1.0
         firstRowA[1] = 2.0
         secondRowA[0] = 3.0
         secondRowA[1] = 4.0
         
-        let firstRowB = inputB.baseAddress
-        let secondRowB = inputB.baseAddress + inputB.paddedColumnCount
+        let firstRowB = inputB.baseAddress!
+        let secondRowB = firstRowB + inputB.paddedColumnCount
         firstRowB[0] = 5.0
         firstRowB[1] = 6.0
         secondRowB[0] = 7.0
         secondRowB[1] = 8.0
 
         do {
-            try CPUPipeline.multiplyData(data)
+            try CPUPipeline.multiply(data)
 
             let epsilon = MatrixElement(0.000001)
-            let firstRow = output.baseAddress
-            let secondRow = output.baseAddress + output.paddedColumnCount
+            let firstRow = output.baseAddress!
+            let secondRow = firstRow + output.paddedColumnCount
 
             XCTAssertEqualWithAccuracy(firstRow[0], 26.0, accuracy: epsilon)
             XCTAssertEqualWithAccuracy(firstRow[1], 30.0, accuracy: epsilon)

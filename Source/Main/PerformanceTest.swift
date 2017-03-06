@@ -24,7 +24,7 @@ struct PerformanceTest {
         else { return nil }
         
         guard
-            let resources = _createResourcesForDevice(device)
+            let resources = _createResources(for: device)
         else { return nil }
         
         self.resources = resources
@@ -32,10 +32,10 @@ struct PerformanceTest {
         self.loopsPerTest = loopsPerTest
     }
 
-    func runAsync(completion: (success: Bool) -> Void) {
-        let background = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
+    func runAsync(_ completion: @escaping (_ success: Bool) -> Void) {
+        let background = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
         
-        dispatch_async(background) {
+        background.async {
             let result: Bool
 
             do {
@@ -49,7 +49,7 @@ struct PerformanceTest {
                 result = false
             }
 
-            completion(success: result)
+            completion(result)
         }
     }
 
@@ -65,11 +65,11 @@ struct PerformanceTest {
 private extension PerformanceTest {
     
     func run() throws {
-        let dimensions = GeneratorSequence(RandomDimensionGenerator(count: testCount))
+        let dimensions = IteratorSequence(RandomDimensionGenerator(count: testCount))
         let testCases = dimensions.flatMap {
             PerformanceTestCase(targetDimensions: $0, resources: self.resources)
         }
-        guard testCases.count == testCount else { throw PipelineError.UnsupportedMatrixSize }
+        guard testCases.count == testCount else { throw PipelineError.unsupportedMatrixSize }
         let flopsToGflops = 1 / 1_000_000_000.0
         
         for testCase in testCases {
@@ -98,12 +98,12 @@ private extension PerformanceTest {
     
 }
 
-private struct RandomDimensionGenerator: GeneratorType {
+private struct RandomDimensionGenerator: IteratorProtocol {
 
     typealias Element = PerformanceTestCase.Dimensions
     var count: Int
 
-    private mutating func next() -> RandomDimensionGenerator.Element? {
+    fileprivate mutating func next() -> RandomDimensionGenerator.Element? {
         guard count > 0 else { return nil }
         count -= 1
         return Element(
@@ -122,15 +122,15 @@ private func _randomDimensionLength() -> Int {
     return Int(arc4random_uniform(_max + 1 - _min) + _min)
 }
 
-private func _createResourcesForDevice(
-    device: MTLDevice
+private func _createResources(
+    for device: MTLDevice
 ) -> PerformanceTestCase.Resources? {
     guard
         let pipeline = MetalPipeline(device: device, countAlignment: 8),
-        inputA = pipeline.newMatrixWithRowCount(1, columnCount: 1),
-        inputB = pipeline.newMatrixWithRowCount(1, columnCount: 1),
-        metalOutput = pipeline.newMatrixWithRowCount(1, columnCount: 1),
-        cpuOutput = CPUMatrix(rowCount: 1, columnCount: 1, countAlignment: 8)
+        let inputA = pipeline.createMatrix(rowCount: 1, columnCount: 1),
+        let inputB = pipeline.createMatrix(rowCount: 1, columnCount: 1),
+        let metalOutput = pipeline.createMatrix(rowCount: 1, columnCount: 1),
+        let cpuOutput = CPUMatrix(rowCount: 1, columnCount: 1, countAlignment: 8)
     else { return nil }
     
     return PerformanceTestCase.Resources(
@@ -140,6 +140,6 @@ private func _createResourcesForDevice(
     )
 }
 
-private func _log(message: String) {
+private func _log(_ message: String) {
     print(message)
 }
