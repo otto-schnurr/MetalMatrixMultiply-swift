@@ -14,7 +14,7 @@ class MetalPipeline_tests: XCTestCase {
     override func setUp() {
         super.setUp()
         if let device = metalDeviceForTesting {
-            pipeline = MetalPipeline(device: device, countAlignment: 8)
+            pipeline = MetalPipeline(device: device, threadGroupAlignment: 8)
         }
     }
     
@@ -29,7 +29,7 @@ class MetalPipeline_tests: XCTestCase {
 
     func test_pipelineWithBadAlignment_cannnotBeCreated() {
         let device = metalDeviceForTesting!
-        let pipeline = MetalPipeline(device: device, countAlignment: 0)
+        let pipeline = MetalPipeline(device: device, threadGroupAlignment: 0)
         XCTAssertTrue(pipeline == nil)
     }
 
@@ -79,9 +79,9 @@ class MetalPipeline_tests: XCTestCase {
             Unmanaged.passUnretained(defaultDevice).toOpaque() != Unmanaged.passUnretained(pipeline.device).toOpaque()
         guard canCreateIncompatibleDevice else { return }
         
-        let inputA = MetalMatrix(rowCount: 2, columnCount: 4, countAlignment: 8, device: defaultDevice)!
-        let inputB = MetalMatrix(rowCount: 2, columnCount: 6, countAlignment: 8, device: defaultDevice)!
-        let output = MetalMatrix(rowCount: 4, columnCount: 6, countAlignment: 8, device: defaultDevice)!
+        let inputA = MetalMatrix(rowCount: 2, columnCount: 4, threadGroupAlignment: 8, device: defaultDevice)!
+        let inputB = MetalMatrix(rowCount: 2, columnCount: 6, threadGroupAlignment: 8, device: defaultDevice)!
+        let output = MetalMatrix(rowCount: 4, columnCount: 6, threadGroupAlignment: 8, device: defaultDevice)!
         let data = MetalData(inputA: inputA, inputB: inputB, output: output)
         
         do {
@@ -135,7 +135,7 @@ class MetalPipeline_tests: XCTestCase {
         let output = pipeline.createMatrix(rowCount: 17, columnCount: 17)!
         let metalData = MetalData(inputA: inputA, inputB: inputB, output: output)
 
-        let referenceOutput = CPUMatrix(rowCount: 17, columnCount: 17, countAlignment: 8)!
+        let referenceOutput = CPUMatrix(rowCount: 17, columnCount: 17, alignment: 8)!
         let referenceData = CPUData(inputA: inputA, inputB: inputB, output: referenceOutput)
     
         for n in [7, 8, 9, 15, 16, 17] {
