@@ -83,7 +83,6 @@
 		2777FC841C190D71004F8AE3 /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
 		2777FC891C1931B7004F8AE3 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		2777FC8A1C1931B7004F8AE3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		277C34571C1B4C5E00AC23DC /* TODO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		27A15EFC1C23338D00C0F47A /* MetalMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix.swift; sourceTree = "<group>"; };
 		27A15F001C23346100C0F47A /* MetalMatrix_tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalMatrix_tests.swift; sourceTree = "<group>"; };
 		27A15F031C24D13300C0F47A /* BufferedMatrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BufferedMatrix.swift; sourceTree = "<group>"; };
@@ -129,7 +128,6 @@
 			children = (
 				2777FC891C1931B7004F8AE3 /* LICENSE.txt */,
 				2777FC8A1C1931B7004F8AE3 /* README.md */,
-				277C34571C1B4C5E00AC23DC /* TODO.md */,
 				27455EC01C190A2700D66961 /* Source */,
 				2777FC881C191BE9004F8AE3 /* Test */,
 				27455EBF1C190A2700D66961 /* Products */,

@@ -139,11 +139,11 @@ private func _createResources(
     for device: MTLDevice, dimensionCapacity n: Int
 ) -> PerformanceTestCase.Resources? {
     guard
-        let pipeline = MetalPipeline(device: device, countAlignment: 8),
+        let pipeline = MetalPipeline(device: device, threadGroupAlignment: 8),
         let inputA = pipeline.createMatrix(rowCount: n, columnCount: n),
         let inputB = pipeline.createMatrix(rowCount: n, columnCount: n),
         let metalOutput = pipeline.createMatrix(rowCount: n, columnCount: n),
-        let cpuOutput = CPUMatrix(rowCount: n, columnCount: n, countAlignment: 8)
+        let cpuOutput = CPUMatrix(rowCount: n, columnCount: n, alignment: 8)
     else { return nil }
     
     return PerformanceTestCase.Resources(

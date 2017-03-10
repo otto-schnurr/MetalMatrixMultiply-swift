@@ -24,11 +24,11 @@ class MetalPipeline {
 
     /// Create a Metal pipeline that vends matrices with the specified alignment.
     ///
-    /// - parameter countAlignment:
+    /// - parameter threadGroupAlignment:
     ///   A span of floating point elements that rows of every matrix should
     ///   align with. When necessary, padding is added to each row of a matrix
     ///   to achieve this alignment. See `BufferedMatrix`.
-    init?(device: MTLDevice, countAlignment: Int) {
+    init?(device: MTLDevice, threadGroupAlignment: Int) {
         self.device = device
         commandQueue = self.device.makeCommandQueue()
         dimensionBuffer = device.makeBuffer(
@@ -43,14 +43,14 @@ class MetalPipeline {
             state = nil
         }
 
-        self.countAlignment = countAlignment
+        self.threadGroupAlignment = threadGroupAlignment
         
         guard
-            self.countAlignment > 0 && dimensionBuffer != nil &&
+            self.threadGroupAlignment > 0 && dimensionBuffer != nil &&
             library != nil && state != nil
         else { return nil }
         
-        assert(self.countAlignment > 0)
+        assert(self.threadGroupAlignment > 0)
         assert(library != nil)
         assert(state != nil)
     }
@@ -62,7 +62,7 @@ class MetalPipeline {
         return MetalMatrix(
             rowCount: rowCount,
             columnCount: columnCount,
-            countAlignment: countAlignment,
+            threadGroupAlignment: threadGroupAlignment,
             device: device
         )
     }
@@ -97,8 +97,8 @@ class MetalPipeline {
         
         // important: One device thread computes an (8x8) sector of output.
         let outputSectorCount = MTLSize(
-            width: data.output.paddedColumnCount / countAlignment,
-            height: data.output.paddedRowCount / countAlignment,
+            width: data.output.paddedColumnCount / threadGroupAlignment,
+            height: data.output.paddedRowCount / threadGroupAlignment,
             depth: 1
         );
         
@@ -136,7 +136,7 @@ class MetalPipeline {
     fileprivate let dimensionBuffer: MTLBuffer!
     fileprivate let library: MTLLibrary!
     fileprivate let state: MTLComputePipelineState!
-    fileprivate let countAlignment: Int
+    fileprivate let threadGroupAlignment: Int
     
 }
 
