@@ -70,10 +70,10 @@ class CPUPipeline_tests: XCTestCase {
             let firstRow = output.baseAddress!
             let secondRow = firstRow + output.paddedColumnCount
 
-            XCTAssertEqualWithAccuracy(firstRow[0], 26.0, accuracy: epsilon)
-            XCTAssertEqualWithAccuracy(firstRow[1], 30.0, accuracy: epsilon)
-            XCTAssertEqualWithAccuracy(secondRow[0], 38.0, accuracy: epsilon)
-            XCTAssertEqualWithAccuracy(secondRow[1], 44.0, accuracy: epsilon)
+            XCTAssertEqual(firstRow[0], 26.0, accuracy: epsilon)
+            XCTAssertEqual(firstRow[1], 30.0, accuracy: epsilon)
+            XCTAssertEqual(secondRow[0], 38.0, accuracy: epsilon)
+            XCTAssertEqual(secondRow[1], 44.0, accuracy: epsilon)
         } catch {
             XCTFail("Failed to multiply matrices.")
         }
