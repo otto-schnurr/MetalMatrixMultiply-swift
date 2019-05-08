@@ -16,6 +16,7 @@ enum PipelineError: Error, CustomStringConvertible {
     case invalidBuffer
     case incompatibleDevice
     case unsupportedMatrixSize
+    case failedResource
     
     var description: String {
         switch self {
@@ -25,6 +26,7 @@ enum PipelineError: Error, CustomStringConvertible {
             case .invalidBuffer:           return "invalid buffer"
             case .incompatibleDevice:      return "incompatible device"
             case .unsupportedMatrixSize:   return "unsupported matrix size"
+            case .failedResource:          return "failed to create a resource"
         }
     }
     
