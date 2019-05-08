@@ -112,10 +112,10 @@ class MetalPipeline {
         let commandBuffer = commandQueue.makeCommandBuffer()
         let encoder = commandBuffer.makeComputeCommandEncoder()
         encoder.setComputePipelineState(state)
-        encoder.setBuffer(dimensionBuffer, offset: 0, at: 0)
-        encoder.setBuffer(bufferA, offset: 0, at: 1)
-        encoder.setBuffer(bufferB, offset: 0, at: 2)
-        encoder.setBuffer(outputBuffer, offset: 0, at: 3)
+        encoder.setBuffer(dimensionBuffer, offset: 0, index: 0)
+        encoder.setBuffer(bufferA, offset: 0, index: 1)
+        encoder.setBuffer(bufferB, offset: 0, index: 2)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 3)
         
         let threadGroupCount = paddedSectorCount / _threadGroupSize
         let count = 1 + repeatCount

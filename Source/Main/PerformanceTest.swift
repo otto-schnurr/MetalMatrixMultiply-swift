@@ -66,7 +66,7 @@ private extension PerformanceTest {
     
     func run() throws {
         let dimensions = IteratorSequence(RandomDimensionGenerator(count: testCount))
-        let testCases = dimensions.flatMap {
+        let testCases = dimensions.compactMap {
             PerformanceTestCase(targetDimensions: $0, resources: self.resources)
         }
         guard testCases.count == testCount else { throw PipelineError.unsupportedMatrixSize }
