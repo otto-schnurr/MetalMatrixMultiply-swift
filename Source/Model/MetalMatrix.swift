@@ -78,18 +78,17 @@ private extension MTLBuffer {
             return nil
         }
         
-        let newBuffer: MTLBuffer
-        
         if newLength <= length {
-            newBuffer = device.makeBuffer(
+            return device.makeBuffer(
                 bytes: self.contents(),
                 length: newLength,
                 options: MTLResourceOptions()
             )
         } else {
-            newBuffer = device.makeBuffer(
+            guard let newBuffer = device.makeBuffer(
                 length: newLength, options: MTLResourceOptions()
-            )
+            ) else { return nil }
+            
             let newBytes = UnsafeMutableRawBufferPointer(
                 start: newBuffer.contents(), count: length
             )
@@ -97,9 +96,8 @@ private extension MTLBuffer {
                 start: self.contents(), count: length
             )
             newBytes.copyBytes(from: oldBytes)
+            return newBuffer
         }
-        
-        return newBuffer
     }
     
 }

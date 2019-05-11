@@ -29,8 +29,12 @@ class MetalPipeline {
     ///   align with. When necessary, padding is added to each row of a matrix
     ///   to achieve this alignment. See `BufferedMatrix`.
     init?(device: MTLDevice, threadGroupAlignment: Int) {
+        guard
+            let commandQueue = device.makeCommandQueue()
+        else { return nil }
+
         self.device = device
-        commandQueue = self.device.makeCommandQueue()
+        self.commandQueue = commandQueue
         dimensionBuffer = device.makeBuffer(
             length: _dimensionBufferByteCount,
             options: MTLResourceOptions()
@@ -109,13 +113,16 @@ class MetalPipeline {
 
         try dimensionBuffer.encodeDimensions(for: data)
         
-        let commandBuffer = commandQueue.makeCommandBuffer()
-        let encoder = commandBuffer.makeComputeCommandEncoder()
+        guard
+            let commandBuffer = commandQueue.makeCommandBuffer(),
+            let encoder = commandBuffer.makeComputeCommandEncoder()
+        else { throw PipelineError.failedResource }
+        
         encoder.setComputePipelineState(state)
-        encoder.setBuffer(dimensionBuffer, offset: 0, at: 0)
-        encoder.setBuffer(bufferA, offset: 0, at: 1)
-        encoder.setBuffer(bufferB, offset: 0, at: 2)
-        encoder.setBuffer(outputBuffer, offset: 0, at: 3)
+        encoder.setBuffer(dimensionBuffer, offset: 0, index: 0)
+        encoder.setBuffer(bufferA, offset: 0, index: 1)
+        encoder.setBuffer(bufferB, offset: 0, index: 2)
+        encoder.setBuffer(outputBuffer, offset: 0, index: 3)
         
         let threadGroupCount = paddedSectorCount / _threadGroupSize
         let count = 1 + repeatCount
